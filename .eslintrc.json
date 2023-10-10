@@ -1,4 +1,3 @@
 {
-  "extends": "next/core-web-vitals",
-  "traillingComma": "always"
+	"extends": ["eslint:recommended", "next/core-web-vitals"]
 }

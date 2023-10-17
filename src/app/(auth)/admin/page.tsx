@@ -4,13 +4,16 @@ export default function Login() {
 	return (
 		<main className='h-screen overflow-hidden'>
 			<div className='grid content-center justify-center h-screen gap-5'>
-				<div className='flex h-[550px] shadow-2xl rounded-2xl items-center justify-around'>
-					<div className='grid justify-around p-10 gap-10'>
+				<div
+					className='flex md:h-[444px] md:w-[1080px] shadow-2xl rounded-2xl
+				 items-center justify-around'
+				>
+					<div className='grid justify-around px-10 gap-10'>
 						<div className='grid text-center justify-center gap-y-2'>
 							<img src='/Isotipo.png' alt='isotipo' />
-							<p>Administracion</p>
+							<p>Personal médico</p>
 						</div>
-						<form className='grid gap-5 w-[500px] h-max py-10 items-center'>
+						<form className='grid gap-5 w-[500px] h-max items-center'>
 							<input
 								className='border-2 rounded-xl border-neutral-500 bg-neutral-300 bg-opacity-25 placeholder:neutral-500 hover:border-neutral-600 py-2 px-4 text-[20px] transition-all'
 								type='text'
@@ -28,16 +31,16 @@ export default function Login() {
 							</button>
 						</div>
 					</div>
-					<div className={'w-[400px] h-max'}>
+					<div className={'w-[400px] md:w-full h-full'}>
 						<img
 							src='/hospital.jpg'
 							alt='login-hospital'
-							className='h-[550px] object-cover rounded-r-2xl'
+							className=' w-full h-full object-cover rounded-r-2xl'
 						/>
 					</div>
 				</div>
 				<p className='flex place-content-center text-center gap-x-2'>
-					¿Formás parte solo del personal médico?
+					¿Formás parte del personal medico?
 					<Link href='/login' className='font-bold'>
 						Inicie aqui.
 					</Link>

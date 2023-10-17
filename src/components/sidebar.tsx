@@ -7,6 +7,9 @@ import { Bell } from '@/icons/bell';
 import { Users } from '@/icons/users';
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
+import path from 'path';
+import { Areas } from '@/icons/areas';
+import { Patient } from '@/icons/patients';
 
 export function SideBar() {
 	const pathname = usePathname();
@@ -24,9 +27,22 @@ export function SideBar() {
 						<Bell />
 					</Icon>
 				</Link>
-				<Link href='/users'>
-					<Icon selected={pathname === '/users'}>
+
+				<Link href='/personal'>
+					<Icon selected={pathname === '/personal'}>
 						<Users />
+					</Icon>
+				</Link>
+
+				<Link href='/areas'>
+					<Icon selected={pathname === '/areas'}>
+						<Areas />
+					</Icon>
+				</Link>
+
+				<Link href='/patients'>
+					<Icon selected={pathname === '/patients'}>
+						<Patient />
 					</Icon>
 				</Link>
 			</div>

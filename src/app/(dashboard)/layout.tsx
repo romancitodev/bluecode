@@ -9,7 +9,7 @@ export default function RootLayout({
 	return (
 		<div className='flex'>
 			<SideBar />
-			{children}
+			<div className='h-screen w-screen p-10'>{children}</div>
 		</div>
 	);
 }

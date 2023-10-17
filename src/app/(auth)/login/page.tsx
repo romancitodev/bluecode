@@ -25,15 +25,17 @@ export default function Login() {
 								className='border-2 rounded-xl border-neutral-500 bg-neutral-300 bg-opacity-25 placeholder:neutral-500 hover:border-neutral-600 py-2 px-4 text-[20px] transition-all'
 								type='text'
 								placeholder='Username'
+								required
 							/>
 							<input
 								className='border-2 rounded-xl border-neutral-500 bg-neutral-300 bg-opacity-25 placeholder:neutral-500 hover:border-neutral-600 py-2 px-4 text-[20px] transition-all'
 								type='password'
 								placeholder='Password'
+								required
 							/>
 						</form>
 						<div className='flex justify-end items-center'>
-							<button type='button' className='text-indigo-600 font-bold text-[24px]'>
+							<button type='submit' className='text-indigo-600 font-bold text-[24px]'>
 								Entrar
 							</button>
 						</div>

@@ -6,7 +6,7 @@ import { LogOut } from '@/icons/logout';
 import { Bell } from '@/icons/bell';
 import { Users } from '@/icons/users';
 import Link from 'next/link';
-import { usePathname, useRouter } from 'next/navigation';
+import { usePathname } from 'next/navigation';
 
 export function SideBar() {
 	const pathname = usePathname();

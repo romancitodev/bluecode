@@ -1,4 +1,3 @@
-import img from '@/../public/hospital.jpg';
 import Link from 'next/link';
 
 export default function Login() {

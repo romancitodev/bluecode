@@ -10,7 +10,7 @@ export function Icon({ children, selected }: Props) {
 			className={
 				selected
 					? 'w-[70px] h-[70px] py-2.5 border-b-4 border-[#2A26EA] justify-center items-center inline-flex'
-					: 'w-[70px] h-[70px] py-2.5 justify-center items-center inline-flex'
+					: 'w-[70px] h-[70px] py-2.5 justify-center items-center inline-flex hover:border-b-4 hover:border-[#2A26EA] transition-all'
 			}
 		>
 			{React.cloneElement(children, {

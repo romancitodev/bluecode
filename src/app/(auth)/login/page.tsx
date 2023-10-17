@@ -1,8 +1,50 @@
+import img from '@/../public/hospital.jpg';
+
 export default function Login() {
-	return <div className='w-50 h-50 content-center hover:content-around' >
-	<form className=" grid gap-5 w-max h-max"  >
-		<input className="border-2 rounded border-l-blue-300" type="text" placeholder="Username" />
-		<input type="password" placeholder="Password" />
-	</form>
-	</div>
+	return (
+		<main className='h-screen overflow-hidden'>
+			<div className='grid content-center justify-center h-screen gap-5'>
+				<div className='flex h-[550px] shadow-2xl rounded-2xl items-center justify-around'>
+					<div className='grid justify-around p-10 gap-10'>
+						<div className='grid text-center justify-center gap-y-2'>
+							<img src='/Isotipo.png' alt='isotipo' />
+							<p>Administracion</p>
+						</div>
+						<form className='grid gap-5 w-[500px] h-max py-10 items-center'>
+							<input
+								className='border-2 rounded-xl border-neutral-500 bg-neutral-300 bg-opacity-25 placeholder:neutral-500 hover:border-neutral-600 py-2 px-4 text-[20px] transition-all'
+								type='text'
+								placeholder='Username'
+							/>
+							<input
+								className='border-2 rounded-xl border-neutral-500 bg-neutral-300 bg-opacity-25 placeholder:neutral-500 hover:border-neutral-600 py-2 px-4 text-[20px] transition-all'
+								type='password'
+								placeholder='Password'
+							/>
+						</form>
+						<div className='flex justify-end items-center'>
+							<button type='button' className='text-indigo-600 font-bold text-[24px]'>
+								Entrar
+							</button>
+						</div>
+					</div>
+					<div className={'w-[400px] h-max'}>
+						<img
+							src='/hospital.jpg'
+							alt='login-hospital'
+							className='h-[550px] object-cover rounded-r-2xl'
+						/>
+					</div>
+				</div>
+				<p className='text-center'>
+					¿Formás parte solo del personal médico? Inicie aquí
+				</p>
+			</div>
+			<footer className='text-center bottom-14 relative'>
+				<p className='text-[20px] font-bold'>
+					© Todos los derechos reservados a Código Azul™ - 2023
+				</p>
+			</footer>
+		</main>
+	);
 }

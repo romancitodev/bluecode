@@ -7,7 +7,7 @@ export default function RootLayout({
 	children: React.ReactNode;
 }) {
 	return (
-		<div>
+		<div className='flex'>
 			<SideBar />
 			{children}
 		</div>

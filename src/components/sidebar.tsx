@@ -15,7 +15,7 @@ export function SideBar() {
 
 	return (
 		<div className='w-[120px] h-screen flex-col justify-around inline-flex border-r-2 border-neutral-300'>
-			<div className='grid justify-center w-full gap-5 p-5 border-b-2 border-neutral-300'>
+			<div className='grid justify-center w-full gap-5 p-5'>
 				<Logo />
 			</div>
 			<div className='grid h-full w-full p-5 content-start justify-center -5 gap-y-5'>
@@ -43,7 +43,7 @@ export function SideBar() {
 					</Icon>
 				</Link>
 			</div>
-			<div className='grid justify-center w-full gap-5 p-5 border-t-2 border-neutral-300'>
+			<div className='grid justify-center w-full gap-5 p-5'>
 				<Link href='/login'>
 					<Icon>
 						<LogOut />

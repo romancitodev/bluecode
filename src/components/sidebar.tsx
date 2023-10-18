@@ -14,7 +14,7 @@ export function SideBar() {
 	const pathname = usePathname();
 
 	return (
-		<div className='w-[120px] h-screen flex-col justify-around inline-flex border-r-2 border-neutral-300'>
+		<div className='w-[120px] h-screen flex-col justify-around inline-flex bg-white shadow-lg shadow-zinc-400'>
 			<div className='grid justify-center w-full gap-5 p-5'>
 				<Logo />
 			</div>

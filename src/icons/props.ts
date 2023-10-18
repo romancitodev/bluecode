@@ -1,1 +1,1 @@
-export type IconProps = { stroke?: string }
+export type IconProps = { stroke?: string };

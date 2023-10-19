@@ -5,7 +5,7 @@ import { Filter } from '@/components/filter';
 import { Title } from '@/components/title';
 import { Suspense,  useState } from 'react';
 import { RaceBy } from '@uiball/loaders';
-import { Cards } from '@/components/cards';
+import { PatientCards } from '@/components/cards';
 
 type Form = { name: string | null; dni: string | null };
 
@@ -26,6 +26,7 @@ export default function Patients() {
 	return (
 		<div className='grid gap-10'>
 			<Title text='Pacientes' />
+
 			<div className='grid w-full h-full gap-y-10 m-auto px-40'>
 				<div className='flex justify-between w-full'>
 					<div className='flex h-full w-[200px]'>
@@ -52,12 +53,17 @@ export default function Patients() {
 				<Suspense
 					fallback={
 						<div className='grid w-full h-[500px] m-auto justify-center place-content-center'>
-							<RaceBy lineWeight={5} speed={1.4} size={500} color='#2A26EA' />
+							<RaceBy
+								lineWeight={5}
+								speed={1.4}
+								size={500}
+								color='#2A26EA'
+							/>
 						</div>
 					}
 				>
 					<div className='grid w-full h-full gap-y-10'>
-						<Cards />
+						<PatientCards />
 					</div>
 				</Suspense>
 			</div>

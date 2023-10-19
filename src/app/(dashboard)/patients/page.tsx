@@ -1,9 +1,28 @@
+'use client';
+
 import { Add } from '@/components/add';
 import { Filter } from '@/components/filter';
-import { Card } from '@/components/flat-card';
 import { Title } from '@/components/title';
+import { Suspense,  useState } from 'react';
+import { RaceBy } from '@uiball/loaders';
+import { Cards } from '@/components/cards';
+
+type Form = { name: string | null; dni: string | null };
 
 export default function Patients() {
+	const [filter, setFilter] = useState<Form>({ name: null, dni: null });
+	const [cards, setCards] = useState<Form[]>([]);
+
+	const handleChange = (
+		e: React.ChangeEvent<HTMLInputElement>,
+		ctx: keyof Form,
+	) => {
+		const { value } = e.target;
+		setFilter(old => {
+			return { ...old, [ctx]: value };
+		});
+	};
+
 	return (
 		<div className='grid gap-10'>
 			<Title text='Pacientes' />
@@ -13,15 +32,34 @@ export default function Patients() {
 						<Add />
 					</div>
 					<div className='flex h-16'>
-						<Filter placeholder='Filter by name' left full />
-						<Filter placeholder='Filter by DNI' right />
+						<Filter
+							placeholder='Filter by name'
+							left
+							full
+							onChange={e => {
+								handleChange(e, 'name');
+							}}
+						/>
+						<Filter
+							placeholder='Filter by DNI'
+							right
+							onChange={e => {
+								handleChange(e, 'dni');
+							}}
+						/>
 					</div>
 				</div>
-				<div className='grid w-full h-full gap-y-10'>
-					<Card name='Pedro parker' dni='123.456.789' />
-					<Card name='d' dni='001.512.692' />
-					<Card name='Messi' dni='051.668.991' />
-				</div>
+				<Suspense
+					fallback={
+						<div className='grid w-full h-[500px] m-auto justify-center place-content-center'>
+							<RaceBy lineWeight={5} speed={1.4} size={500} color='#2A26EA' />
+						</div>
+					}
+				>
+					<div className='grid w-full h-full gap-y-10'>
+						<Cards />
+					</div>
+				</Suspense>
 			</div>
 		</div>
 	);

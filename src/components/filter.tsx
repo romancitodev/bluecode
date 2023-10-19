@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { ChangeEvent } from 'react';
 
 type Positions = {
 	left?: boolean;
@@ -9,6 +9,7 @@ type Positions = {
 
 type FilterProps = {
 	placeholder: string;
+	onChange: (e: ChangeEvent<HTMLInputElement>) => void;
 } & Positions;
 
 export function Filter({
@@ -17,6 +18,7 @@ export function Filter({
 	right,
 	center,
 	full,
+	onChange,
 }: FilterProps) {
 	let positionStyles = [
 		left && 'border-l-2 border-t-2 border-b-2 rounded-l-xl',
@@ -31,5 +33,13 @@ export function Filter({
 
 	const style = `px-5 py-1 bg-neutral-100 ${positionStyles}`;
 
-	return <input type='text' placeholder={placeholder} className={style} name="filter" />;
+	return (
+		<input
+			type='text'
+			placeholder={placeholder}
+			className={style}
+			name='filter'
+			onChange={onChange}
+		/>
+	);
 }

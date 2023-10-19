@@ -1,6 +1,31 @@
+'use client';
+
+import { useSession, signIn } from 'next-auth/react';
 import Link from 'next/link';
+import { redirect } from 'next/navigation';
+import { useState } from 'react';
+
+type Form = { email: string; password: string };
 
 export default function Login() {
+	const { data: session, status } = useSession();
+	const [form, setForm] = useState<Form>({ email: '', password: '' });
+
+	const handleSubmit = async (e: React.MouseEvent<HTMLButtonElement>) => {
+		e.preventDefault();
+		signIn('credentials', { callbackUrl: '/patients', redirect: false });
+	};
+
+	const handleChange = (
+		e: React.ChangeEvent<HTMLInputElement>,
+		ctx: keyof Form,
+	) => {
+		const { value } = e.target;
+		setForm(old => {
+			return { ...old, [ctx]: value };
+		});
+	};
+
 	return (
 		<main className='h-screen overflow-hidden'>
 			<div className='grid content-center justify-center h-screen gap-5'>
@@ -26,16 +51,26 @@ export default function Login() {
 								type='text'
 								placeholder='Username'
 								required
+								onChange={e => {
+									handleChange(e, 'email');
+								}}
 							/>
 							<input
 								className='border-2 rounded-xl border-neutral-500 bg-neutral-300 bg-opacity-25 placeholder:neutral-500 hover:border-neutral-600 py-2 px-4 text-[20px] transition-all'
 								type='password'
 								placeholder='Password'
 								required
+								onChange={e => {
+									handleChange(e, 'password');
+								}}
 							/>
 						</form>
 						<div className='flex justify-end items-center'>
-							<button type='submit' className='text-indigo-600 font-bold text-[24px]'>
+							<button
+								onClick={handleSubmit}
+								type='submit'
+								className='text-indigo-600 font-bold text-[24px]'
+							>
 								Entrar
 							</button>
 						</div>

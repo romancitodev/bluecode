@@ -1,11 +1,13 @@
-'use client';
+import { getServerSession } from 'next-auth';
+import { AppProps } from 'next/app';
+import { redirect } from 'next/navigation';
 
-import { useRouter } from 'next/navigation';
-import { useEffect } from 'react';
+export default async function Home({ Component, pageProps }: AppProps) {
+	const session = await getServerSession();
 
-export default function Home() {
-	const router = useRouter();
-	useEffect(() => {
-		router.push('/login');
-	}, []);
+	if (session) {
+		redirect('/patients');
+	} else {
+		redirect('/login');
+	}
 }

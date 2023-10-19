@@ -31,5 +31,5 @@ export function Filter({
 
 	const style = `px-5 py-1 bg-neutral-100 ${positionStyles}`;
 
-	return <input type='text' placeholder={placeholder} className={style} />;
+	return <input type='text' placeholder={placeholder} className={style} name="filter" />;
 }

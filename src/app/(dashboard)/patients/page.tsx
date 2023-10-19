@@ -19,8 +19,8 @@ export default function Patients() {
 				</div>
 				<div className='grid w-full h-full gap-y-10'>
 					<Card name='Pedro parker' dni='123.456.789' />
-					<Card name='Keanu Reeves' dni='001.512.692' />
-					<Card name='Leonel Messi' dni='051.668.991' />
+					<Card name='d' dni='001.512.692' />
+					<Card name='Messi' dni='051.668.991' />
 				</div>
 			</div>
 		</div>

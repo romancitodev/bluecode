@@ -1,3 +1,6 @@
 {
-	"conventionalCommits.scopes": ["front", "back"]
+	"conventionalCommits.scopes": [
+		"front",
+		"back"
+	]
 }

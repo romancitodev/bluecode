@@ -4,6 +4,8 @@ import { useSession, signIn } from 'next-auth/react';
 import { useRouter } from 'next/navigation';
 import Link from 'next/link';
 import { useState } from 'react';
+import { ToastContainer, toast } from 'react-toastify';
+import "react-toastify/dist/ReactToastify.css";
 
 type Form = { email: string; password: string };
 
@@ -18,9 +20,11 @@ export default function Login() {
 			...form,
 			redirect: false,
 		});
-		console.log({ ...login });
+		console.log(login);
 		if (!login?.error) {
 			router.push('/patients');
+		} else {
+			toast.error(login.error);
 		}
 	};
 
@@ -36,6 +40,7 @@ export default function Login() {
 
 	return (
 		<main className='h-screen overflow-hidden'>
+			<ToastContainer position={'bottom-right'} autoClose={2500} closeButton={false} draggable={false}/>
 			<div className='grid content-center justify-center h-screen gap-5'>
 				<div
 					className='flex h-max shadow-2xl rounded-2xl

@@ -5,12 +5,7 @@ import { PrismaAdapter } from '@auth/prisma-adapter';
 
 const prisma = new PrismaClient();
 
-type Response =
-	| {
-			Estado: number;
-			Rol: string;
-	  }
-	| { Estado: number; Info: string };
+type Fields = { f0: number, f1: string };
 
 const authProps: AuthOptions = {
 	providers: [
@@ -29,20 +24,21 @@ const authProps: AuthOptions = {
 					placeholder: 'enter your password',
 				},
 			},
-			authorize: async function (credentials, _) {
+			authorize: async function (credentials) {
 				if (!credentials || !credentials.email || !credentials.password)
 					return null;
 				const { email, password } = credentials;
-				const user =
-					await prisma.$queryRaw<Response>`CALL VerifyLogin(${email}, ${password})`;
-
-				console.log(user);
-				if ('Info' in user) return null;
-				return { status: user.Estado, role: user.Rol };
+				const [user, ...rest] =
+					await prisma.$queryRaw<Fields[]>`CALL VerifyLogin(${email}, ${password})`;
+				if (user.f0 === 0) throw new Error(user.f1);
+				return { status: user.f0, role: user.f1 };
 			},
 		}),
 	],
 	adapter: PrismaAdapter(prisma),
+	session: {
+		strategy: 'jwt'
+	}
 };
 
 const handler = NextAuth(authProps);

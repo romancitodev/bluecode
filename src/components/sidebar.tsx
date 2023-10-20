@@ -9,6 +9,7 @@ import Link from 'next/link';
 import { usePathname } from 'next/navigation';
 import { Areas } from '@/icons/areas';
 import { Patient } from '@/icons/patients';
+import { signOut } from 'next-auth/react';
 
 export function SideBar() {
 	const pathname = usePathname();
@@ -44,11 +45,11 @@ export function SideBar() {
 				</Link>
 			</div>
 			<div className='grid justify-center w-full gap-5 p-5'>
-				<Link href='/login'>
+				<button type="button" onClick={() => signOut({ callbackUrl: 'http://localhost:3000/login' })}>
 					<Icon>
 						<LogOut />
 					</Icon>
-				</Link>
+				</button>
 			</div>
 		</div>
 	);

@@ -2,6 +2,7 @@ import NextAuth, { AuthOptions } from 'next-auth';
 import CredentialsProvider from 'next-auth/providers/credentials';
 import { PrismaAdapter } from '@auth/prisma-adapter';
 import prisma from '@/prisma/singleton';
+import { Adapter } from 'next-auth/adapters';
 
 type Fields = { f0: number; f1: string };
 
@@ -34,7 +35,7 @@ const authProps: AuthOptions = {
 			},
 		}),
 	],
-	adapter: PrismaAdapter(prisma),
+	adapter: PrismaAdapter(prisma) as Adapter,
 	session: {
 		strategy: 'jwt',
 	},

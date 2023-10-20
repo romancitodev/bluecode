@@ -1,0 +1,385 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "mysql"
+  url      = env("DATABASE_URL")
+}
+
+model accidentes {
+  id_accidente        Int                   @id @default(autoincrement())
+  descripcion         String                @db.VarChar(45)
+  rel_ficha_accidente rel_ficha_accidente[]
+}
+
+model accounts {
+  id                  String  @id @db.Char(36)
+  type                String  @db.VarChar(255)
+  provider            String  @db.VarChar(255)
+  provider_account_id String  @db.VarChar(255)
+  refresh_token       String? @db.VarChar(255)
+  access_token        String? @db.VarChar(255)
+  expires_at          Int?
+  token_type          String? @db.VarChar(255)
+  scope               String? @db.VarChar(255)
+  id_token            String? @db.Text
+  session_state       String? @db.VarChar(255)
+  user_id             String? @db.Char(36)
+  users               users?  @relation(fields: [user_id], references: [id], onDelete: Cascade, map: "accounts_ibfk_1")
+
+  @@index([user_id], map: "user_id")
+}
+
+model afiliaciones {
+  id_afiliacion     Int                 @id
+  nombre            String              @db.VarChar(100)
+  tipo              String              @db.VarChar(100)
+  rel_afil_paciente rel_afil_paciente[]
+}
+
+model alergias {
+  id_alergia        Int                 @id @default(autoincrement())
+  descripcion       String              @db.VarChar(45)
+  rel_ficha_alergia rel_ficha_alergia[]
+}
+
+model area {
+  id_area           Int                 @id
+  descripcion       String              @db.VarChar(100)
+  rel_area_cama     rel_area_cama[]
+  rel_area_registro rel_area_registro[]
+  rel_area_usuario  rel_area_usuario[]
+}
+
+model cama {
+  id_cama       Int             @id
+  estado        Int             @db.TinyInt
+  numero        Int
+  rel_area_cama rel_area_cama[]
+}
+
+model datos_usuario {
+  dni                  Int                    @id
+  nombre               String                 @db.VarChar(255)
+  apellido             String                 @db.VarChar(255)
+  cuil                 Int                    @unique(map: "cuil_UNIQUE")
+  telefono             Int
+  est_civil            String                 @db.VarChar(100)
+  fec_inicio           DateTime               @db.Date
+  fec_nacimiento       DateTime               @db.Date
+  domicilio_paciente   domicilio_paciente?
+  domicilio_usuario    domicilio_usuario?
+  rel_ficha_paciente   rel_ficha_paciente[]
+  rel_registro_usuario rel_registro_usuario[]
+  rel_usuario_datos    rel_usuario_datos[]
+}
+
+model deficiencias {
+  id_deficiencia        Int                     @id @default(autoincrement())
+  descripcion           String                  @db.VarChar(45)
+  rel_ficha_deficiencia rel_ficha_deficiencia[]
+}
+
+model domicilio_paciente {
+  dni           Int           @id
+  calle         String        @db.VarChar(100)
+  numero        Int
+  localidad     String        @db.VarChar(100)
+  provincia     String        @db.VarChar(100)
+  tipo          String        @db.VarChar(100)
+  departamento  String        @db.VarChar(50)
+  datos_usuario datos_usuario @relation(fields: [dni], references: [dni], onDelete: Cascade, map: "fk_dni4")
+}
+
+model domicilio_usuario {
+  dni           Int           @id
+  calle         String        @db.VarChar(100)
+  numero        Int
+  localidad     String        @db.VarChar(100)
+  provincia     String        @db.VarChar(100)
+  tipo          String        @db.VarChar(45)
+  departamento  String        @db.VarChar(50)
+  datos_usuario datos_usuario @relation(fields: [dni], references: [dni], onDelete: Cascade, map: "fk_dni2")
+}
+
+model enfermedades {
+  id_enfermedad        Int                    @id @default(autoincrement())
+  descripcion          String                 @db.VarChar(45)
+  rel_ficha_enfermedad rel_ficha_enfermedad[]
+}
+
+model ficha {
+  id_ficha              Int                     @id
+  fecha                 DateTime                @db.Date
+  grupo_sanguineo       String                  @db.VarChar(10)
+  observaciones         String                  @db.Text
+  rel_ficha_accidente   rel_ficha_accidente[]
+  rel_ficha_alergia     rel_ficha_alergia[]
+  rel_ficha_deficiencia rel_ficha_deficiencia[]
+  rel_ficha_enfermedad  rel_ficha_enfermedad[]
+  rel_ficha_paciente    rel_ficha_paciente[]
+  rel_ficha_vacuna      rel_ficha_vacuna[]
+  rel_usuario_ficha     rel_usuario_ficha[]
+}
+
+model llamados {
+  id_llamado           Int                    @id
+  tipo                 String                 @db.VarChar(100)
+  record               DateTime               @db.DateTime(0)
+  respuesta            DateTime               @db.DateTime(0)
+  origen               String                 @db.VarChar(100)
+  rel_llamado_paciente rel_llamado_paciente[]
+}
+
+model paciente {
+  dni                   Int                     @id
+  nombre                String                  @db.VarChar(250)
+  apellido              String                  @db.VarChar(250)
+  fecha_nacimiento      DateTime                @db.Date
+  genero                String                  @db.VarChar(50)
+  legajo                String                  @db.VarChar(100)
+  estado_civil          String                  @db.VarChar(100)
+  telefono              Int
+  rel_afil_paciente     rel_afil_paciente[]
+  rel_llamado_paciente  rel_llamado_paciente[]
+  rel_registro_paciente rel_registro_paciente[]
+}
+
+model registro {
+  id_registro           Int                     @id
+  descripcion           String                  @db.VarChar(100)
+  estado                Int                     @db.TinyInt
+  fecha                 DateTime                @db.Date
+  rel_area_registro     rel_area_registro[]
+  rel_registro_paciente rel_registro_paciente[]
+  rel_registro_usuario  rel_registro_usuario[]
+}
+
+model rel_afil_paciente {
+  id            Int          @id @default(autoincrement())
+  dni           Int
+  id_afiliacion Int
+  afiliaciones  afiliaciones @relation(fields: [id_afiliacion], references: [id_afiliacion], onDelete: NoAction, onUpdate: NoAction, map: "fk_afiliacion")
+  paciente      paciente     @relation(fields: [dni], references: [dni], onDelete: Cascade, map: "fk_paciente")
+
+  @@index([id_afiliacion], map: "fk_afiliacion_idx")
+  @@index([dni], map: "fk_paciente_idx")
+}
+
+model rel_area_cama {
+  id      Int  @id @default(autoincrement())
+  id_area Int
+  id_cama Int
+  area    area @relation(fields: [id_area], references: [id_area], onDelete: NoAction, onUpdate: NoAction, map: "fk_area2")
+  cama    cama @relation(fields: [id_cama], references: [id_cama], onDelete: Cascade, map: "fk_cama")
+
+  @@index([id_area], map: "fk_area2_idx")
+  @@index([id_cama], map: "fk_cama_idx")
+}
+
+model rel_area_registro {
+  id          Int      @id @default(autoincrement())
+  id_area     Int
+  id_registro Int
+  area        area     @relation(fields: [id_area], references: [id_area], onDelete: NoAction, onUpdate: NoAction, map: "fk_area3")
+  registro    registro @relation(fields: [id_registro], references: [id_registro], onDelete: NoAction, onUpdate: NoAction, map: "fk_registro3")
+
+  @@index([id_area], map: "fk_area3_idx")
+  @@index([id_registro], map: "fk_registro3_idx")
+}
+
+model rel_area_usuario {
+  id      Int     @id @default(autoincrement())
+  mail    String  @db.VarChar(256)
+  id_area Int
+  area    area    @relation(fields: [id_area], references: [id_area], onDelete: NoAction, onUpdate: NoAction, map: "fk_area")
+  usuario usuario @relation(fields: [mail], references: [mail], onDelete: Cascade, map: "fk_mail4")
+
+  @@index([id_area], map: "fk_area_idx")
+  @@index([mail], map: "fk_mail4_idx")
+}
+
+model rel_ficha_accidente {
+  id           Int        @id @default(autoincrement())
+  estado       Int        @db.TinyInt
+  id_accidente Int
+  id_ficha     Int
+  accidentes   accidentes @relation(fields: [id_accidente], references: [id_accidente], onDelete: NoAction, onUpdate: NoAction, map: "fk_accidente")
+  ficha        ficha      @relation(fields: [id_ficha], references: [id_ficha], onDelete: Cascade, map: "fk_ficha5")
+
+  @@index([id_accidente], map: "fk_accidente_idx")
+  @@index([id_ficha], map: "fk_ficha5_idx")
+}
+
+model rel_ficha_alergia {
+  id         Int      @id @default(autoincrement())
+  estado     Boolean
+  id_ficha   Int
+  id_alergia Int
+  alergias   alergias @relation(fields: [id_alergia], references: [id_alergia], onDelete: NoAction, onUpdate: NoAction, map: "fk_alergia")
+  ficha      ficha    @relation(fields: [id_ficha], references: [id_ficha], onDelete: Cascade, map: "fk_ficha2")
+
+  @@index([id_alergia], map: "fk_alergia_idx")
+  @@index([id_ficha], map: "fk_ficha2_idx")
+}
+
+model rel_ficha_deficiencia {
+  id             Int          @id @default(autoincrement())
+  estado         Int          @db.TinyInt
+  id_deficiencia Int
+  id_ficha       Int
+  deficiencias   deficiencias @relation(fields: [id_deficiencia], references: [id_deficiencia], onDelete: NoAction, onUpdate: NoAction, map: "fk_deficiencia")
+  ficha          ficha        @relation(fields: [id_ficha], references: [id_ficha], onDelete: Cascade, map: "fk_ficha6")
+
+  @@index([id_deficiencia], map: "fk_deficiencia_idx")
+  @@index([id_ficha], map: "fk_ficha6_idx")
+}
+
+model rel_ficha_enfermedad {
+  id            Int          @id @default(autoincrement())
+  estado        Int          @db.TinyInt
+  id_enfermedad Int
+  id_ficha      Int
+  enfermedades  enfermedades @relation(fields: [id_enfermedad], references: [id_enfermedad], onDelete: NoAction, onUpdate: NoAction, map: "fk_enfermedad")
+  ficha         ficha        @relation(fields: [id_ficha], references: [id_ficha], onDelete: Cascade, map: "fk_ficha4")
+
+  @@index([id_enfermedad], map: "fk_enfermedad_idx")
+  @@index([id_ficha], map: "fk_ficha4_idx")
+}
+
+model rel_ficha_paciente {
+  id            Int           @id @default(autoincrement())
+  id_ficha      Int
+  dni           Int
+  datos_usuario datos_usuario @relation(fields: [dni], references: [dni], onDelete: Cascade, map: "fk_dni3")
+  ficha         ficha         @relation(fields: [id_ficha], references: [id_ficha], onDelete: Cascade, map: "fk_ficha7")
+
+  @@index([dni], map: "fk_dni3_idx")
+  @@index([id_ficha], map: "fk_ficha7_idx")
+}
+
+model rel_ficha_vacuna {
+  id        Int     @id @default(autoincrement())
+  estado    Int     @db.TinyInt
+  id_vacuna Int
+  id_ficha  Int
+  ficha     ficha   @relation(fields: [id_ficha], references: [id_ficha], onDelete: Cascade, map: "fk_ficha3")
+  vacunas   vacunas @relation(fields: [id_vacuna], references: [id_vacuna], onDelete: NoAction, onUpdate: NoAction, map: "fk_vacuna")
+
+  @@index([id_ficha], map: "fk_ficha3_idx")
+  @@index([id_vacuna], map: "fk_vacuna_idx")
+}
+
+model rel_llamado_paciente {
+  id         Int      @id @default(autoincrement())
+  dni        Int
+  id_llamado Int
+  paciente   paciente @relation(fields: [dni], references: [dni], onDelete: Cascade, map: "fk_dni5")
+  llamados   llamados @relation(fields: [id_llamado], references: [id_llamado], onDelete: NoAction, onUpdate: NoAction, map: "fk_llamado")
+
+  @@index([dni], map: "fk_dni5_idx")
+  @@index([id_llamado], map: "fk_llamado_idx")
+}
+
+model rel_registro_paciente {
+  id          Int      @id @default(autoincrement())
+  dni         Int
+  id_registro Int
+  paciente    paciente @relation(fields: [dni], references: [dni], onDelete: Cascade, map: "fk_dni6")
+  registro    registro @relation(fields: [id_registro], references: [id_registro], onDelete: NoAction, onUpdate: NoAction, map: "fk_registro")
+
+  @@index([dni], map: "fk_dni6_idx")
+  @@index([id_registro], map: "fk_registro_idx")
+}
+
+model rel_registro_usuario {
+  id            Int           @id @default(autoincrement())
+  dni           Int
+  id_registro   Int
+  datos_usuario datos_usuario @relation(fields: [dni], references: [dni], onDelete: Cascade, map: "fk_dni7")
+  registro      registro      @relation(fields: [id_registro], references: [id_registro], onDelete: NoAction, onUpdate: NoAction, map: "fk_registro2")
+
+  @@index([dni], map: "fk_dni7_idx")
+  @@index([id_registro], map: "fk_registro2_idx")
+}
+
+model rel_usuario_datos {
+  id            Int           @id @default(autoincrement())
+  mail          String        @db.VarChar(256)
+  dni           Int
+  datos_usuario datos_usuario @relation(fields: [dni], references: [dni], onDelete: Cascade, map: "fk_dni")
+  usuario       usuario       @relation(fields: [mail], references: [mail], onDelete: Cascade, map: "fk_mail")
+
+  @@index([dni], map: "fk_dni_idx")
+  @@index([mail], map: "fk_mail_idx")
+}
+
+model rel_usuario_ficha {
+  id       Int     @id @default(autoincrement())
+  id_ficha Int
+  mail     String  @db.VarChar(256)
+  ficha    ficha   @relation(fields: [id_ficha], references: [id_ficha], onDelete: Cascade, map: "fk_ficha")
+  usuario  usuario @relation(fields: [mail], references: [mail], onDelete: Cascade, map: "fk_mail3")
+
+  @@index([id_ficha], map: "fk_ficha_idx")
+  @@index([mail], map: "fk_mail3_idx")
+}
+
+model rel_usuario_rol {
+  id      Int     @id @default(autoincrement())
+  id_rol  Int
+  mail    String  @db.VarChar(256)
+  usuario usuario @relation(fields: [mail], references: [mail], onDelete: Cascade, map: "fk_mail2")
+  rol     rol     @relation(fields: [id_rol], references: [id_rol], onDelete: Cascade, map: "fk_rol")
+
+  @@index([mail], map: "fk_mail2_idx")
+  @@index([id_rol], map: "fk_rol_idx")
+}
+
+model rol {
+  id_rol          Int               @id
+  descripci_n     String            @map("descripción") @db.VarChar(45)
+  rel_usuario_rol rel_usuario_rol[]
+}
+
+model sessions {
+  id            String   @id @db.Char(36)
+  expires       DateTime @db.DateTime(0)
+  session_token String   @unique(map: "sessionToken") @db.VarChar(255)
+  user_id       String?  @db.Char(36)
+  users         users?   @relation(fields: [user_id], references: [id], onDelete: Cascade, map: "sessions_ibfk_1")
+
+  @@index([user_id], map: "user_id")
+}
+
+model users {
+  id             String     @id @db.Char(36)
+  name           String?    @db.VarChar(255)
+  email          String?    @unique(map: "email") @db.VarChar(255)
+  email_verified DateTime?  @db.DateTime(0)
+  image          String?    @db.VarChar(255)
+  accounts       accounts[]
+  sessions       sessions[]
+}
+
+model usuario {
+  mail              String              @id @db.VarChar(256)
+  clave             String              @db.VarChar(21)
+  rel_area_usuario  rel_area_usuario[]
+  rel_usuario_datos rel_usuario_datos[]
+  rel_usuario_ficha rel_usuario_ficha[]
+  rel_usuario_rol   rel_usuario_rol[]
+}
+
+model vacunas {
+  id_vacuna        Int                @id @default(autoincrement())
+  descripcion      String             @db.VarChar(45)
+  rel_ficha_vacuna rel_ficha_vacuna[]
+}
+
+model verification_tokens {
+  token      String   @id @db.VarChar(255)
+  identifier String   @db.VarChar(255)
+  expires    DateTime @db.DateTime(0)
+}

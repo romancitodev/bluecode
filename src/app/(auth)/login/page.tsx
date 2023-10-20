@@ -1,19 +1,27 @@
 'use client';
 
 import { useSession, signIn } from 'next-auth/react';
+import { useRouter } from 'next/navigation';
 import Link from 'next/link';
-import { redirect } from 'next/navigation';
 import { useState } from 'react';
 
 type Form = { email: string; password: string };
 
 export default function Login() {
+	const router = useRouter();
 	const { data: session, status } = useSession();
 	const [form, setForm] = useState<Form>({ email: '', password: '' });
 
-	const handleSubmit = async (e: React.MouseEvent<HTMLButtonElement>) => {
+	const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
 		e.preventDefault();
-		signIn('credentials', { callbackUrl: '/patients', redirect: false });
+		const login = await signIn('credentials', {
+			...form,
+			redirect: false,
+		});
+		console.log({ ...login });
+		if (!login?.error) {
+			router.push('/patients');
+		}
 	};
 
 	const handleChange = (
@@ -45,11 +53,14 @@ export default function Login() {
 							<img src='/Isotipo.png' alt='isotipo' />
 							<p>Personal médico</p>
 						</div>
-						<form className='grid gap-5 w-[500px] h-max items-center'>
+						<form
+							className='grid gap-5 w-[500px] h-max items-center'
+							onSubmit={handleSubmit}
+						>
 							<input
 								className='border-2 rounded-xl border-neutral-500 bg-neutral-300 bg-opacity-25 placeholder:neutral-500 hover:border-neutral-600 py-2 px-4 text-[20px] transition-all'
 								type='text'
-								placeholder='Username'
+								placeholder='Email'
 								required
 								onChange={e => {
 									handleChange(e, 'email');
@@ -64,16 +75,12 @@ export default function Login() {
 									handleChange(e, 'password');
 								}}
 							/>
+							<div className='w-full h-full flex justify-end items-center'>
+								<button type='submit' className='text-indigo-600 font-bold text-[24px]'>
+									Entrar
+								</button>
+							</div>
 						</form>
-						<div className='flex justify-end items-center'>
-							<button
-								onClick={handleSubmit}
-								type='submit'
-								className='text-indigo-600 font-bold text-[24px]'
-							>
-								Entrar
-							</button>
-						</div>
 					</div>
 				</div>
 				<p className='flex place-content-center text-center gap-x-2'>

@@ -11,7 +11,7 @@ import { Areas } from '@/icons/areas';
 import { Patient } from '@/icons/patients';
 import { signOut } from 'next-auth/react';
 
-export function SideBar() {
+export function SideBar({ isAdmin }: { isAdmin: boolean }) {
 	const pathname = usePathname();
 
 	return (
@@ -20,11 +20,16 @@ export function SideBar() {
 				<Logo />
 			</div>
 			<div className='grid h-full w-full p-5 content-start justify-center -5 gap-y-5'>
+				{ 
+				isAdmin ? 
 				<Link href='/reports'>
 					<Icon selected={pathname === '/reports'}>
 						<Bell />
 					</Icon>
 				</Link>
+	
+				:  ''
+				}
 
 				<Link href='/personal'>
 					<Icon selected={pathname === '/personal'}>

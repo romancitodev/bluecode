@@ -9,8 +9,9 @@ import Link from 'next/link';
 import { usePathname } from 'next/navigation';
 import { Areas } from '@/icons/areas';
 import { Patient } from '@/icons/patients';
+import { signOut } from 'next-auth/react';
 
-export function SideBar() {
+export function SideBar({ isAdmin }: { isAdmin: boolean }) {
 	const pathname = usePathname();
 
 	return (
@@ -19,11 +20,16 @@ export function SideBar() {
 				<Logo />
 			</div>
 			<div className='grid h-full w-full p-5 content-start justify-center -5 gap-y-5'>
+				{ 
+				isAdmin ? 
 				<Link href='/reports'>
 					<Icon selected={pathname === '/reports'}>
 						<Bell />
 					</Icon>
 				</Link>
+	
+				:  ''
+				}
 
 				<Link href='/personal'>
 					<Icon selected={pathname === '/personal'}>
@@ -44,11 +50,11 @@ export function SideBar() {
 				</Link>
 			</div>
 			<div className='grid justify-center w-full gap-5 p-5'>
-				<Link href='/login'>
+				<button type="button" onClick={() => signOut({ callbackUrl: 'http://localhost:3000/login' })}>
 					<Icon>
 						<LogOut />
 					</Icon>
-				</Link>
+				</button>
 			</div>
 		</div>
 	);

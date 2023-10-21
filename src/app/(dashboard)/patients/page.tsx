@@ -24,10 +24,10 @@ export default function Patients() {
 	};
 
 	return (
-		<div className='grid gap-10'>
+		<div className='grid gap-10 p-6'>
 			<Title text='Pacientes' />
 
-			<div className='grid w-full h-full gap-y-10 m-auto px-40'>
+			<div className='grid w-full h-full gap-y-10 m-auto px-20'>
 				<div className='flex justify-between w-full'>
 					<div className='flex h-full w-[200px]'>
 						<Add />

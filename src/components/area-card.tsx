@@ -33,7 +33,7 @@ export function AreaCard({ areaname, incharge, beds, cstate }: Props) {
                     <p className='w-max'>{beds}</p>
                 </div>
             </div>
-            <div className='flex justify-between w-max gap-10'>
+            <div className='flex justify-between w-max gap-5'>
                 <button type='button'>
                     <SmallIcon>
                         <Modify />

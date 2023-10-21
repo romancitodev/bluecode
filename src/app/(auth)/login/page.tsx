@@ -5,7 +5,7 @@ import { useRouter } from 'next/navigation';
 import Link from 'next/link';
 import { useState } from 'react';
 import { ToastContainer, toast } from 'react-toastify';
-import "react-toastify/dist/ReactToastify.css";
+import 'react-toastify/dist/ReactToastify.css';
 
 type Form = { email: string; password: string };
 
@@ -40,7 +40,12 @@ export default function Login() {
 
 	return (
 		<main className='h-screen overflow-hidden'>
-			<ToastContainer position={'bottom-right'} autoClose={2500} closeButton={false} draggable={false}/>
+			<ToastContainer
+				position={'bottom-right'}
+				autoClose={2500}
+				closeButton={false}
+				draggable={false}
+			/>
 			<div className='grid content-center justify-center h-screen gap-5'>
 				<div
 					className='flex h-max shadow-2xl rounded-2xl
@@ -56,7 +61,7 @@ export default function Login() {
 					<div className='grid justify-around px-10 gap-10'>
 						<div className='grid text-center justify-center gap-y-2'>
 							<img src='/Isotipo.png' alt='isotipo' />
-							<p>Personal médico</p>
+							<p>Mejorando la salud de las personas</p>
 						</div>
 						<form
 							className='grid gap-5 w-[500px] h-max items-center'
@@ -88,12 +93,6 @@ export default function Login() {
 						</form>
 					</div>
 				</div>
-				<p className='flex place-content-center text-center gap-x-2'>
-					¿Formás parte de la administración?
-					<Link href='/admin' className='font-bold'>
-						Inicie aqui.
-					</Link>
-				</p>
 			</div>
 			<footer className='text-center bottom-14 relative'>
 				<p className='text-[20px] font-bold'>

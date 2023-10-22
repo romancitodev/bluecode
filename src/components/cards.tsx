@@ -28,21 +28,21 @@ function fetchPatientData() {
 
 export async function AreaCards() {
 	const data = await fetchAreaData();
-	return data.map(({ areaname, incharge, beds, state}) =>
-		<AreaCard 
+	return data.map(({ areaname, incharge, beds, state }) => (
+		<AreaCard
 			areaname={areaname}
 			incharge={incharge}
 			beds={beds}
 			cstate={state}
 		/>
-	)
+	));
 }
 
 export type Form2 = {
 	areaname: string;
 	incharge: string;
 	beds: number;
-	state: boolean
+	state: boolean;
 };
 
 function fetchAreaData() {
@@ -52,20 +52,20 @@ function fetchAreaData() {
 				{
 					areaname: 'Quirofano 1',
 					incharge: 'tamagoru',
-					beds: 5, 
-					state: true
+					beds: 5,
+					state: true,
 				},
 				{
 					areaname: 'Guardia',
 					incharge: 'romancitodev',
 					beds: 4,
-					state: false 
+					state: false,
 				},
 				{
 					areaname: 'Pediatria',
 					incharge: 'Cenix',
-					beds: 10, 
-					state: true
+					beds: 10,
+					state: true,
 				},
 			]);
 		}, 1 * 500);

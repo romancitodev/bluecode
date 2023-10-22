@@ -53,12 +53,7 @@ export default function Patients() {
 				<Suspense
 					fallback={
 						<div className='grid w-full h-[500px] m-auto justify-center place-content-center'>
-							<RaceBy
-								lineWeight={5}
-								speed={1.4}
-								size={500}
-								color='#2A26EA'
-							/>
+							<RaceBy lineWeight={5} speed={1.4} size={500} color='#2A26EA' />
 						</div>
 					}
 				>

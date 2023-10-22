@@ -14,7 +14,9 @@ export function Card({ name, dni }: Props) {
 					<SmallIcon>
 						<Account />
 					</SmallIcon>
-					<p className='2xl:w-[300px] xl:w-[250px] lg:w-[200px] md:w-[150px] sm:w-[100px]'>{name}</p>
+					<p className='2xl:w-[300px] xl:w-[250px] lg:w-[200px] md:w-[150px] sm:w-[100px]'>
+						{name}
+					</p>
 				</div>
 				<div className='flex justify-start gap-5 h-max text-center items-center'>
 					<SmallIcon>

@@ -28,6 +28,9 @@
       ],
       "@/prisma/*": [
         "./prisma/*"
+      ],
+      "@/schemas/*": [
+        "./src/app/schemas/*"
       ]
     },
     "forceConsistentCasingInFileNames": true

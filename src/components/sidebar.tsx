@@ -20,16 +20,15 @@ export function SideBar({ isAdmin }: { isAdmin: boolean }) {
 				<Logo />
 			</div>
 			<div className='grid h-full w-full p-5 content-start justify-center -5 gap-y-5'>
-				{ 
-				isAdmin ? 
-				<Link href='/reports'>
-					<Icon selected={pathname === '/reports'}>
-						<Bell />
-					</Icon>
-				</Link>
-	
-				:  ''
-				}
+				{isAdmin ? (
+					<Link href='/reports'>
+						<Icon selected={pathname === '/reports'}>
+							<Bell />
+						</Icon>
+					</Link>
+				) : (
+					''
+				)}
 
 				<Link href='/personal'>
 					<Icon selected={pathname === '/personal'}>
@@ -50,7 +49,10 @@ export function SideBar({ isAdmin }: { isAdmin: boolean }) {
 				</Link>
 			</div>
 			<div className='grid justify-center w-full gap-5 p-5'>
-				<button type="button" onClick={() => signOut({ callbackUrl: 'http://localhost:3000/login' })}>
+				<button
+					type='button'
+					onClick={() => signOut({ callbackUrl: 'http://localhost:3000/login' })}
+				>
 					<Icon>
 						<LogOut />
 					</Icon>

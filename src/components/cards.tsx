@@ -1,26 +1,4 @@
 import { AreaCard } from './area-card';
-import { Card } from './flat-card';
-
-//#region "export patient cards"
-
-export async function PatientCards() {
-	const data = await fetchPatientData();
-	return data.map(({ name, dni }) => <Card name={name} dni={dni} />);
-}
-
-export type Form1 = { name: string; dni: string };
-
-function fetchPatientData() {
-	return new Promise<Form1[]>(resolve => {
-		setTimeout(() => {
-			resolve([
-				{ name: 'Pedro parker', dni: '123.456.789' },
-				{ name: 'd', dni: '001.512.692' },
-				{ name: 'Messi', dni: '051.668.991' },
-			]);
-		}, 1 * 500);
-	});
-}
 
 //#endregion
 

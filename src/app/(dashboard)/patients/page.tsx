@@ -5,7 +5,7 @@ import { Filter } from '@/components/filter';
 import { Title } from '@/components/title';
 import { Suspense, useState } from 'react';
 import { RaceBy } from '@uiball/loaders';
-import { PatientCards } from '@/components/cards';
+import { PatientCards } from '@/components/patientCard';
 
 type Form = { name: string | null; dni: string | null };
 

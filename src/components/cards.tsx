@@ -28,44 +28,44 @@ function fetchPatientData() {
 
 export async function AreaCards() {
 	const data = await fetchAreaData();
-	return data.map(({ areaname, incharge, beds, state }) => (
+	return data.map(({ areaname, incharge, beds, variant }) => (
 		<AreaCard
 			areaname={areaname}
 			incharge={incharge}
 			beds={beds}
-			cstate={state}
+			variant={variant}
 		/>
 	));
 }
 
-export type Form2 = {
+export type Area = {
 	areaname: string;
 	incharge: string;
 	beds: number;
-	state: boolean;
+	variant: 'open' | 'occupied';
 };
 
 function fetchAreaData() {
-	return new Promise<Form2[]>(resolve => {
+	return new Promise<Area[]>(resolve => {
 		setTimeout(() => {
 			resolve([
 				{
 					areaname: 'Quirofano 1',
 					incharge: 'tamagoru',
 					beds: 5,
-					state: true,
+					variant: 'open',
 				},
 				{
 					areaname: 'Guardia',
 					incharge: 'romancitodev',
 					beds: 4,
-					state: false,
+					variant: 'occupied',
 				},
 				{
 					areaname: 'Pediatria',
 					incharge: 'Cenix',
 					beds: 10,
-					state: true,
+					variant: 'open',
 				},
 			]);
 		}, 1 * 500);

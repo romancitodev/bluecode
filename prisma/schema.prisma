@@ -110,7 +110,7 @@ model enfermedades {
 }
 
 model ficha {
-  id_ficha              Int                     @id
+  id_ficha              Int                     @id @default(autoincrement())
   fecha                 DateTime                @db.Date
   grupo_sanguineo       String                  @db.VarChar(10)
   observaciones         String                  @db.Text

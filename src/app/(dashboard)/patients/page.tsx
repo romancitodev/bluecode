@@ -3,7 +3,7 @@
 import { Add } from '@/components/add';
 import { Filter } from '@/components/filter';
 import { Title } from '@/components/title';
-import { Suspense, useCallback } from 'react';
+import { useCallback } from 'react';
 import { RaceBy } from '@uiball/loaders';
 import { PatientCards } from '@/components/patientCards';
 import { useFilter } from '@/hooks/filter';

@@ -1,4 +1,4 @@
-import React, { ChangeEvent } from 'react';
+import React, { ChangeEvent, Ref } from 'react';
 
 type Positions = {
 	left?: boolean;
@@ -8,6 +8,7 @@ type Positions = {
 };
 
 type FilterProps = {
+	value?: string;
 	placeholder: string;
 	onChange: (e: ChangeEvent<HTMLInputElement>) => void;
 } & Positions;
@@ -19,6 +20,7 @@ export function Filter({
 	center,
 	full,
 	onChange,
+	value,
 }: FilterProps) {
 	let positionStyles = [
 		left && 'border-l-2 border-t-2 border-b-2 rounded-l-xl',
@@ -40,6 +42,7 @@ export function Filter({
 			className={style}
 			name='filter'
 			onChange={onChange}
+			value={value}
 		/>
 	);
 }

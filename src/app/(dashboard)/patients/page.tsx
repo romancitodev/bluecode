@@ -3,25 +3,26 @@
 import { Add } from '@/components/add';
 import { Filter } from '@/components/filter';
 import { Title } from '@/components/title';
-import { Suspense, useState } from 'react';
+import { Suspense, useCallback, useRef, useState } from 'react';
 import { RaceBy } from '@uiball/loaders';
 import { PatientCards } from '@/components/patientCard';
+import { useFilter } from '@/hooks/filter';
+import debounce from 'just-debounce-it';
 
 type Form = { name: string | null; dni: string | null };
 
 export default function Patients() {
-	const [filter, setFilter] = useState<Form>({ name: null, dni: null });
-	const [cards, setCards] = useState<Form[]>([]);
+	const { filter, setFilter } = useFilter();
 
-	const handleChange = (
-		e: React.ChangeEvent<HTMLInputElement>,
-		ctx: keyof Form,
-	) => {
-		const { value } = e.target;
-		setFilter(old => {
-			return { ...old, [ctx]: value };
-		});
-	};
+	const debouncedSetFilter = useCallback(
+		debounce((f: string, ctx: keyof Form): void => {
+			setFilter(old => {
+				return { ...old, [ctx]: f };
+			});
+			console.log(filter);
+		}, 1000),
+		[filter],
+	);
 
 	return (
 		<div className='grid gap-10 p-6'>
@@ -37,16 +38,14 @@ export default function Patients() {
 							placeholder='Filter by name'
 							left
 							full
-							onChange={e => {
-								handleChange(e, 'name');
-							}}
+							value={filter.name}
+							onChange={e => debouncedSetFilter(e.target.value, 'name')}
 						/>
 						<Filter
 							placeholder='Filter by DNI'
 							right
-							onChange={e => {
-								handleChange(e, 'dni');
-							}}
+							value={filter?.dni}
+							onChange={e => debouncedSetFilter(e.target.value, 'dni')}
 						/>
 					</div>
 				</div>

@@ -1,6 +1,6 @@
 import { useCallback, useState } from 'react';
 
-type Personal = { name: string; surname: string; dni: string };
+type Personal = { name: string; surname: string; dni: number };
 
 type SimplePersonal = Omit<Personal, 'surname'>;
 

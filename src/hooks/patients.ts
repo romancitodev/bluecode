@@ -1,6 +1,6 @@
 import { useCallback, useState } from 'react';
 
-type Patient = { name: string; surname: string; dni: string };
+type Patient = { name: string; surname: string; dni: number };
 
 type SimplePatient = Omit<Patient, 'surname'>;
 

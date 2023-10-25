@@ -8,10 +8,10 @@ export async function PatientCards() {
 	return data.map(({ name, dni }) => <Card name={name} dni={dni} />);
 }
 
-export type Form1 = { name: string; dni: string };
+export type Form = { name: string; dni: string };
 
 function fetchPatientData() {
-	return new Promise<Form1[]>(resolve => {
+	return new Promise<Form[]>(resolve => {
 		setTimeout(() => {
 			resolve([
 				{ name: 'Pedro parker', dni: '123.456.789' },

@@ -4,8 +4,6 @@ import { PrismaAdapter } from '@auth/prisma-adapter';
 import prisma from '@/prisma/singleton';
 import { Adapter } from 'next-auth/adapters';
 
-type Fields = { f0: number; f1: string };
-
 const authProps: AuthOptions = {
 	providers: [
 		CredentialsProvider({
@@ -27,11 +25,11 @@ const authProps: AuthOptions = {
 				if (!credentials || !credentials.email || !credentials.password)
 					return null;
 				const { email, password } = credentials;
-				const [user, ...rest] = await prisma.$queryRaw<
-					Fields[]
-				>`CALL VerifyLogin(${email}, ${password})`;
-				if (user.f0 === 0) throw new Error(user.f1);
-				return { status: user.f0, role: user.f1 };
+				const user = await prisma.usuario.findUnique({
+					where: { mail: email, clave: password }
+				});
+				if (!user) throw new Error("Email or password invalid. Try again.");
+				return { user };
 			},
 		}),
 	],

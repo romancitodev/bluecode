@@ -4,21 +4,44 @@ import { Title } from '@/components/title';
 import { Add } from '@/components/add';
 import { Filter } from '@/components/filter';
 import RaceBy from '@uiball/loaders/dist/components/RaceBy';
-import { Suspense, useState } from 'react';
-import { PersonalCards } from '@/components/patientsCards';
+import { useCallback, useEffect } from 'react';
+import { PersonalCards } from '@/components/personalCards';
+import { useFilter } from '@/hooks/filter';
+import { usePersonal } from '@/hooks/personal';
+import debounce from 'just-debounce-it';
 
-type Form = { name: string | null; dni: string | null };
+type Form = { name: string; dni: string };
 
 export default function Personal() {
-	const [filter, setFilter] = useState<Form>({ name: null, dni: null });
-	const [cards, setCards] = useState<Form[]>([]);
+	const { filter, setFilter } = useFilter();
+	const { personal, getPersonal, loading } = usePersonal();
 
-	const handleChange = (e: React.ChangeEvent<HTMLInputElement>, ctx: keyof Form) => {
-		const { value } = e.target;
-		setFilter(old => {
-			return { ...old, [ctx]: value }
-		})
+	const handleName = (e: React.ChangeEvent<HTMLInputElement>) => {
+		const { value: name } = e.target;
+		const new_filter = { ...filter, name };
+		setFilter(new_filter);
+		debouncedSetFilter(new_filter);
 	};
+
+	const handleDni = (e: React.ChangeEvent<HTMLInputElement>) => {
+		const { value: dni } = e.target;
+		const new_filter = { ...filter, dni };
+		setFilter(new_filter);
+		debouncedSetFilter(new_filter);
+	};
+
+	const debouncedSetFilter = useCallback(
+		debounce((filter: Form) => {
+			console.log(filter);
+			getPersonal({ ...filter });
+		}, 1000),
+		[],
+	);
+
+	useEffect(() => {
+		getPersonal({ name: '', dni: '' });
+	}, []);
+
 	return (
 		<div className='grid gap-10 p-6'>
 			<Title text='Personal' />
@@ -30,39 +53,19 @@ export default function Personal() {
 					</div>
 
 					<div className='flex h-16'>
-						<Filter
-							placeholder='Filter by name'
-							left
-							onChange={e => {
-								handleChange(e, 'name')
-							}}
-						/>
-						<Filter
-							placeholder='Filter by DNI'
-							full
-							right
-							onChange={e => {
-								handleChange(e, 'dni')
-							}}
-						/>
+						<Filter placeholder='Filter by name' left onChange={handleName} />
+						<Filter placeholder='Filter by DNI' full right onChange={handleDni} />
 					</div>
 				</div>
-				<Suspense
-					fallback={
-						<div className='grid w-full h-[500px] m-auto justify-center place-content-center'>
-							<RaceBy
-								lineWeight={5}
-								speed={1.4}
-								size={500}
-								color='#2A26EA'
-							/>
-						</div>
-					}
-				>
-					<div className='grid w-full h-full gap-y-10'>
-						<PersonalCards />
+				{loading ? (
+					<div className='grid w-full h-[500px] m-auto justify-center place-content-center'>
+						<RaceBy lineWeight={5} speed={1.4} size={500} color='#2A26EA' />
 					</div>
-				</Suspense>
+				) : (
+					<div className='grid w-full h-full gap-y-10'>
+						<PersonalCards personal={personal} />
+					</div>
+				)}
 			</div>
 		</div>
 	);

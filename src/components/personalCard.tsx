@@ -4,7 +4,7 @@ import { Account } from '@/icons/small/account';
 import { Modify } from '@/icons/modify';
 import { Delete } from '@/icons/delete';
 
-type Props = { name: string; dni: string };
+type Props = { name: string; surname: string; dni: string };
 
 export function PersonalCard({ name, dni }: Props) {
 	return (

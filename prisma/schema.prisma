@@ -9,30 +9,12 @@ datasource db {
 
 model accidentes {
   id_accidente        Int                   @id @default(autoincrement())
-  descripcion         String                @db.VarChar(45)
+  descripcion         String                @db.Text
   rel_ficha_accidente rel_ficha_accidente[]
 }
 
-model accounts {
-  id                  String  @id @db.Char(36)
-  type                String  @db.VarChar(255)
-  provider            String  @db.VarChar(255)
-  provider_account_id String  @db.VarChar(255)
-  refresh_token       String? @db.VarChar(255)
-  access_token        String? @db.VarChar(255)
-  expires_at          Int?
-  token_type          String? @db.VarChar(255)
-  scope               String? @db.VarChar(255)
-  id_token            String? @db.Text
-  session_state       String? @db.VarChar(255)
-  user_id             String? @db.Char(36)
-  users               users?  @relation(fields: [user_id], references: [id], onDelete: Cascade, map: "accounts_ibfk_1")
-
-  @@index([user_id], map: "user_id")
-}
-
 model afiliaciones {
-  id_afiliacion     Int                 @id
+  id_afiliacion     Int                 @id @default(autoincrement())
   nombre            String              @db.VarChar(100)
   tipo              String              @db.VarChar(100)
   rel_afil_paciente rel_afil_paciente[]
@@ -61,8 +43,8 @@ model cama {
 
 model datos_usuario {
   dni                  Int                    @id
-  nombre               String                 @db.VarChar(255)
-  apellido             String                 @db.VarChar(255)
+  name                 String                 @map("nombre") @db.VarChar(255)
+  surname              String                 @map("apellido") @db.VarChar(255)
   cuil                 Int                    @unique(map: "cuil_UNIQUE")
   telefono             Int
   est_civil            String                 @db.VarChar(100)
@@ -77,7 +59,7 @@ model datos_usuario {
 
 model deficiencias {
   id_deficiencia        Int                     @id @default(autoincrement())
-  descripcion           String                  @db.VarChar(45)
+  descripcion           String                  @db.Text
   rel_ficha_deficiencia rel_ficha_deficiencia[]
 }
 
@@ -88,7 +70,8 @@ model domicilio_paciente {
   localidad     String        @db.VarChar(100)
   provincia     String        @db.VarChar(100)
   tipo          String        @db.VarChar(100)
-  departamento  String        @db.VarChar(50)
+  departamento  String?       @db.VarChar(50)
+  piso          Int?
   datos_usuario datos_usuario @relation(fields: [dni], references: [dni], onDelete: Cascade, map: "fk_dni4")
 }
 
@@ -110,8 +93,8 @@ model enfermedades {
 }
 
 model ficha {
-  id_ficha              Int                     @id
-  fecha                 DateTime                @db.Date
+  id_ficha              Int                     @id @default(autoincrement())
+  fecha                 DateTime                @default(now()) @db.DateTime(0)
   grupo_sanguineo       String                  @db.VarChar(10)
   observaciones         String                  @db.Text
   rel_ficha_accidente   rel_ficha_accidente[]
@@ -134,8 +117,8 @@ model llamados {
 
 model paciente {
   dni                   Int                     @id
-  nombre                String                  @db.VarChar(250)
-  apellido              String                  @db.VarChar(250)
+  name                  String                  @map("nombre") @db.VarChar(250)
+  surname               String                  @map("apellido") @db.VarChar(250)
   fecha_nacimiento      DateTime                @db.Date
   genero                String                  @db.VarChar(50)
   legajo                String                  @db.VarChar(100)
@@ -148,9 +131,8 @@ model paciente {
 
 model registro {
   id_registro           Int                     @id
-  descripcion           String                  @db.VarChar(100)
-  estado                Int                     @db.TinyInt
-  fecha                 DateTime                @db.Date
+  estado                Int                     @default(0) @db.TinyInt
+  fecha                 DateTime                @default(now()) @db.DateTime(0)
   rel_area_registro     rel_area_registro[]
   rel_registro_paciente rel_registro_paciente[]
   rel_registro_usuario  rel_registro_usuario[]
@@ -202,7 +184,7 @@ model rel_area_usuario {
 
 model rel_ficha_accidente {
   id           Int        @id @default(autoincrement())
-  estado       Int        @db.TinyInt
+  estado       Int        @default(1) @db.TinyInt
   id_accidente Int
   id_ficha     Int
   accidentes   accidentes @relation(fields: [id_accidente], references: [id_accidente], onDelete: NoAction, onUpdate: NoAction, map: "fk_accidente")
@@ -214,7 +196,7 @@ model rel_ficha_accidente {
 
 model rel_ficha_alergia {
   id         Int      @id @default(autoincrement())
-  estado     Boolean
+  estado     Boolean  @default(true)
   id_ficha   Int
   id_alergia Int
   alergias   alergias @relation(fields: [id_alergia], references: [id_alergia], onDelete: NoAction, onUpdate: NoAction, map: "fk_alergia")
@@ -226,7 +208,7 @@ model rel_ficha_alergia {
 
 model rel_ficha_deficiencia {
   id             Int          @id @default(autoincrement())
-  estado         Int          @db.TinyInt
+  estado         Int          @default(1) @db.TinyInt
   id_deficiencia Int
   id_ficha       Int
   deficiencias   deficiencias @relation(fields: [id_deficiencia], references: [id_deficiencia], onDelete: NoAction, onUpdate: NoAction, map: "fk_deficiencia")
@@ -238,7 +220,7 @@ model rel_ficha_deficiencia {
 
 model rel_ficha_enfermedad {
   id            Int          @id @default(autoincrement())
-  estado        Int          @db.TinyInt
+  estado        Int          @default(1) @db.TinyInt
   id_enfermedad Int
   id_ficha      Int
   enfermedades  enfermedades @relation(fields: [id_enfermedad], references: [id_enfermedad], onDelete: NoAction, onUpdate: NoAction, map: "fk_enfermedad")
@@ -261,7 +243,7 @@ model rel_ficha_paciente {
 
 model rel_ficha_vacuna {
   id        Int     @id @default(autoincrement())
-  estado    Int     @db.TinyInt
+  estado    Int     @default(1) @db.TinyInt
   id_vacuna Int
   id_ficha  Int
   ficha     ficha   @relation(fields: [id_ficha], references: [id_ficha], onDelete: Cascade, map: "fk_ficha3")
@@ -343,26 +325,6 @@ model rol {
   rel_usuario_rol rel_usuario_rol[]
 }
 
-model sessions {
-  id            String   @id @db.Char(36)
-  expires       DateTime @db.DateTime(0)
-  session_token String   @unique(map: "sessionToken") @db.VarChar(255)
-  user_id       String?  @db.Char(36)
-  users         users?   @relation(fields: [user_id], references: [id], onDelete: Cascade, map: "sessions_ibfk_1")
-
-  @@index([user_id], map: "user_id")
-}
-
-model users {
-  id             String     @id @db.Char(36)
-  name           String?    @db.VarChar(255)
-  email          String?    @unique(map: "email") @db.VarChar(255)
-  email_verified DateTime?  @db.DateTime(0)
-  image          String?    @db.VarChar(255)
-  accounts       accounts[]
-  sessions       sessions[]
-}
-
 model usuario {
   mail              String              @id @db.VarChar(256)
   clave             String              @db.VarChar(21)
@@ -376,10 +338,4 @@ model vacunas {
   id_vacuna        Int                @id @default(autoincrement())
   descripcion      String             @db.VarChar(45)
   rel_ficha_vacuna rel_ficha_vacuna[]
-}
-
-model verification_tokens {
-  token      String   @id @db.VarChar(255)
-  identifier String   @db.VarChar(255)
-  expires    DateTime @db.DateTime(0)
 }

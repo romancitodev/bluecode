@@ -26,9 +26,9 @@ const authProps: AuthOptions = {
 					return null;
 				const { email, password } = credentials;
 				const user = await prisma.usuario.findUnique({
-					where: { mail: email, clave: password }
+					where: { mail: email, clave: password },
 				});
-				if (!user) throw new Error("Email or password invalid. Try again.");
+				if (!user) throw new Error('Email or password invalid. Try again.');
 				return { user };
 			},
 		}),

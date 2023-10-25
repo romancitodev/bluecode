@@ -16,7 +16,7 @@ async function fetchAreaData({ areaname }: Pick<Area, 'areaname'>) {
 
 export function useAreas() {
 	const [areas, setAreas] = useState<Area[]>([]);
-	const [loading, setLoading] = useState(false);
+	const [loading, setLoading] = useState(true);
 
 	const getAreas = useCallback(async ({ areaname }: Pick<Area, 'areaname'>) => {
 		setLoading(true);

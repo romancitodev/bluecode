@@ -1,8 +1,10 @@
 import { useCallback, useState } from 'react';
 
-type Patient = { name: string; dni: string };
+type Patient = { name: string; surname: string; dni: string };
 
-async function fetchPatientData({ name, dni }: Patient) {
+type SimplePatient = Omit<Patient, 'surname'>;
+
+async function fetchPatientData({ name, dni }: SimplePatient) {
 	const response = await fetch(
 		`http://localhost:3000/api/patients?name=${name}&dni=${dni}`,
 	);
@@ -11,9 +13,9 @@ async function fetchPatientData({ name, dni }: Patient) {
 
 export function usePatients() {
 	const [patients, setPatients] = useState<Patient[]>([]);
-	const [loading, setLoading] = useState(false);
+	const [loading, setLoading] = useState(true);
 
-	const getPatients = useCallback(async ({ name, dni }: Patient) => {
+	const getPatients = useCallback(async ({ name, dni }: SimplePatient) => {
 		setLoading(true);
 		fetchPatientData({ name, dni }).then(({ data }) => {
 			setLoading(false);

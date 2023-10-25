@@ -3,7 +3,7 @@
 import { Add } from '@/components/add';
 import { Filter } from '@/components/filter';
 import { Title } from '@/components/title';
-import { useCallback } from 'react';
+import { useCallback, useEffect } from 'react';
 import { RaceBy } from '@uiball/loaders';
 import { PatientCards } from '@/components/patientCards';
 import { useFilter } from '@/hooks/filter';
@@ -37,6 +37,10 @@ export default function Patients() {
 		}, 1000),
 		[],
 	);
+
+	useEffect(() => {
+		getPatients({ name: '', dni: '' });
+	}, []);
 
 	return (
 		<div className='grid gap-10 p-6'>

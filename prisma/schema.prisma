@@ -43,8 +43,8 @@ model cama {
 
 model datos_usuario {
   dni                  Int                    @id
-  nombre               String                 @db.VarChar(255)
-  apellido             String                 @db.VarChar(255)
+  name                 String                 @map("nombre") @db.VarChar(255)
+  surname              String                 @map("apellido") @db.VarChar(255)
   cuil                 Int                    @unique(map: "cuil_UNIQUE")
   telefono             Int
   est_civil            String                 @db.VarChar(100)
@@ -117,8 +117,8 @@ model llamados {
 
 model paciente {
   dni                   Int                     @id
-  nombre                String                  @db.VarChar(250)
-  apellido              String                  @db.VarChar(250)
+  name                  String                  @map("nombre") @db.VarChar(250)
+  surname               String                  @map("apellido") @db.VarChar(250)
   fecha_nacimiento      DateTime                @db.Date
   genero                String                  @db.VarChar(50)
   legajo                String                  @db.VarChar(100)

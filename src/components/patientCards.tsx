@@ -1,6 +1,6 @@
-import { Card } from './flat-card';
+import { Card } from './patientCard';
 
-type Patient = { name: string; dni: string };
+type Patient = { name: string; surname: string; dni: string };
 type Props = { patients: Patient[] };
 
 export function PatientCards({ patients }: Props) {
@@ -10,5 +10,7 @@ export function PatientCards({ patients }: Props) {
 				Empty patients
 			</p>
 		);
-	return patients.map(({ name, dni }) => <Card name={name} dni={dni} />);
+	return patients.map(({ name, surname, dni }) => (
+		<Card name={name} surname={surname} dni={dni} />
+	));
 }

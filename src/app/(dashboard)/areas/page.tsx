@@ -3,7 +3,7 @@
 import { Title } from '@/components/title';
 import { Add } from '@/components/add';
 import { Filter } from '@/components/filter';
-import { useCallback } from 'react';
+import { useCallback, useEffect } from 'react';
 import { RaceBy } from '@uiball/loaders';
 import { AreaCards } from '@/components/areaCards';
 import { useFilter } from '@/hooks/filter';
@@ -30,6 +30,10 @@ export default function Areas() {
 		}, 1000),
 		[],
 	);
+
+	useEffect(() => {
+		getAreas({ areaname: '' });
+	}, []);
 
 	return (
 		<div className='grid gap-10 p-6'>

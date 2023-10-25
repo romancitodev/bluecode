@@ -17,6 +17,8 @@ export function AreaCards({ areas }: Props) {
 			</p>
 		);
 
+	console.log(areas);
+
 	return areas.map(({ areaname, incharge, beds, variant }) => (
 		<AreaCard
 			areaname={areaname}

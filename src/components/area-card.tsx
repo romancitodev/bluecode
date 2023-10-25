@@ -20,7 +20,7 @@ export function AreaCard({ areaname, incharge, beds, variant }: Props) {
 					<SmallIcon>
 						<AreaState variant={variant} />
 					</SmallIcon>
-					<p className='2xl:w-[150px] xl:w-[140px] lg:w-[130px] md:w-[120px] sm:w-[100px]'>
+					<p className='truncate 2xl:w-[150px] xl:w-[140px] lg:w-[130px] md:w-[120px] sm:w-[100px]'>
 						{areaname}
 					</p>
 				</div>
@@ -28,7 +28,7 @@ export function AreaCard({ areaname, incharge, beds, variant }: Props) {
 					<SmallIcon>
 						<Account />
 					</SmallIcon>
-					<p className='2xl:w-[150px] xl:w-[140px] lg:w-[130px] md:w-[120px] sm:w-[100px]'>
+					<p className='truncate 2xl:w-[150px] xl:w-[140px] lg:w-[130px] md:w-[120px] sm:w-[100px]'>
 						{incharge}
 					</p>
 				</div>

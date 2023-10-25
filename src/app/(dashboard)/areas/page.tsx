@@ -25,7 +25,6 @@ export default function Areas() {
 
 	const debouncedSetFilter = useCallback(
 		debounce((filter: Form) => {
-			console.log(filter);
 			getAreas({ areaname: filter.name });
 		}, 1000),
 		[],

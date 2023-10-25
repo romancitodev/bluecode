@@ -10,7 +10,7 @@ import { useFilter } from '@/hooks/filter';
 import debounce from 'just-debounce-it';
 import { usePatients } from '@/hooks/patients';
 
-type Form = { name: string; dni: string };
+type Form = { name: string; dni: number };
 
 export default function Patients() {
 	const { filter, setFilter } = useFilter();
@@ -25,21 +25,20 @@ export default function Patients() {
 
 	const handleDni = (e: React.ChangeEvent<HTMLInputElement>) => {
 		const { value: dni } = e.target;
-		const new_filter = { ...filter, dni };
+		const new_filter = { ...filter, dni: Number(dni) };
 		setFilter(new_filter);
 		debouncedSetFilter(new_filter);
 	};
 
 	const debouncedSetFilter = useCallback(
 		debounce((filter: Form) => {
-			console.log(filter);
 			getPatients({ ...filter });
 		}, 1000),
 		[],
 	);
 
 	useEffect(() => {
-		getPatients({ name: '', dni: '' });
+		getPatients({ name: '', dni: 0 });
 	}, []);
 
 	return (
@@ -62,7 +61,7 @@ export default function Patients() {
 						<Filter
 							placeholder='Filter by DNI'
 							right
-							value={filter?.dni}
+							value={filter?.dni.toString()}
 							onChange={handleDni}
 						/>
 					</div>

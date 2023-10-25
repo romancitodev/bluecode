@@ -1,6 +1,7 @@
+import { formatDni } from '@/utils/format';
 import { PersonalCard } from './personalCard';
 
-type Personal = { name: string; surname: string; dni: string };
+type Personal = { name: string; surname: string; dni: number };
 type Props = { personal: Personal[] };
 
 export function PersonalCards({ personal }: Props) {
@@ -11,6 +12,6 @@ export function PersonalCards({ personal }: Props) {
 			</p>
 		);
 	return personal.map(({ name, surname, dni }) => (
-		<PersonalCard name={name} surname={surname} dni={dni} />
+		<PersonalCard name={name} surname={surname} dni={formatDni(dni)} />
 	));
 }

@@ -10,7 +10,7 @@ import { useFilter } from '@/hooks/filter';
 import { usePersonal } from '@/hooks/personal';
 import debounce from 'just-debounce-it';
 
-type Form = { name: string; dni: string };
+type Form = { name: string; dni: number };
 
 export default function Personal() {
 	const { filter, setFilter } = useFilter();
@@ -25,21 +25,20 @@ export default function Personal() {
 
 	const handleDni = (e: React.ChangeEvent<HTMLInputElement>) => {
 		const { value: dni } = e.target;
-		const new_filter = { ...filter, dni };
+		const new_filter = { ...filter, dni: Number(dni) };
 		setFilter(new_filter);
 		debouncedSetFilter(new_filter);
 	};
 
 	const debouncedSetFilter = useCallback(
 		debounce((filter: Form) => {
-			console.log(filter);
 			getPersonal({ ...filter });
 		}, 1000),
 		[],
 	);
 
 	useEffect(() => {
-		getPersonal({ name: '', dni: '' });
+		getPersonal({ name: '', dni: 0 });
 	}, []);
 
 	return (

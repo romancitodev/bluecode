@@ -9,7 +9,6 @@ import { PatientCards } from '@/components/patientCards';
 import { useFilter } from '@/hooks/filter';
 import debounce from 'just-debounce-it';
 import { usePatients } from '@/hooks/patients';
-import { Modal } from '@/components/modal';
 import { PatientModal } from '@/components/personModal';
 
 type Form = { name: string; dni: number };

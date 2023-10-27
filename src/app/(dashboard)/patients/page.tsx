@@ -3,18 +3,21 @@
 import { Add } from '@/components/add';
 import { Filter } from '@/components/filter';
 import { Title } from '@/components/title';
-import { useCallback, useEffect } from 'react';
+import { useCallback, useEffect, useState } from 'react';
 import { RaceBy } from '@uiball/loaders';
 import { PatientCards } from '@/components/patientCards';
 import { useFilter } from '@/hooks/filter';
 import debounce from 'just-debounce-it';
 import { usePatients } from '@/hooks/patients';
+import { Modal } from '@/components/modal';
+import { PatientModal } from '@/components/personModal';
 
 type Form = { name: string; dni: number };
 
 export default function Patients() {
 	const { filter, setFilter } = useFilter();
 	const { patients, getPatients, loading } = usePatients();
+	const [isOpen, setIsOpen] = useState(false);
 
 	const handleName = (e: React.ChangeEvent<HTMLInputElement>) => {
 		const { value: name } = e.target;
@@ -42,13 +45,13 @@ export default function Patients() {
 	}, []);
 
 	return (
-		<div className='grid gap-10 p-6'>
+		<div className='grid m-0'>
+			<PatientModal show={isOpen} onClose={() => setIsOpen(!isOpen)} />
 			<Title text='Pacientes' />
-
 			<div className='grid w-full h-full gap-y-10 m-auto px-20'>
 				<div className='flex justify-between w-full'>
 					<div className='flex h-full w-[200px]'>
-						<Add />
+						<Add onClick={() => setIsOpen(!isOpen)} />
 					</div>
 					<div className='flex h-16'>
 						<Filter

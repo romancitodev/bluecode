@@ -11,13 +11,15 @@ export function PatientModal({ show, onClose }: Props) {
 			<Modal.Container>
 				<Modal.Grid>
 					<Modal.Title text='Info Basica' />
-					<Modal.Group>
+					<Modal.Group className = 'w-full h-full grid grid-cols-2 justify-between gap-5'>
 						<Modal.TextInput placeholder='Nombre' />
 						<Modal.TextInput placeholder='Apellido' />
 						<Modal.TextInput placeholder='DNI' />
 						<Modal.TextInput placeholder='Sexo' />
+						<Modal.TextInput placeholder='Domicilio' full />
+						<Modal.TextInput placeholder='Estado Civil' />
+						<Modal.TextInput placeholder='Grupo Sanginueo' />
 					</Modal.Group>
-					<Modal.TextInput placeholder='Domicilio' />
 				</Modal.Grid>
 				<Modal.Grid>
 					<Modal.Title text='Alergias' />

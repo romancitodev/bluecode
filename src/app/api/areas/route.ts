@@ -1,4 +1,5 @@
 import prisma from '@/prisma/singleton';
+import { NextRequest } from 'next/server';
 
 type Area = {
 	areaname: string;
@@ -7,7 +8,10 @@ type Area = {
 	variant: 'open' | 'occupied';
 };
 
-export const GET = async (request: Request) => {
+export const GET = async (request: NextRequest) => {
+	const params = request.nextUrl.searchParams;
+	const name = params.get('name');
+	console.log({ name });
 	const data = await prisma.area.findMany({
 		select: {
 			_count: {
@@ -34,7 +38,6 @@ export const GET = async (request: Request) => {
 									datos_usuario: {
 										select: {
 											name: true,
-
 											surname: true,
 										},
 									},

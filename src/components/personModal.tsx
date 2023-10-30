@@ -9,6 +9,7 @@ export function PatientModal({ show, onClose }: Props) {
 	return (
 		<Modal open={show}>
 			<Modal.Container>
+				<Modal.Grid className='grid overflow-y-auto h-full w-full gap-5 scroll-smooth no-scrollbar' >
 				<Modal.Grid>
 					<Modal.Title text='Info Basica' />
 					<Modal.Group className = 'w-full h-full grid grid-cols-2 justify-between gap-5'>
@@ -29,6 +30,7 @@ export function PatientModal({ show, onClose }: Props) {
 					<Modal.Group>
 						<Modal.TextInput placeholder='Alergia X' />
 					</Modal.Group>
+				</Modal.Grid>
 				</Modal.Grid>
 				<Modal.Group font='bold'>
 					<Modal.Button

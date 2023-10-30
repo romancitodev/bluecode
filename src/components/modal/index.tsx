@@ -15,8 +15,7 @@ type Props = {
 export function Modal({ open, children }: Props) {
 	return !open ? null : (
 		<div
-			className='absolute w-full h-full bg-black bg-opacity-10 flex justify-between
- overflow-hidden'
+			className='absolute w-full h-full bg-black bg-opacity-10 flex justify-between overflow-hidden'
 		>
 			{children}
 		</div>

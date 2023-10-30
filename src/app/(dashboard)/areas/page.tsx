@@ -35,7 +35,7 @@ export default function Areas() {
 	}, []);
 
 	return (
-		<div className='grid gap-10 p-6'>
+		<div className='grid m-0'>
 			<Title text='Areas' />
 
 			<div className='grid w-full h-full gap-y-10 m-auto px-20'>

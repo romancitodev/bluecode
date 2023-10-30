@@ -44,9 +44,10 @@ export default function Patients() {
 	}, []);
 
 	return (
-		<div className='grid m-0'>
+		<div className='grid m-0 overflow-hidden'>
 			<PatientModal show={isOpen} onClose={() => setIsOpen(!isOpen)} />
 			<Title text='Pacientes' />
+
 			<div className='grid w-full h-full gap-y-10 m-auto px-20'>
 				<div className='flex justify-between w-full'>
 					<div className='flex h-full w-[200px]'>
@@ -68,6 +69,7 @@ export default function Patients() {
 						/>
 					</div>
 				</div>
+
 				{loading ? (
 					<div className='grid w-full h-[500px] m-auto justify-center place-content-center'>
 						<RaceBy lineWeight={5} speed={1.4} size={500} color='#2A26EA' />

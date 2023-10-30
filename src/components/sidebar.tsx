@@ -15,7 +15,7 @@ export function SideBar({ isAdmin }: { isAdmin: boolean }) {
 	const pathname = usePathname();
 
 	return (
-		<div className='w-[120px] h-screen flex-col justify-around inline-flex bg-white shadow-lg shadow-zinc-400 rounded-r-2xl'>
+		<div className='overflow-hidden w-[120px] h-screen flex-col justify-around inline-flex bg-white shadow-lg shadow-zinc-400 rounded-r-2xl'>
 			<div className='grid justify-center w-full gap-5 p-5'>
 				<Logo />
 			</div>

@@ -17,9 +17,9 @@ export default function RootLayout({
 		},
 	});
 	return (
-		<div className='flex'>
+		<div className='flex overflow-hidden h-screen w-screen'>
 			<SideBar isAdmin={session?.user.role !== 'Enfermero'} />
-			<div className='h-screen w-screen'>{children}</div>
+			<div className='h-screen w-screen overflow-hidden'>{children}</div>
 		</div>
 	);
 }

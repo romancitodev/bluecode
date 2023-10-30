@@ -23,7 +23,7 @@ export function PatientModal({ show, onClose }: Props) {
 					</Modal.Group>
 				</Modal.Grid>
 				<Modal.Grid>
-					<Modal.Title text='Alergias' />
+					<Modal.Title text='Alergias' />	
 					<Modal.Group>
 						<Modal.TextInput placeholder='Alergia X' />
 					</Modal.Group>

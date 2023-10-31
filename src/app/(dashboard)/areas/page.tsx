@@ -16,7 +16,7 @@ type Form = { name: string };
 export default function Areas() {
 	const { filter, setFilter } = useFilter();
 	const { areas, getAreas, loading } = useAreas();
-	const [ isOpen, setIsOpen ] = useState(false);
+	const [isOpen, setIsOpen] = useState(false);
 
 	const handleName = (e: React.ChangeEvent<HTMLInputElement>) => {
 		const { value: name } = e.target;

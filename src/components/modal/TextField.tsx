@@ -1,5 +1,5 @@
-type Props = { 
-	text: string
+type Props = {
+	text: string;
 };
 
 export function TextField({ text }: Props) {

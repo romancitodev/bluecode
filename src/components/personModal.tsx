@@ -24,7 +24,7 @@ export function PatientModal({ show, onClose }: Props) {
 					</Modal.Grid>
 
 					<Modal.Grid>
-						<Modal.Title text='Afiliación'/>
+						<Modal.Title text='Afiliación' />
 						<Modal.Group className='w-full h-full grid grid-cols-2 justify-between gap-5'>
 							<Modal.TextInput placeholder='Tipo' />
 							<Modal.TextInput placeholder='Nombre' />
@@ -40,7 +40,7 @@ export function PatientModal({ show, onClose }: Props) {
 							<Modal.TextInput placeholder='Alergia X' />
 						</Modal.Group>
 					</Modal.Grid>
-					
+
 					<Modal.Grid>
 						<Modal.Title text='Enfermedades' />
 						<Modal.Group>

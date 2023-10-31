@@ -61,7 +61,7 @@ export default function Personal() {
 						<RaceBy lineWeight={5} speed={1.4} size={500} color='#2A26EA' />
 					</div>
 				) : (
-					<div className='grid w-full h-full gap-y-10'>
+					<div className='grid h-[790px] w-full gap-y-10 no-scrollbar'>
 						<PersonalCards personal={personal} />
 					</div>
 				)}
@@ -70,4 +70,4 @@ export default function Personal() {
 	);
 }
 
-// 
+//

@@ -44,7 +44,7 @@ export default function Patients() {
 	}, []);
 
 	return (
-		<div className='grid m-0 overflow-hidden'>
+		<div className='w-full h-full mx-auto'>
 			<PatientModal show={isOpen} onClose={() => setIsOpen(!isOpen)} />
 			<Title text='Pacientes' />
 

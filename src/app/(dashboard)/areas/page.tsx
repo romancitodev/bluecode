@@ -3,18 +3,20 @@
 import { Title } from '@/components/title';
 import { Add } from '@/components/add';
 import { Filter } from '@/components/filter';
-import { useCallback, useEffect } from 'react';
+import { useCallback, useEffect, useState } from 'react';
 import { RaceBy } from '@uiball/loaders';
 import { AreaCards } from '@/components/areaCards';
 import { useFilter } from '@/hooks/filter';
 import { useAreas } from '@/hooks/areas';
 import debounce from 'just-debounce-it';
+import { AreaModal } from '@/components/areaModal';
 
 type Form = { name: string };
 
 export default function Areas() {
 	const { filter, setFilter } = useFilter();
 	const { areas, getAreas, loading } = useAreas();
+	const [ isOpen, setIsOpen ] = useState(false);
 
 	const handleName = (e: React.ChangeEvent<HTMLInputElement>) => {
 		const { value: name } = e.target;
@@ -36,12 +38,13 @@ export default function Areas() {
 
 	return (
 		<div className='grid m-0'>
+			<AreaModal show={isOpen} onClose={() => setIsOpen(!isOpen)} />
 			<Title text='Areas' />
 
 			<div className='grid w-full h-full gap-y-10 m-auto px-20'>
 				<div className='flex justify-between w-full'>
 					<div className='flex h-full w-[200px]'>
-						<Add />
+						<Add onClick={() => setIsOpen(!isOpen)} />
 					</div>
 					<div className='flex h-16'>
 						<Filter placeholder='Filter by name' left right onChange={handleName} />

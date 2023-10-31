@@ -17,7 +17,7 @@ export function AreaModal({ show, onClose }: Props) {
 							<Modal.TextInput placeholder='Nombre' />
 							<Modal.TextInput placeholder='Cant. Camas' />
 							<Modal.TextInput placeholder='Piso' full />
-							<Modal.LargeTextField placeholder='Descripción' full />
+							<Modal.LargeTextField placeholder='Descripción' />
 						</Modal.Group>
 					</Modal.Grid>
 				</Modal.Grid>

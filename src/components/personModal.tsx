@@ -16,29 +16,123 @@ export function PatientModal({ show, onClose }: Props) {
 							<Modal.TextInput placeholder='Nombre' />
 							<Modal.TextInput placeholder='Apellido' />
 							<Modal.TextInput placeholder='DNI' />
-							<Modal.TextInput placeholder='Sexo' />
+							<Modal.ComboBox
+								placeholder='Sexo'
+								empty='No se encontró el sexo proporcionado'
+								options={[
+									{
+										label: 'Masculino',
+										value: 'masculino',
+									},
+									{
+										label: 'Femenino',
+										value: 'femenino',
+									},
+									{
+										label: 'Por favor',
+										value: 'por favor',
+									},
+									{
+										label: 'Otro',
+										value: 'otro',
+									},
+								]}
+							/>
 							<Modal.TextInput placeholder='Domicilio' full />
-							<Modal.TextInput placeholder='Estado Civil' />
-							<Modal.TextInput placeholder='Grupo Sanguineo' />
+							<Modal.ComboBox
+								placeholder='Estado Civil'
+								empty='No se encontró el estado.'
+								options={[
+									{
+										label: 'Casado',
+										value: 'casado',
+									},
+									{
+										label: 'Soltero',
+										value: 'soltero',
+									},
+								]}
+							/>
+							<Modal.ComboBox
+								placeholder='Grupo Sanguíneo'
+								empty='No se encontró el grupo'
+								options={[
+									{
+										label: 'A+',
+										value: 'a+',
+									},
+									{
+										label: 'A-',
+										value: 'a-',
+									},
+									{
+										label: 'B+',
+										value: 'b+',
+									},
+									{
+										label: 'B-',
+										value: 'b-',
+									},
+									{
+										label: 'AB+',
+										value: 'ab+',
+									},
+									{
+										label: 'AB-',
+										value: 'ab-',
+									},
+									{
+										label: 'O+',
+										value: 'o+',
+									},
+									{
+										label: 'O-',
+										value: 'o-',
+									},
+								]}
+							/>
 						</Modal.Group>
 					</Modal.Grid>
 
 					<Modal.Grid>
 						<Modal.Title text='Afiliación' />
 						<Modal.Group className='w-full h-full grid grid-cols-2 justify-between gap-5'>
-							<Modal.TextInput placeholder='Tipo' />
+							<Modal.ComboBox
+								placeholder='Tipo'
+								empty='No se encontró el tipo.'
+								options={[
+									{
+										label: 'Prepaga',
+										value: 'prepaga',
+									},
+									{
+										label: 'Obra social',
+										value: 'obra social',
+									},
+									{
+										label: 'Ninguno',
+										value: 'ninguno',
+									},
+								]}
+							/>
 							<Modal.TextInput placeholder='Nombre' />
 						</Modal.Group>
 					</Modal.Grid>
 
 					<Modal.Grid>
 						<Modal.Title text='Alergias' />
-						<Modal.Group>
-							<Modal.TextInput placeholder='Alergia X' />
-						</Modal.Group>
-						<Modal.Group>
-							<Modal.TextInput placeholder='Alergia X' />
-						</Modal.Group>
+						<Modal.TagInput
+							placeholder='Alergias'
+							options={[
+								{ label: 'Polen', value: 'polen' },
+								{ label: 'Nueces', value: 'nueces' },
+								{ label: 'Mariscos', value: 'mariscos' },
+								{ label: 'Leche', value: 'leche' },
+								{ label: 'Polvo', value: 'polvo' },
+								{ label: 'Gatos', value: 'gatos' },
+							]}
+							empty='No se encontraron alergias'
+						/>
 					</Modal.Grid>
 
 					<Modal.Grid>

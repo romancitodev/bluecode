@@ -7,7 +7,8 @@ import { LargeTextField } from './LargeTextField';
 import { TextInput } from './TextInput';
 import { Group } from './Group';
 import { Title } from './Title';
-import { TagInput } from './TagInput';
+import { TagInput } from './TagSearcher';
+import { ComboBox } from './Combo';
 
 type Props = {
 	open: boolean;
@@ -30,3 +31,4 @@ Modal.TextInput = TextInput;
 Modal.Group = Group;
 Modal.Title = Title;
 Modal.TagInput = TagInput;
+Modal.ComboBox = ComboBox;

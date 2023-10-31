@@ -4,7 +4,7 @@ type Props = {
 
 export function Button({ text, onClick, className }: Props) {
 	return (
-		<button onClick={onClick} className={className}>
+		<button onClick={onClick} className={className} type='button'>
 			{text}
 		</button>
 	);

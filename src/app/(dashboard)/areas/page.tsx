@@ -41,7 +41,7 @@ export default function Areas() {
 			<AreaModal show={isOpen} onClose={() => setIsOpen(!isOpen)} />
 			<Title text='Areas' />
 
-			<div className='grid w-full h-full gap-y-10 m-auto px-20'>
+			<div className='grid max-h-[820px] w-full h-full gap-y-10 m-auto px-20'>
 				<div className='flex justify-between w-full'>
 					<div className='flex h-full w-[200px]'>
 						<Add onClick={() => setIsOpen(!isOpen)} />

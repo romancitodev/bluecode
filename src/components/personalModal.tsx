@@ -18,8 +18,38 @@ export function PersonalModal({ show, onClose }: Props) {
 							<Modal.TextInput placeholder='DNI' />
 							<Modal.TextInput placeholder='Fecha de nacimiento' />
 							<Modal.TextInput placeholder='Domicilio' full />
-							<Modal.TextInput placeholder='Género' />
-							<Modal.TextInput placeholder='Estado civil' />
+							<Modal.ComboBox
+								placeholder='Sexo'
+								empty='No se encontró el sexo proporcionado'
+								options={[
+									{
+										label: 'Masculino',
+										value: 'masculino',
+									},
+									{
+										label: 'Femenino',
+										value: 'femenino',
+									},
+									{
+										label: 'Otro',
+										value: 'otro',
+									},
+								]}
+							/>
+							<Modal.ComboBox
+								placeholder='Estado Civil'
+								empty='No se encontró el estado.'
+								options={[
+									{
+										label: 'Casado',
+										value: 'casado',
+									},
+									{
+										label: 'Soltero',
+										value: 'soltero',
+									},
+								]}
+							/>
 							<Modal.TextInput placeholder='Teléfono' />
 							<Modal.TextInput placeholder='Fecha inicio' />
 							<Modal.TextInput placeholder='CUIT' />
@@ -28,12 +58,28 @@ export function PersonalModal({ show, onClose }: Props) {
 
 					<Modal.Grid>
 						<Modal.Title text='Areas' />
-						<Modal.Group>
-							<Modal.TextInput placeholder='Area' />
-						</Modal.Group>
-						<Modal.Group>
-							<Modal.TextInput placeholder='Area X' />
-						</Modal.Group>
+						<Modal.TagInput
+							placeholder='Areas'
+							empty='No se encontró el area.'
+							options={[
+								{
+									label: 'Electro',
+									value: 'electro',
+								},
+								{
+									label: 'Resonancia',
+									value: 'resonancia',
+								},
+								{
+									label: 'Cardiologia',
+									value: 'cardiologia',
+								},
+								{
+									label: 'Guardia',
+									value: 'guardia',
+								},
+							]}
+						/>
 					</Modal.Grid>
 				</Modal.Grid>
 

@@ -1,4 +1,7 @@
 import { Modal } from './modal';
+import illnesses from '@/mocks/illnesses.json';
+import allergies from '@/mocks/allergies.json';
+import vacuums from '@/mocks/vacuums.json';
 
 type Props = {
 	show: boolean;
@@ -27,10 +30,6 @@ export function PatientModal({ show, onClose }: Props) {
 									{
 										label: 'Femenino',
 										value: 'femenino',
-									},
-									{
-										label: 'Por favor',
-										value: 'por favor',
 									},
 									{
 										label: 'Otro',
@@ -123,35 +122,28 @@ export function PatientModal({ show, onClose }: Props) {
 						<Modal.Title text='Alergias' />
 						<Modal.TagInput
 							placeholder='Alergias'
-							options={[
-								{ label: 'Polen', value: 'polen' },
-								{ label: 'Nueces', value: 'nueces' },
-								{ label: 'Mariscos', value: 'mariscos' },
-								{ label: 'Leche', value: 'leche' },
-								{ label: 'Polvo', value: 'polvo' },
-								{ label: 'Gatos', value: 'gatos' },
-							]}
+							options={allergies}
 							empty='No se encontraron alergias'
 						/>
 					</Modal.Grid>
 
 					<Modal.Grid>
 						<Modal.Title text='Enfermedades' />
-						<Modal.Group>
-							<Modal.TextInput placeholder='Enfermedad X' />
-						</Modal.Group>
-						<Modal.Group>
-							<Modal.TextInput placeholder='Enfermedad X' />
-						</Modal.Group>
+						<Modal.TagInput
+							empty='Not found'
+							placeholder='Enfermedades`'
+							options={illnesses}
+						/>
 					</Modal.Grid>
 
 					<Modal.Grid>
 						<Modal.Title text='Vacunas' />
 						<Modal.Group>
-							<Modal.TextInput placeholder='Vacunas X' />
-						</Modal.Group>
-						<Modal.Group>
-							<Modal.TextInput placeholder='Vacunas X' />
+							<Modal.TagInput
+								placeholder='Vacuna'
+								empty='No se encontró la vacuna.'
+								options={vacuums}
+							/>
 						</Modal.Group>
 					</Modal.Grid>
 

@@ -7,7 +7,7 @@ type Props = {
 
 export function TagList({ tags, setTags }: Props) {
 	return (
-		<div className='h-[50px] justify-start grid grid-flow-col no-scrollbar gap-5 overflow-x-auto'>
+		<div className='h-max w-full content-center justify-stretch flex flex-wrap gap-5'>
 			{[...tags].map(t => (
 				<Tag
 					value={t}

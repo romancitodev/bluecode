@@ -54,11 +54,11 @@ export function ComboBox({ placeholder, options, empty, onChange }: Props) {
 					<ChevronsUpDown className='ml-2 h-4 w-4 shrink-0 opacity-80' />
 				</Button>
 			</PopoverTrigger>
-			<PopoverContent className='w-full p-0'>
-				<Command className='bg-neutral-100/25 py-2 px-4 transition-all w-full'>
+			<PopoverContent className='w-max p-0'>
+				<Command className='bg-neutral-100/25 py-2 px-4 transition-all max-h-72 overflow-y h-max'>
 					<CommandInput placeholder={placeholder} />
 					<CommandEmpty>{empty}</CommandEmpty>
-					<CommandGroup>
+					<CommandGroup className='overflow-y-auto scrollbar-thin scrollbar-thumb-gray-300 h-max'>
 						{options.map(option => (
 							<CommandItem
 								className='text-[16px]'

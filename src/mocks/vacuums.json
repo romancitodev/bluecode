@@ -1,0 +1,66 @@
+[
+	{ "label": "BCG", "value": "bcg" },
+	{ "label": "Hepatitis B", "value": "hepatitis b" },
+	{
+		"label": "Neumococo conjugada 13 valente",
+		"value": "neumococo conjugada 13 valente"
+	},
+	{
+		"label": "Quíntuple / Pentavalente IPV",
+		"value": "quíntuple / pentavalente ipv"
+	},
+	{ "label": "Rotavirus", "value": "rotavirus" },
+	{ "label": "Meningococo ACYW", "value": "meningococo acyw" },
+	{ "label": "Antigripal", "value": "antigripal" },
+	{ "label": "Hepatitis A", "value": "hepatitis a" },
+	{ "label": "Triple Viral", "value": "triple viral" },
+	{ "label": "Varicela", "value": "varicela" },
+	{ "label": "Triple Bacteriana Celular", "value": "triple bacteriana celular" },
+	{
+		"label": "Triple Bacteriana Acelular",
+		"value": "triple bacteriana acelular"
+	},
+	{ "label": "Virus del Papiloma Humano", "value": "virus del papiloma humano" },
+	{ "label": "Fiebre Amarilla", "value": "fiebre amarilla" },
+	{ "label": "Sputnik V", "value": "sputnik v" },
+	{
+		"label": "Sputnik LIGHT",
+		"value": "sputnik light"
+	},
+	{
+		"label": "Covishield",
+		"value": "covishield"
+	},
+	{
+		"label": "Sinopharm",
+		"value": "sinopharm"
+	},
+	{
+		"label": "AstraZeneca",
+		"value": "astrazeneca"
+	},
+	{
+		"label": "Moderna",
+		"value": "moderna"
+	},
+	{
+		"label": "Convidecia",
+		"value": "convidecia"
+	},
+	{
+		"label": "Comirnaty",
+		"value": "comirnaty"
+	},
+	{
+		"label": "Comirnaty pediátrica",
+		"value": "comirnaty pediátrica"
+	},
+	{
+		"label": "Comirnaty Bivariante",
+		"value": "comirnaty bivariante"
+	},
+	{
+		"label": "Moderna bivariante",
+		"value": "moderna bivariante"
+	}
+]

@@ -22,7 +22,7 @@ export function DatePicker({ placeholder }: Props) {
 	return (
 		<Popover>
 			<PopoverTrigger asChild>
-				<Button className='border-2 border-zinc-400 rounded-xl bg-neutral-300 bg-opacity-25 hover:border-neutral-600 hover:bg-neutral-300 hover:bg-opacity-25 py-2 px-4 text-[19px] justify-start h-[48.5px] text-[#000000] transition-all'>
+				<Button className='border-2 border-zinc-400 rounded-xl bg-neutral-300 bg-opacity-25 hover:border-neutral-600 hover:bg-neutral-300 hover:bg-opacity-25 py-2 px-4 text-[19px] justify-start h-[48.5px] text-[#000000] font-[400] transition-all'>
 					{date ? (
 						format(date, 'PPP')
 					) : (

@@ -18,6 +18,7 @@ export function PatientModal({ show, onClose }: Props) {
 						<Modal.Group className='w-full h-full grid grid-cols-2 justify-between gap-5'>
 							<Modal.TextInput placeholder='Nombre' />
 							<Modal.TextInput placeholder='Apellido' />
+							<Modal.DatePicker placeholder='Fecha de nacimiento' />
 							<Modal.TextInput placeholder='DNI' />
 							<Modal.ComboBox
 								placeholder='Sexo'
@@ -37,7 +38,6 @@ export function PatientModal({ show, onClose }: Props) {
 									},
 								]}
 							/>
-							<Modal.TextInput placeholder='Domicilio' full />
 							<Modal.ComboBox
 								placeholder='Estado Civil'
 								empty='No se encontró el estado.'
@@ -52,6 +52,7 @@ export function PatientModal({ show, onClose }: Props) {
 									},
 								]}
 							/>
+							<Modal.TextInput placeholder='Domicilio' full />
 							<Modal.ComboBox
 								placeholder='Grupo Sanguíneo'
 								empty='No se encontró el grupo'

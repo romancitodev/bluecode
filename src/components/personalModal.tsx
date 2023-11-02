@@ -16,7 +16,7 @@ export function PersonalModal({ show, onClose }: Props) {
 							<Modal.TextInput placeholder='Nombre' />
 							<Modal.TextInput placeholder='Apellido' />
 							<Modal.TextInput placeholder='DNI' />
-							<Modal.TextInput placeholder='Fecha de nacimiento' />
+							<Modal.DatePicker placeholder='Fecha de nacimiento' />
 							<Modal.TextInput placeholder='Domicilio' full />
 							<Modal.ComboBox
 								placeholder='Sexo'
@@ -51,7 +51,7 @@ export function PersonalModal({ show, onClose }: Props) {
 								]}
 							/>
 							<Modal.TextInput placeholder='Teléfono' />
-							<Modal.TextInput placeholder='Fecha inicio' />
+							<Modal.DatePicker placeholder='Fecha inicio' />
 							<Modal.TextInput placeholder='CUIT' />
 						</Modal.Group>
 					</Modal.Grid>

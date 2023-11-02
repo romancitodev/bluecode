@@ -9,6 +9,7 @@ import { Group } from './Group';
 import { Title } from './Title';
 import { TagInput } from './TagSearcher';
 import { ComboBox } from './Combo';
+import { DatePicker } from './DatePicker';
 
 type Props = {
 	open: boolean;
@@ -32,3 +33,4 @@ Modal.Group = Group;
 Modal.Title = Title;
 Modal.TagInput = TagInput;
 Modal.ComboBox = ComboBox;
+Modal.DatePicker = DatePicker;

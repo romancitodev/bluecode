@@ -41,7 +41,7 @@ export default function Areas() {
 			<AreaModal show={isOpen} onClose={() => setIsOpen(!isOpen)} />
 			<Title text='Areas' />
 
-			<div className='grid max-h-[820px] w-full h-full gap-y-10 m-auto px-20'>
+			<div className='grid max-h-[820px] min-[1600px]:max-h-[820px] w-full h-full gap-y-10 m-auto px-20'>
 				<div className='flex justify-between w-full'>
 					<div className='flex h-full w-[200px]'>
 						<Add onClick={() => setIsOpen(!isOpen)} />
@@ -55,7 +55,7 @@ export default function Areas() {
 						<RaceBy lineWeight={5} speed={1.4} size={500} color='#2A26EA' />
 					</div>
 				) : (
-					<div className='grid w-full h-full gap-y-8'>
+					<div className='grid w-full h-full gap-y-10 no-scrollbar overflow-y-auto'>
 						<AreaCards areas={areas} />
 					</div>
 				)}

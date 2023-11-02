@@ -48,7 +48,7 @@ export default function Personal() {
 			<PersonalModal show={isOpen} onClose={() => setIsOpen(!isOpen)} />
 			<Title text='Personal' />
 
-			<div className='grid max-h-[820px] w-full h-full gap-y-10 m-auto px-20'>
+			<div className='grid md:max-h-[600px] min-[1600px]:max-h-[820px] w-full h-full gap-y-10 m-auto px-20'>
 				<div className='flex justify-between w-full'>
 					<div className='flex h-full w-[200px]'>
 						<Add onClick={() => setIsOpen(!isOpen)} />

@@ -2,7 +2,6 @@
 
 import * as React from 'react';
 import { format } from 'date-fns';
-import { Calendar as CalendarIcon } from 'lucide-react';
 
 import { Button } from '@/components/ui/button';
 import { Calendar } from '@/components/ui/calendar';
@@ -11,13 +10,32 @@ import {
 	PopoverContent,
 	PopoverTrigger,
 } from '@/components/ui/popover';
+import { ComboBox } from './Combo';
+import {
+	Select,
+	SelectContent,
+	SelectItem,
+	SelectTrigger,
+	SelectValue,
+} from '../ui/select';
+
+type DateRange = {
+	start?: Date;
+	end?: Date;
+};
 
 type Props = {
 	placeholder?: string;
+	max_day?: Date;
+	min_day?: Date;
 };
 
-export function DatePicker({ placeholder }: Props) {
+export function DatePicker({ placeholder, min_day, max_day }: Props) {
 	const [date, setDate] = React.useState<Date>();
+	const currentYear = new Date().getFullYear();
+	const minYear = min_day ? min_day.getFullYear() : 1930;
+	const maxYear = max_day ? max_day.getFullYear() + 1 : currentYear + 1000;
+	const numElements = Math.max(0, maxYear - minYear);
 
 	return (
 		<Popover>
@@ -30,8 +48,37 @@ export function DatePicker({ placeholder }: Props) {
 					)}
 				</Button>
 			</PopoverTrigger>
-			<PopoverContent className='w-auto p-0'>
-				<Calendar mode='single' selected={date} onSelect={setDate} initialFocus />
+			<PopoverContent align='start' className='flex w-auto flex-col space-y-2 p-2'>
+				<Select
+					onValueChange={value => {
+						setDate(
+							new Date(parseInt(value), date?.getMonth() || 0, date?.getDate() || 1),
+						);
+					}}
+				>
+					<SelectTrigger>
+						<SelectValue placeholder='Select' />
+					</SelectTrigger>
+					<SelectContent position='popper' className='h-full max-h-72'>
+						{Array(numElements)
+							.fill(0)
+							.map((_, i) => {
+								const date = (min_day || new Date('1930-01-01')).getFullYear() + i + 1;
+								return <SelectItem value={`${date}`}>{date}</SelectItem>;
+							})
+							.toReversed()}
+					</SelectContent>
+				</Select>
+				<Calendar
+					mode='single'
+					selected={date}
+					onSelect={setDate}
+					disabled={day =>
+						day < (min_day || new Date('1930-01-01')) ||
+						(max_day && day > max_day) ||
+						false
+					}
+				/>
 			</PopoverContent>
 		</Popover>
 	);

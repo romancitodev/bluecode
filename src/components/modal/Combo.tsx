@@ -27,10 +27,17 @@ type Props = {
 	placeholder: string;
 	options: Selectable[];
 	empty?: string;
+	className?: string;
 	onChange?: (e: string) => void;
 };
 
-export function ComboBox({ placeholder, options, empty, onChange }: Props) {
+export function ComboBox({
+	placeholder,
+	options,
+	empty,
+	onChange,
+	className,
+}: Props) {
 	const [open, setOpen] = React.useState(false);
 	const [value, setValue] = React.useState('');
 
@@ -43,10 +50,13 @@ export function ComboBox({ placeholder, options, empty, onChange }: Props) {
 					variant='outline'
 					role='combobox'
 					aria-expanded={open}
-					className={cn(
-						'text-[19px] w-full h-full rounded-xl bg-neutral-300/25 border-zinc-400 border-2 justify-between',
-						!isSelected ? 'text-slate-600/50' : '',
-					)}
+					className={
+						className ??
+						cn(
+							'text-[19px] w-full h-full rounded-xl bg-neutral-300/25 border-zinc-400 border-2 justify-between',
+							!isSelected ? 'text-slate-600/50' : '',
+						)
+					}
 				>
 					{value
 						? options.find(option => option.value === value)?.label

@@ -1,3 +1,4 @@
+import { substractYears } from '@/utils/date';
 import { Modal } from './modal';
 
 type Props = {
@@ -16,7 +17,10 @@ export function PersonalModal({ show, onClose }: Props) {
 							<Modal.TextInput placeholder='Nombre' />
 							<Modal.TextInput placeholder='Apellido' />
 							<Modal.TextInput placeholder='DNI' />
-							<Modal.DatePicker placeholder='Fecha de nacimiento' />
+							<Modal.DatePicker
+								placeholder='Fecha de nacimiento'
+								max_day={substractYears(15)}
+							/>
 							<Modal.TextInput placeholder='Domicilio' full />
 							<Modal.ComboBox
 								placeholder='Sexo'
@@ -51,7 +55,7 @@ export function PersonalModal({ show, onClose }: Props) {
 								]}
 							/>
 							<Modal.TextInput placeholder='Teléfono' />
-							<Modal.DatePicker placeholder='Fecha inicio' />
+							<Modal.DatePicker placeholder='Fecha inicio' max_day={new Date()} />
 							<Modal.TextInput placeholder='CUIT' />
 						</Modal.Group>
 					</Modal.Grid>

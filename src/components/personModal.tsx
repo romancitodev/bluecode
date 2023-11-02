@@ -18,7 +18,10 @@ export function PatientModal({ show, onClose }: Props) {
 						<Modal.Group className='w-full h-full grid grid-cols-2 justify-between gap-5'>
 							<Modal.TextInput placeholder='Nombre' />
 							<Modal.TextInput placeholder='Apellido' />
-							<Modal.DatePicker placeholder='Fecha de nacimiento' />
+							<Modal.DatePicker
+								placeholder='Fecha de nacimiento'
+								max_day={new Date()}
+							/>
 							<Modal.TextInput placeholder='DNI' />
 							<Modal.ComboBox
 								placeholder='Sexo'

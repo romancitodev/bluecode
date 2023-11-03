@@ -30,7 +30,7 @@ type Props = {
 	min_day?: Date;
 };
 
-export function DatePicker({ placeholder, min_day, max_day }: Props) {
+export function DatePicker({ placeholder, min_day, max_day, ...props }: Props) {
 	const [date, setDate] = React.useState<Date>();
 	const currentYear = new Date().getFullYear();
 	const minYear = min_day ? min_day.getFullYear() : 1930;
@@ -57,7 +57,7 @@ export function DatePicker({ placeholder, min_day, max_day }: Props) {
 					}}
 				>
 					<SelectTrigger>
-						<SelectValue placeholder='Select' />
+						<SelectValue placeholder='Select' {...props} />
 					</SelectTrigger>
 					<SelectContent position='popper' className='h-full max-h-72'>
 						{Array(numElements)

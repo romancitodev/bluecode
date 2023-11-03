@@ -15,7 +15,7 @@ type Props = {
 	empty: string;
 };
 
-export function TagInput({ placeholder, options, empty }: Props) {
+export function TagInput({ placeholder, options, empty, ...props }: Props) {
 	const [tags, setTags] = useState<Set<string>>(new Set());
 	console.log(tags);
 	return (
@@ -26,7 +26,7 @@ export function TagInput({ placeholder, options, empty }: Props) {
 				empty={empty}
 				onChange={e => setTags(new Set([...tags, e]))}
 			/>
-			<TagList tags={tags} setTags={setTags} />
+			<TagList tags={tags} setTags={setTags} {...props} />
 		</div>
 	);
 }

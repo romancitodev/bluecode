@@ -37,6 +37,7 @@ export function ComboBox({
 	empty,
 	onChange,
 	className,
+	...props
 }: Props) {
 	const [open, setOpen] = React.useState(false);
 	const [value, setValue] = React.useState('');
@@ -66,7 +67,7 @@ export function ComboBox({
 			</PopoverTrigger>
 			<PopoverContent className='w-max p-0'>
 				<Command className='bg-neutral-100/25 py-2 px-4 transition-all max-h-72 overflow-y h-max'>
-					<CommandInput placeholder={placeholder} />
+					<CommandInput placeholder={placeholder} {...props} />
 					<CommandEmpty>{empty}</CommandEmpty>
 					<CommandGroup className='overflow-y-auto scrollbar-thin scrollbar-thumb-gray-300 h-max'>
 						{options.map(option => (
@@ -76,9 +77,9 @@ export function ComboBox({
 								value={option.value}
 								onSelect={currentValue => {
 									setValue(currentValue === value ? '' : currentValue);
-									if (onChange) {
-										onChange(currentValue);
-									}
+									// if (onChange) {
+									// 	onChange(currentValue);
+									// }
 									setOpen(false);
 								}}
 							>

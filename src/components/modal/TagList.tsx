@@ -5,9 +5,12 @@ type Props = {
 	setTags: (e: Set<string>) => void;
 };
 
-export function TagList({ tags, setTags }: Props) {
+export function TagList({ tags, setTags, ...props }: Props) {
 	return (
-		<div className='h-max w-full content-center justify-stretch flex flex-wrap gap-5'>
+		<div
+			className='h-max w-full content-center justify-stretch flex flex-wrap gap-5'
+			{...props}
+		>
 			{[...tags].map(t => (
 				<Tag
 					value={t}

@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { FormHTMLAttributes } from 'react';
 import { Button } from './Button';
 import { Container } from './Container';
 import { Grid } from './Grid';
@@ -14,10 +14,13 @@ import { DatePicker } from './DatePicker';
 type Props = {
 	open: boolean;
 	children: React.ReactNode;
-};
-export function Modal({ open, children }: Props) {
+} & FormHTMLAttributes<HTMLFormElement>;
+export function Modal({ open, children, ...props }: Props) {
 	return !open ? null : (
-		<form className='fixed w-full h-full bg-black/10 grid justify-center content-center backdrop-blur-sm'>
+		<form
+			className='fixed w-full h-full bg-black/10 grid justify-center content-center backdrop-blur-sm'
+			{...props}
+		>
 			{children}
 		</form>
 	);

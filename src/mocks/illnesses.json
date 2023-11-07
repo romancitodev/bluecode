@@ -1,51 +1,77 @@
 [
-    { "label": "Asma", "value": "asma" },
-    { "label": "Diabetes tipo 2", "value": "diabetes tipo 2" },
-    { "label": "Hipertensión", "value": "hipertensión" },
-    { "label": "Cáncer de mama", "value": "cáncer de mama" },
-    { "label": "Artritis reumatoide", "value": "artritis reumatoide" },
-    { "label": "Enfermedad de Alzheimer", "value": "enfermedad de alzheimer" },
-    { "label": "VIH/SIDA", "value": "vih/sida" },
-    { "label": "Hepatitis C", "value": "hepatitis c" },
-    { "label": "Parkinson", "value": "parkinson" },
-    { "label": "Esclerosis múltiple", "value": "esclerosis múltiple" },
-    { "label": "Enfermedad de Crohn", "value": "enfermedad de crohn" },
-    { "label": "Leucemia", "value": "leucemia" },
-    { "label": "Fibromialgia", "value": "fibromialgia" },
-    { "label": "Epilepsia", "value": "epilepsia" },
-    { "label": "Enfermedad de Huntington", "value": "enfermedad de huntington" },
-    { "label": "Esquizofrenia", "value": "esquizofrenia" },
-    { "label": "Enfermedad de Parkinson", "value": "enfermedad de parkinson" },
-    { "label": "EPOC (Enfermedad Pulmonar Obstructiva Crónica)", "value": "epoc (enfermedad pulmonar obstructiva crónica)" },
-    { "label": "Osteoporosis", "value": "osteoporosis" },
-    { "label": "Lupus eritematoso sistémico", "value": "lupus eritematoso sistémico" },
-    { "label": "Síndrome de Down", "value": "síndrome de down" },
-    { "label": "Síndrome de Asperger", "value": "síndrome de asperger" },
-    { "label": "Síndrome de Tourette", "value": "síndrome de tourette" },
-    { "label": "Esclerosis lateral amiotrófica", "value": "esclerosis lateral amiotrófica" },
-    { "label": "Enfermedad de Wilson", "value": "enfermedad de wilson" },
-    { "label": "Síndrome de Marfan", "value": "síndrome de marfan" },
-    { "label": "Síndrome de Rett", "value": "síndrome de rett" },
-    { "label": "Síndrome de Crouzon", "value": "síndrome de crouzon" },
-    { "label": "Síndrome de Prader-Willi", "value": "síndrome de prader-willi" },
-    { "label": "Esclerodermia", "value": "esclerodermia" },
-    { "label": "Síndrome de Ehlers-Danlos", "value": "síndrome de ehlers-danlos" },
-    { "label": "Enfermedad de Von Willebrand", "value": "enfermedad de von willebrand" },
-    { "label": "Hemofilia", "value": "hemofilia" },
-    { "label": "Trastorno del espectro autista", "value": "trastorno del espectro autista" },
-    { "label": "Síndrome de Sjögren", "value": "síndrome de sjögren" },
-    { "label": "Síndrome de Prune Belly", "value": "síndrome de prune belly" },
-    { "label": "Síndrome de Moebius", "value": "síndrome de moebius" },
-    { "label": "Síndrome de Ondine", "value": "síndrome de ondine" },
-    { "label": "Síndrome de Stendhal", "value": "síndrome de stendhal" },
-    { "label": "Síndrome de Waardenburg", "value": "síndrome de waardenburg" },
-    { "label": "Síndrome de Gerstmann-Sträussler-Scheinker", "value": "síndrome de gerstmann-sträussler-scheinker" },
-    { "label": "Síndrome de Miller-Dieker", "value": "síndrome de miller-dieker" },
-    { "label": "Síndrome de Proteus", "value": "síndrome de proteus" },
-    { "label": "Síndrome de Pantothenate Kinase-Associated Neurodegeneration (PKAN)", "value": "síndrome de pantothenate kinase-associated neurodegeneration (pkan)" },
-    { "label": "Síndrome de Wobbly Hedgehog", "value": "síndrome de wobbly hedgehog" },
-    { "label": "Síndrome de Incontinentia Pigmenti", "value": "síndrome de incontinentia pigmenti" },
-    { "label": "Síndrome de Buerger", "value": "síndrome de buerger" },
-    { "label": "Síndrome de Turner", "value": "síndrome de turner" }
-  ]
-  
+	{ "label": "Asma", "value": "asma" },
+	{ "label": "Diabetes tipo 2", "value": "diabetes tipo 2" },
+	{ "label": "Hipertensión", "value": "hipertensión" },
+	{ "label": "Cáncer de mama", "value": "cáncer de mama" },
+	{ "label": "Artritis reumatoide", "value": "artritis reumatoide" },
+	{ "label": "Enfermedad de Alzheimer", "value": "enfermedad de alzheimer" },
+	{ "label": "VIH/SIDA", "value": "vih/sida" },
+	{ "label": "Hepatitis C", "value": "hepatitis c" },
+	{ "label": "Parkinson", "value": "parkinson" },
+	{ "label": "Esclerosis múltiple", "value": "esclerosis múltiple" },
+	{ "label": "Enfermedad de Crohn", "value": "enfermedad de crohn" },
+	{ "label": "Leucemia", "value": "leucemia" },
+	{ "label": "Fibromialgia", "value": "fibromialgia" },
+	{ "label": "Epilepsia", "value": "epilepsia" },
+	{ "label": "Enfermedad de Huntington", "value": "enfermedad de huntington" },
+	{ "label": "Esquizofrenia", "value": "esquizofrenia" },
+	{ "label": "Enfermedad de Parkinson", "value": "enfermedad de parkinson" },
+	{
+		"label": "EPOC (Enfermedad Pulmonar Obstructiva Crónica)",
+		"value": "epoc (enfermedad pulmonar obstructiva crónica)"
+	},
+	{ "label": "Osteoporosis", "value": "osteoporosis" },
+	{
+		"label": "Lupus eritematoso sistémico",
+		"value": "lupus eritematoso sistémico"
+	},
+	{ "label": "Síndrome de Down", "value": "síndrome de down" },
+	{ "label": "Síndrome de Asperger", "value": "síndrome de asperger" },
+	{ "label": "Síndrome de Tourette", "value": "síndrome de tourette" },
+	{
+		"label": "Esclerosis lateral amiotrófica",
+		"value": "esclerosis lateral amiotrófica"
+	},
+	{ "label": "Enfermedad de Wilson", "value": "enfermedad de wilson" },
+	{ "label": "Síndrome de Marfan", "value": "síndrome de marfan" },
+	{ "label": "Síndrome de Rett", "value": "síndrome de rett" },
+	{ "label": "Síndrome de Crouzon", "value": "síndrome de crouzon" },
+	{ "label": "Síndrome de Prader-Willi", "value": "síndrome de prader-willi" },
+	{ "label": "Esclerodermia", "value": "esclerodermia" },
+	{ "label": "Síndrome de Ehlers-Danlos", "value": "síndrome de ehlers-danlos" },
+	{
+		"label": "Enfermedad de Von Willebrand",
+		"value": "enfermedad de von willebrand"
+	},
+	{ "label": "Hemofilia", "value": "hemofilia" },
+	{
+		"label": "Trastorno del espectro autista",
+		"value": "trastorno del espectro autista"
+	},
+	{ "label": "Síndrome de Sjögren", "value": "síndrome de sjögren" },
+	{ "label": "Síndrome de Prune Belly", "value": "síndrome de prune belly" },
+	{ "label": "Síndrome de Moebius", "value": "síndrome de moebius" },
+	{ "label": "Síndrome de Ondine", "value": "síndrome de ondine" },
+	{ "label": "Síndrome de Stendhal", "value": "síndrome de stendhal" },
+	{ "label": "Síndrome de Waardenburg", "value": "síndrome de waardenburg" },
+	{
+		"label": "Síndrome de Gerstmann-Sträussler-Scheinker",
+		"value": "síndrome de gerstmann-sträussler-scheinker"
+	},
+	{ "label": "Síndrome de Miller-Dieker", "value": "síndrome de miller-dieker" },
+	{ "label": "Síndrome de Proteus", "value": "síndrome de proteus" },
+	{
+		"label": "Síndrome de Pantothenate Kinase-Associated Neurodegeneration (PKAN)",
+		"value": "síndrome de pantothenate kinase-associated neurodegeneration (pkan)"
+	},
+	{
+		"label": "Síndrome de Wobbly Hedgehog",
+		"value": "síndrome de wobbly hedgehog"
+	},
+	{
+		"label": "Síndrome de Incontinentia Pigmenti",
+		"value": "síndrome de incontinentia pigmenti"
+	},
+	{ "label": "Síndrome de Buerger", "value": "síndrome de buerger" },
+	{ "label": "Síndrome de Turner", "value": "síndrome de turner" }
+]

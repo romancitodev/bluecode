@@ -17,6 +17,11 @@ import {
 	PopoverContent,
 	PopoverTrigger,
 } from '@/components/ui/popover';
+import {
+	FieldValues,
+	UseControllerProps,
+	useController,
+} from 'react-hook-form';
 
 type Selectable = {
 	label: string;
@@ -29,16 +34,24 @@ type Props = {
 	empty?: string;
 	className?: string;
 	onCustomSet?: (e: string) => void;
+	span?: boolean;
 };
 
-export function ComboBox({
-	placeholder,
-	options,
-	empty,
-	onCustomSet,
-	className,
-	...props
-}: Props) {
+export const ControlledComboBox = <T extends FieldValues>(
+	props: UseControllerProps<T> & Props,
+) => {
+	const {
+		placeholder,
+		options,
+		empty,
+		onCustomSet,
+		className,
+		span,
+		...controllerProps
+	} = props;
+	const {
+		field: { onChange },
+	} = useController(controllerProps);
 	const [open, setOpen] = React.useState(false);
 	const [value, setValue] = React.useState('');
 	const isSelected = options.find(option => option.value === value);
@@ -55,6 +68,7 @@ export function ComboBox({
 						cn(
 							'text-[19px] w-full h-full rounded-xl bg-neutral-300/25 border-zinc-400 border-2 justify-between',
 							!isSelected ? 'text-slate-600/50' : '',
+							span ? 'col-span-full' : 'col-span-1/2',
 						)
 					}
 				>
@@ -76,6 +90,7 @@ export function ComboBox({
 								value={option.value}
 								onSelect={currentValue => {
 									setValue(currentValue === value ? '' : currentValue);
+									onChange(currentValue);
 									if (onCustomSet) {
 										onCustomSet(currentValue);
 									}
@@ -96,4 +111,4 @@ export function ComboBox({
 			</PopoverContent>
 		</Popover>
 	);
-}
+};

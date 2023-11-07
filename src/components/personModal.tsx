@@ -3,7 +3,7 @@ import illnesses from '@/mocks/illnesses.json';
 import allergies from '@/mocks/allergies.json';
 import vacuums from '@/mocks/vacuums.json';
 import { PatientForm, PatientFormData } from '@/app/schemas/patients-form';
-import { FieldValues, useForm } from 'react-hook-form';
+import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 type Props = {
 	show: boolean;
@@ -12,24 +12,24 @@ type Props = {
 
 export function PatientModal({ show, onClose }: Props) {
 	const {
-		register,
+		control,
+		watch,
 		handleSubmit,
 		formState: { errors },
-		trigger,
+		register,
 	} = useForm<PatientFormData>({ resolver: zodResolver(PatientForm) });
 
 	const onSubmit = async (data: PatientFormData) => {
-		console.log('hola');
-
-		// const result = await fetch('http://localhost:3000/api/patients', {
-		// 	method: 'POST',
-		// 	body: JSON.stringify(data),
-		// });
-
-		// const json = await result.json();
+		const result = await fetch('http://localhost:3000/api/patients', {
+			method: 'POST',
+			body: JSON.stringify(data),
+		});
+		const json = await result.json();
+		console.log(json);
 	};
 
-	const onError = () => {
+	const onError = (errors: any) => {
+		console.log(errors);
 		console.log('an error occurred');
 	};
 
@@ -40,16 +40,31 @@ export function PatientModal({ show, onClose }: Props) {
 					<Modal.Grid>
 						<Modal.Title text='Info Básica' />
 						<Modal.Group className='w-full h-full grid grid-cols-2 justify-between gap-5'>
-							<Modal.TextInput placeholder='Nombre' {...register('name')} />
-							<Modal.TextInput placeholder='Apellido' {...register('surname')} />
+							<Modal.TextInput
+								placeholder='Nombre'
+								error={errors.name?.message}
+								{...register('name')}
+							/>
+							<Modal.TextInput
+								placeholder='Apellido'
+								error={errors.surname?.message}
+								{...register('surname')}
+							/>
 							<Modal.DatePicker
 								placeholder='Fecha de nacimiento'
 								max_day={new Date()}
-								{...register('birth')}
+								name='birth'
+								control={control}
+								error={errors.birth?.message}
 							/>
-							<Modal.TextInput placeholder='DNI' {...register('dni')} />
-							<Modal.ComboBox
-								// {...register('gender')}
+							<Modal.TextInput
+								placeholder='DNI'
+								{...register('dni')}
+								error={errors.dni?.message}
+							/>
+							<Modal.ControlledCombo
+								control={control}
+								name='gender'
 								placeholder='Sexo'
 								empty='No se encontró el sexo proporcionado'
 								options={[
@@ -67,8 +82,9 @@ export function PatientModal({ show, onClose }: Props) {
 									},
 								]}
 							/>
-							<Modal.ComboBox
-								// {...register('civil_status')}
+							<Modal.ControlledCombo
+								control={control}
+								name='civil_status'
 								placeholder='Estado Civil'
 								empty='No se encontró el estado.'
 								options={[
@@ -82,9 +98,9 @@ export function PatientModal({ show, onClose }: Props) {
 									},
 								]}
 							/>
-							<Modal.TextInput placeholder='Domicilio' full {...register('address')} />
-							<Modal.ComboBox
-								// {...register('blood_type')}
+							<Modal.ControlledCombo
+								control={control}
+								name='blood_type'
 								placeholder='Grupo Sanguíneo'
 								empty='No se encontró el grupo'
 								options={[
@@ -122,13 +138,75 @@ export function PatientModal({ show, onClose }: Props) {
 									},
 								]}
 							/>
+							<Modal.TextInput
+								placeholder='Telefono'
+								block
+								{...register('phone')}
+								error={errors.phone?.message}
+							/>
 						</Modal.Group>
 					</Modal.Grid>
 
 					<Modal.Grid>
-						<Modal.Title text='Afiliación' {...register('affiliation_type')} />
+						<Modal.Grid>
+							<Modal.Title text='Detalles del domicilio' />
+							<Modal.Group className='w-full h-full grid grid-cols-2 justify-between gap-5'>
+								<Modal.TextInput
+									placeholder='Domicilio'
+									{...register('street')}
+									error={errors.street?.message}
+								/>
+								<Modal.TextInput
+									placeholder='Numeracion'
+									{...register('street_number')}
+									error={errors.street_number?.message}
+								/>
+								<Modal.TextInput
+									placeholder='Localidad'
+									{...register('neighborhood')}
+									error={errors.neighborhood?.message}
+								/>
+								<Modal.TextInput
+									placeholder='Provincia'
+									{...register('province')}
+									error={errors.province?.message}
+								/>
+								<Modal.ControlledCombo
+									control={control}
+									span
+									name='house_type'
+									placeholder='Casa / Departamento'
+									empty='No se encontró el tipo de hogar'
+									options={[
+										{
+											label: 'Casa',
+											value: 'casa',
+										},
+										{
+											label: 'Departamento',
+											value: 'departamento',
+										},
+									]}
+								/>
+								<Modal.TextInput
+									placeholder='Piso del departamento'
+									{...register('department_annotation')}
+									error={errors.department_annotation?.message}
+								/>
+								<Modal.TextInput
+									placeholder='Numero de departamento'
+									{...register('department_number')}
+									error={errors.department_number?.message}
+								/>
+							</Modal.Group>
+						</Modal.Grid>
+					</Modal.Grid>
+					<Modal.Grid>
+						<Modal.Title text='Afiliación' />
 						<Modal.Group className='w-full h-full grid grid-cols-2 justify-between gap-5'>
-							<Modal.ComboBox
+							<Modal.ControlledCombo
+								control={control}
+								name='affiliation_type'
 								placeholder='Tipo'
 								empty='No se encontró el tipo.'
 								options={[
@@ -148,6 +226,7 @@ export function PatientModal({ show, onClose }: Props) {
 							/>
 							<Modal.TextInput
 								placeholder='Nombre'
+								error={errors.affiliation_name?.message}
 								{...register('affiliation_name')}
 							/>
 						</Modal.Group>
@@ -156,7 +235,8 @@ export function PatientModal({ show, onClose }: Props) {
 					<Modal.Grid>
 						<Modal.Title text='Alergias' />
 						<Modal.TagInput
-							{...register('allergies')}
+							control={control}
+							name='allergies'
 							placeholder='Alergias'
 							options={allergies}
 							empty='No se encontraron alergias'
@@ -166,7 +246,8 @@ export function PatientModal({ show, onClose }: Props) {
 					<Modal.Grid>
 						<Modal.Title text='Enfermedades' />
 						<Modal.TagInput
-							{...register('illnesses')}
+							control={control}
+							name='illnesses'
 							empty='Not found'
 							placeholder='Enfermedades`'
 							options={illnesses}
@@ -177,7 +258,8 @@ export function PatientModal({ show, onClose }: Props) {
 						<Modal.Title text='Vacunas' />
 						<Modal.Group>
 							<Modal.TagInput
-								{...register('vacuums')}
+								control={control}
+								name='vacuums'
 								placeholder='Vacuna'
 								empty='No se encontró la vacuna.'
 								options={vacuums}
@@ -187,8 +269,8 @@ export function PatientModal({ show, onClose }: Props) {
 
 					<Modal.Grid>
 						<Modal.Title text='Accidentes' />
-						<Modal.Group className='w-full h-full grid grid-cols-2 justify-between'>
-							<Modal.LargeTextField
+						<Modal.Group className='w-full h-full grid'>
+							<Modal.LargeTextInput
 								placeholder='Accidentes ocurridos'
 								{...register('accidents')}
 							/>
@@ -197,8 +279,8 @@ export function PatientModal({ show, onClose }: Props) {
 
 					<Modal.Grid>
 						<Modal.Title text='Antecedentes' />
-						<Modal.Group className='w-full h-full grid grid-cols-2 justify-between'>
-							<Modal.LargeTextField
+						<Modal.Group className='w-full h-full grid'>
+							<Modal.LargeTextInput
 								placeholder='Antecedentes'
 								{...register('antecedents')}
 							/>
@@ -207,27 +289,47 @@ export function PatientModal({ show, onClose }: Props) {
 
 					<Modal.Grid>
 						<Modal.Title text='Observaciones' />
-						<Modal.Group className='w-full h-full grid grid-cols-2 justify-between'>
-							<Modal.LargeTextField
+						<Modal.Group className='w-full h-full grid'>
+							<Modal.LargeTextInput
 								placeholder='Observaciones'
 								{...register('observations')}
 							/>
 						</Modal.Group>
 					</Modal.Grid>
+					<Modal.Grid>
+						<Modal.Title text='Area' />
+						<Modal.Group className='w-full h-full grid grid-cols-2 justify-between gap-5'>
+							<Modal.ControlledCombo
+								control={control}
+								name='area'
+								placeholder='Area a ocupar'
+								empty='No se encontró el area.'
+								options={[
+									{
+										label: 'Ginecologia',
+										value: 'ginecologia',
+									},
+									{
+										label: 'Urgencias',
+										value: 'urgencias',
+									},
+								]}
+							/>
+							<Modal.TextInput
+								placeholder='Usa cama? 1 / 0'
+								error={errors.bed_number?.message}
+								{...register('bed_number')}
+							/>
+						</Modal.Group>
+					</Modal.Grid>
 				</Modal.Grid>
-
 				<Modal.Group font='bold'>
 					<Modal.Button
 						text='Close'
 						className='text-red-500 text-[24px]'
 						onClick={onClose}
 					/>
-					<Modal.Button
-						onClick={() => trigger()}
-						type='submit'
-						text='Create'
-						className='text-[24px]'
-					/>
+					<Modal.Button type='submit' text='Create' className='text-[24px]' />
 				</Modal.Group>
 			</Modal.Container>
 		</Modal>

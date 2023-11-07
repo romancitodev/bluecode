@@ -10,7 +10,6 @@ import {
 	PopoverContent,
 	PopoverTrigger,
 } from '@/components/ui/popover';
-import { ComboBox } from './Combo';
 import {
 	Select,
 	SelectContent,
@@ -18,19 +17,27 @@ import {
 	SelectTrigger,
 	SelectValue,
 } from '../ui/select';
-
-type DateRange = {
-	start?: Date;
-	end?: Date;
-};
+import {
+	FieldValues,
+	UseControllerProps,
+	useController,
+} from 'react-hook-form';
+import { ErrorMessage } from './ErrorMessage';
 
 type Props = {
-	placeholder?: string;
 	max_day?: Date;
 	min_day?: Date;
-};
+	error?: string;
+} & React.ButtonHTMLAttributes<HTMLButtonElement>;
 
-export function DatePicker({ placeholder, min_day, max_day, ...props }: Props) {
+export const DatePicker = <T extends FieldValues>(
+	props: UseControllerProps<T> & Props,
+) => {
+	const { placeholder, min_day, max_day, error, ...controllerProps } = props;
+	const {
+		field: { onChange },
+	} = useController(controllerProps);
+
 	const [date, setDate] = React.useState<Date>();
 	const currentYear = new Date().getFullYear();
 	const minYear = min_day ? min_day.getFullYear() : 1930;
@@ -40,20 +47,30 @@ export function DatePicker({ placeholder, min_day, max_day, ...props }: Props) {
 	return (
 		<Popover>
 			<PopoverTrigger asChild>
-				<Button className='border-2 border-zinc-400 rounded-xl bg-neutral-300 bg-opacity-25 hover:border-neutral-600 hover:bg-neutral-300 hover:bg-opacity-25 py-2 px-4 text-[19px] justify-start h-[48.5px] text-[#000000] font-[400] transition-all'>
-					{date ? (
-						format(date, 'PPP')
-					) : (
-						<span className='text-[#9ca3af]'>{placeholder}</span>
-					)}
-				</Button>
+				<div>
+					<Button
+						type='button'
+						className='w-full border-2 border-zinc-400 rounded-xl bg-neutral-300 bg-opacity-25 hover:border-neutral-600 hover:bg-neutral-300 hover:bg-opacity-25 py-2 px-4 text-[19px] justify-start h-[48.5px] text-[#000000] font-[400] transition-all'
+					>
+						{date ? (
+							format(date, 'dd-MM-yyyy')
+						) : (
+							<span className='text-[#9ca3af]'>{placeholder}</span>
+						)}
+					</Button>
+					<ErrorMessage text={error} />
+				</div>
 			</PopoverTrigger>
 			<PopoverContent align='start' className='flex w-auto flex-col space-y-2 p-2'>
 				<Select
 					onValueChange={value => {
-						setDate(
-							new Date(parseInt(value), date?.getMonth() || 0, date?.getDate() || 1),
+						const parsedDate = new Date(
+							parseInt(value),
+							date?.getMonth() || 0,
+							date?.getDate() || 1,
 						);
+						setDate(parsedDate);
+						onChange(parsedDate);
 					}}
 				>
 					<SelectTrigger>
@@ -72,7 +89,10 @@ export function DatePicker({ placeholder, min_day, max_day, ...props }: Props) {
 				<Calendar
 					mode='single'
 					selected={date}
-					onSelect={setDate}
+					onSelect={d => {
+						setDate(d);
+						onChange(d);
+					}}
 					disabled={day =>
 						day < (min_day || new Date('1930-01-01')) ||
 						(max_day && day > max_day) ||
@@ -82,4 +102,4 @@ export function DatePicker({ placeholder, min_day, max_day, ...props }: Props) {
 			</PopoverContent>
 		</Popover>
 	);
-}
+};

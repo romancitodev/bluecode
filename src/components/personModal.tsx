@@ -165,7 +165,7 @@ export function PatientModal({ show, onClose }: Props) {
 									error={errors.street?.message}
 								/>
 								<Modal.TextInput
-									placeholder='Numeracion'
+									placeholder='Numeración'
 									{...register('street_number')}
 									error={errors.street_number?.message}
 								/>
@@ -181,7 +181,6 @@ export function PatientModal({ show, onClose }: Props) {
 								/>
 								<Modal.ControlledCombo
 									control={control}
-									span
 									name='house_type'
 									placeholder='Casa / Departamento'
 									empty='No se encontró el tipo de hogar'

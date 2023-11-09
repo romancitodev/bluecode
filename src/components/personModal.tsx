@@ -13,11 +13,16 @@ type Props = {
 export function PatientModal({ show, onClose }: Props) {
 	const {
 		control,
-		watch,
+		reset,
 		handleSubmit,
 		formState: { errors },
 		register,
 	} = useForm<PatientFormData>({ resolver: zodResolver(PatientForm) });
+
+	const handleClose = (e) => {
+		onClose(e);
+		reset()
+	}
 
 	const onSubmit = async (data: PatientFormData) => {
 		const result = await fetch('http://localhost:3000/api/patients', {
@@ -67,6 +72,7 @@ export function PatientModal({ show, onClose }: Props) {
 								name='gender'
 								placeholder='Sexo'
 								empty='No se encontró el sexo proporcionado'
+								error={errors.gender?.message}
 								options={[
 									{
 										label: 'Masculino',
@@ -87,6 +93,7 @@ export function PatientModal({ show, onClose }: Props) {
 								name='civil_status'
 								placeholder='Estado Civil'
 								empty='No se encontró el estado.'
+								error={errors.civil_status?.message}
 								options={[
 									{
 										label: 'Casado',
@@ -103,6 +110,7 @@ export function PatientModal({ show, onClose }: Props) {
 								name='blood_type'
 								placeholder='Grupo Sanguíneo'
 								empty='No se encontró el grupo'
+								error={errors.blood_type?.message}
 								options={[
 									{
 										label: 'A+',
@@ -327,7 +335,7 @@ export function PatientModal({ show, onClose }: Props) {
 					<Modal.Button
 						text='Close'
 						className='text-red-500 text-[24px]'
-						onClick={onClose}
+						onClick={handleClose}
 					/>
 					<Modal.Button type='submit' text='Create' className='text-[24px]' />
 				</Modal.Group>

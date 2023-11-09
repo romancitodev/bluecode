@@ -20,28 +20,28 @@ export const PatientForm = z
 		civil_status: z.string().refine(args => STATUS.includes(args.toLowerCase()), {
 			message: 'Invalid civil status',
 		}),
-		street: z.string(),
-		street_number: z.coerce.number(),
-		neighborhood: z.string(),
-		province: z.string(),
-		house_type: z.string(),
+		street: z.string().min(1),
+		street_number: z.coerce.number().min(1),
+		neighborhood: z.string().min(1),
+		province: z.string().min(1),
+		house_type: z.string().min(1),
 		department_annotation: z.string().default('-'),
 		department_number: z.coerce.number().nullable().default(null),
-		area: z.string(),
+		area: z.string().min(1),
 		bed_number: z.coerce.number().default(0),
 		blood_type: z
 			.string()
 			.refine(args => BLOOD_GROUPS.includes(args.toLowerCase()), {
 				message: 'Invalid blood type',
 			}),
-		affiliation_type: z.string(),
-		affiliation_name: z.string(),
+		affiliation_type: z.string().min(1),
+		affiliation_name: z.string().min(1),
 		allergies: z.array(z.string()).optional(),
 		illnesses: z.array(z.string()).optional(),
 		vacuums: z.array(z.string()).optional(),
-		accidents: z.string(),
-		antecedents: z.string(),
-		observations: z.string(),
+		accidents: z.string().min(1),
+		antecedents: z.string().min(1),
+		observations: z.string().min(1),
 	})
 	.superRefine((data, ctx) => {
 		if (data.house_type === 'departamento' && data.department_annotation === '') {

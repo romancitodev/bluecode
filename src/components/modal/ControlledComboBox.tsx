@@ -22,6 +22,7 @@ import {
 	UseControllerProps,
 	useController,
 } from 'react-hook-form';
+import { ErrorMessage } from './ErrorMessage';
 
 type Selectable = {
 	label: string;
@@ -33,6 +34,7 @@ type Props = {
 	options: Selectable[];
 	empty?: string;
 	className?: string;
+	error?: string;
 	onCustomSet?: (e: string) => void;
 	span?: boolean;
 };
@@ -47,6 +49,7 @@ export const ControlledComboBox = <T extends FieldValues>(
 		onCustomSet,
 		className,
 		span,
+		error,
 		...controllerProps
 	} = props;
 	const {
@@ -59,17 +62,20 @@ export const ControlledComboBox = <T extends FieldValues>(
 	return (
 		<Popover open={open} onOpenChange={setOpen}>
 			<PopoverTrigger asChild>
+				<div className='w-full h-max'>
 				<Button
+					type='button'
 					variant='outline'
 					role='combobox'
 					aria-expanded={open}
 					className={
-						className ??
-						cn(
-							'text-[19px] w-full h-full rounded-xl bg-neutral-300/25 border-zinc-400 border-2 justify-between',
-							!isSelected ? 'text-slate-600/50' : '',
-							span ? 'col-span-full' : 'col-span-1/2',
-						)
+						`text-[19px] w-full h-full rounded-xl bg-neutral-300/25 border-zinc-400 border-2 justify-between
+						${
+							span? 'col-span-full' : 'col-span-1'
+						}
+						${
+							!isSelected? 'text-slate-600/50' : ''
+						}`
 					}
 				>
 					{value
@@ -77,6 +83,8 @@ export const ControlledComboBox = <T extends FieldValues>(
 						: placeholder}
 					<ChevronsUpDown className='ml-2 h-4 w-4 shrink-0 opacity-80' />
 				</Button>
+				<ErrorMessage text={ error } />
+				</div>
 			</PopoverTrigger>
 			<PopoverContent className='w-max p-0'>
 				<Command className='bg-neutral-100/25 py-2 px-4 transition-all max-h-72 overflow-y h-max'>

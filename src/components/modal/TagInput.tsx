@@ -40,7 +40,7 @@ export const TagInput = <T extends FieldValues>(
 		});
 	};
 	return (
-		<div className='grid w-[800px] gap-5 overflow-x-auto'>
+		<div className='grid w-full gap-5 overflow-x-auto'>
 			<ComboBox
 				placeholder={placeholder}
 				options={options}

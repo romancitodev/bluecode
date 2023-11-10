@@ -213,7 +213,7 @@ export function PersonalModal({ show, onClose }: Props) {
 					<Modal.Button
 						text='Close'
 						className='text-red-500 text-[24px]'
-						onClick={onClose}
+						onClick={handleClose}
 					/>
 					<Modal.Button
 						text='Create'

@@ -149,6 +149,7 @@ export function PersonalModal({ show, onClose }: Props) {
 									error={errors.province?.message}
 								/>
 								<Modal.ControlledCombo
+									span
 									control={control}
 									name='house_type'
 									placeholder='Casa / Departamento'

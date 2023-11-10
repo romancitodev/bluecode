@@ -62,28 +62,21 @@ export const ControlledComboBox = <T extends FieldValues>(
 	return (
 		<Popover open={open} onOpenChange={setOpen}>
 			<PopoverTrigger asChild>
-				<div className='w-full h-max'>
-				<Button
-					type='button'
-					variant='outline'
-					role='combobox'
-					aria-expanded={open}
-					className={
-						`text-[19px] w-full h-full rounded-xl bg-neutral-300/25 border-zinc-400 border-2 justify-between
-						${
-							span? 'col-span-full' : 'col-span-1'
-						}
-						${
-							!isSelected? 'text-slate-600/50' : ''
-						}`
-					}
-				>
-					{value
-						? options.find(option => option.value === value)?.label
-						: placeholder}
-					<ChevronsUpDown className='ml-2 h-4 w-4 shrink-0 opacity-80' />
-				</Button>
-				<ErrorMessage text={ error } />
+				<div className={cn('w-full h-max', span ? 'col-span-full' : 'col-span-1')}>
+					<Button
+						type='button'
+						variant='outline'
+						role='combobox'
+						aria-expanded={open}
+						className={`text-[19px] w-full h-full rounded-xl bg-neutral-300/25 border-zinc-400 border-2 justify-between
+						${!isSelected ? 'text-slate-600/50' : ''}`}
+					>
+						{value
+							? options.find(option => option.value === value)?.label
+							: placeholder}
+						<ChevronsUpDown className='ml-2 h-4 w-4 shrink-0 opacity-80' />
+					</Button>
+					<ErrorMessage text={error} />
 				</div>
 			</PopoverTrigger>
 			<PopoverContent className='w-max p-0'>

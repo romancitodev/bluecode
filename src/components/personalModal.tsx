@@ -46,21 +46,21 @@ export function PersonalModal({ show, onClose }: Props) {
 						<Modal.Group className='w-full h-full grid grid-cols-2 justify-between gap-5'>
 							<Modal.TextInput
 								placeholder='Nombre'
-								name='name'
 								error={errors.name?.message}
+								{...register('name')}
 							/>
 							<Modal.TextInput
 								placeholder='Apellido'
-								name='surname'
+								{...register('surname')}
 								error={errors.surname?.message}
 							/>
 							<Modal.TextInput
 								placeholder='DNI'
-								name='dni'
+								{...register('dni')}
 								error={errors.dni?.message}
 							/>
 							<Modal.DatePicker
-								name='birth'
+								{...register('birth')}
 								control={control}
 								placeholder='Fecha de nacimiento'
 								max_day={new Date()}
@@ -68,7 +68,7 @@ export function PersonalModal({ show, onClose }: Props) {
 							/>
 							<Modal.ControlledCombo
 								control={control}
-								name='gender'
+								{...register('gender')}
 								placeholder='Sexo'
 								empty='No se encontró el sexo proporcionado'
 								error={errors.gender?.message}
@@ -89,7 +89,7 @@ export function PersonalModal({ show, onClose }: Props) {
 							/>
 							<Modal.ControlledCombo
 								control={control}
-								name='civil_status'
+								{...register('civil_status')}
 								placeholder='Estado Civil'
 								empty='No se encontró el estado.'
 								error={errors.civil_status?.message}
@@ -106,19 +106,19 @@ export function PersonalModal({ show, onClose }: Props) {
 							/>
 							<Modal.TextInput
 								placeholder='Teléfono'
-								name='phone'
+								{...register('phone')}
 								error={errors.phone?.message}
 							/>
 							<Modal.DatePicker
-								name='date_start'
 								control={control}
+								{...register('date_start')}
 								placeholder='Fecha inicio'
 								max_day={new Date()}
 								error={errors.date_start?.message}
 							/>
 							<Modal.TextInput
 								placeholder='CUIT'
-								name='cuit'
+								{...register('cuit')}
 								error={errors.cuit?.message}
 							/>
 						</Modal.Group>
@@ -183,7 +183,7 @@ export function PersonalModal({ show, onClose }: Props) {
 						<Modal.Title text='Areas' />
 						<Modal.TagInput
 							control={control}
-							name='area'
+							{...register('area')}
 							placeholder='Areas'
 							empty='No se encontró el area.'
 							error={errors.area?.message}

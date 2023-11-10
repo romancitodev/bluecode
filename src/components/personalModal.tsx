@@ -130,6 +130,7 @@ export function PersonalModal({ show, onClose }: Props) {
 							<Modal.Group className='w-full h-full grid grid-cols-2 justify-between gap-5'>
 								<Modal.TextInput
 									placeholder='Domicilio'
+									block
 									{...register('street')}
 									error={errors.street?.message}
 								/>
@@ -149,7 +150,6 @@ export function PersonalModal({ show, onClose }: Props) {
 									error={errors.province?.message}
 								/>
 								<Modal.ControlledCombo
-									span
 									control={control}
 									name='house_type'
 									placeholder='Casa / Departamento'

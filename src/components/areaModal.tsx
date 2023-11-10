@@ -1,4 +1,7 @@
 import { Modal } from './modal';
+import { AreaForm, AreaFormData } from '@/app/schemas/area-form';
+import { useForm } from 'react-hook-form';
+import { zodResolver } from '@hookform/resolvers/zod';
 
 type Props = {
 	show: boolean;
@@ -6,18 +9,55 @@ type Props = {
 };
 
 export function AreaModal({ show, onClose }: Props) {
+	const {
+		control,
+		reset,
+		handleSubmit,
+		formState: { errors },
+		register,
+	} = useForm<AreaFormData>({ resolver: zodResolver(AreaForm) });
+
+	const handleClose = (e) => {
+		onClose(e);
+		reset();
+	}
+
+	const onSubmit = async (data: AreaFormData) => {
+		const result = await fetch('http://localhost:3000/api/patients', {
+			method: 'POST',
+			body: JSON.stringify(data),
+		});
+		const json = await result.json();
+		console.log(json);
+	};
+
+	const onError = (errors: any) => {
+		console.log(errors);
+		console.log('an error occurred');
+	};
+	
 	return (
-		<Modal open={show}>
+		<Modal open={show} onSubmit={handleSubmit(onSubmit, onError)}>
 			<Modal.Container>
 				<Modal.Grid className='grid overflow-y-auto h-full w-full gap-5 scroll-smooth no-scrollbar'>
 					<Modal.Grid>
 						<Modal.Title text='Información del área' />
 
 						<Modal.Group className='w-full h-full grid grid-cols-2 justify-between gap-5'>
-							<Modal.TextInput placeholder='Nombre' />
-							<Modal.TextInput placeholder='Cant. Camas' />
-							<Modal.TextInput placeholder='Piso' full />
-							<Modal.LargeTextInput placeholder='Descripción' />
+							<Modal.TextInput
+								placeholder='Nombre'
+								block
+								error={errors.name?.message}
+								{...register('name')}
+							/>
+							<Modal.TextInput
+								placeholder='Cant. Camas'
+								{...register('beds')}
+							/>
+							<Modal.TextInput
+								placeholder='Piso'
+								{...register('floor')}
+							/>
 						</Modal.Group>
 					</Modal.Grid>
 				</Modal.Grid>
@@ -27,7 +67,11 @@ export function AreaModal({ show, onClose }: Props) {
 						className='text-red-500 text-[24px]'
 						onClick={onClose}
 					/>
-					<Modal.Button text='Create' className='text-[24px]' />
+					<Modal.Button
+						text='Create'
+						className='text-[24px]'
+						type='submit'
+					/>
 				</Modal.Group>
 			</Modal.Container>
 		</Modal>

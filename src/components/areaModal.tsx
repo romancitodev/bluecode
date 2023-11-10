@@ -52,10 +52,12 @@ export function AreaModal({ show, onClose }: Props) {
 							/>
 							<Modal.TextInput
 								placeholder='Cant. Camas'
+								error={errors.beds?.message}
 								{...register('beds')}
 							/>
 							<Modal.TextInput
 								placeholder='Piso'
+								error={errors.floor?.message}
 								{...register('floor')}
 							/>
 						</Modal.Group>

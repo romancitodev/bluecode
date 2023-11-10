@@ -215,7 +215,11 @@ export function PersonalModal({ show, onClose }: Props) {
 						className='text-red-500 text-[24px]'
 						onClick={onClose}
 					/>
-					<Modal.Button text='Create' className='text-[24px]' />
+					<Modal.Button
+						text='Create'
+						type='submit'
+						className='text-[24px]'
+					/>
 				</Modal.Group>
 			</Modal.Container>
 		</Modal>

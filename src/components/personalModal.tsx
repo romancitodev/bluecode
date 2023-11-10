@@ -18,10 +18,10 @@ export function PersonalModal({ show, onClose }: Props) {
 		register,
 	} = useForm<PersonalFormData>({ resolver: zodResolver(PersonalForm) });
 
-	const handleClose = (e) => {
+	const handleClose = e => {
 		onClose(e);
-		reset()
-	}
+		reset();
+	};
 
 	const onSubmit = async (data: PersonalFormData) => {
 		const result = await fetch('http://localhost:3000/api/patients', {
@@ -54,16 +54,16 @@ export function PersonalModal({ show, onClose }: Props) {
 								name='surname'
 								error={errors.surname?.message}
 							/>
-							<Modal.TextInput 
+							<Modal.TextInput
 								placeholder='DNI'
-								name='dni' 
+								name='dni'
 								error={errors.dni?.message}
 							/>
 							<Modal.DatePicker
-								placeholder='Fecha de nacimiento'
-								max_day={new Date()}
 								name='birth'
 								control={control}
+								placeholder='Fecha de nacimiento'
+								max_day={new Date()}
 								error={errors.birth?.message}
 							/>
 							<Modal.ControlledCombo
@@ -104,19 +104,20 @@ export function PersonalModal({ show, onClose }: Props) {
 									},
 								]}
 							/>
-							<Modal.TextInput 
-								placeholder='Teléfono' 
+							<Modal.TextInput
+								placeholder='Teléfono'
 								name='phone'
 								error={errors.phone?.message}
 							/>
 							<Modal.DatePicker
 								name='date_start'
+								control={control}
 								placeholder='Fecha inicio'
 								max_day={new Date()}
 								error={errors.date_start?.message}
 							/>
-							<Modal.TextInput 
-								placeholder='CUIT' 
+							<Modal.TextInput
+								placeholder='CUIT'
 								name='cuit'
 								error={errors.cuit?.message}
 							/>

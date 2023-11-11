@@ -17,13 +17,13 @@ export function AreaModal({ show, onClose }: Props) {
 		register,
 	} = useForm<AreaFormData>({ resolver: zodResolver(AreaForm) });
 
-	const handleClose = (e) => {
+	const handleClose = e => {
 		onClose(e);
 		reset();
-	}
+	};
 
 	const onSubmit = async (data: AreaFormData) => {
-		const result = await fetch('http://localhost:3000/api/patients', {
+		const result = await fetch('http://localhost:3000/api/areas', {
 			method: 'POST',
 			body: JSON.stringify(data),
 		});
@@ -35,7 +35,7 @@ export function AreaModal({ show, onClose }: Props) {
 		console.log(errors);
 		console.log('an error occurred');
 	};
-	
+
 	return (
 		<Modal open={show} onSubmit={handleSubmit(onSubmit, onError)}>
 			<Modal.Container>
@@ -69,11 +69,7 @@ export function AreaModal({ show, onClose }: Props) {
 						className='text-red-500 text-[24px]'
 						onClick={handleClose}
 					/>
-					<Modal.Button
-						text='Create'
-						className='text-[24px]'
-						type='submit'
-					/>
+					<Modal.Button text='Create' className='text-[24px]' type='submit' />
 				</Modal.Group>
 			</Modal.Container>
 		</Modal>

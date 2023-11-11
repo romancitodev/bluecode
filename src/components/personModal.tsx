@@ -149,7 +149,6 @@ export function PatientModal({ show, onClose }: Props) {
 							/>
 							<Modal.TextInput
 								placeholder='Telefono'
-								block
 								{...register('phone')}
 								error={errors.phone?.message}
 							/>

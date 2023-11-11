@@ -4,6 +4,7 @@ import { NextRequest, NextResponse } from 'next/server';
 import { ZodError } from 'zod';
 
 export const GET = async (request: Request) => {
+	console.log({ request });
 	const data = await prisma.paciente.findMany();
 	return Response.json({ data });
 };

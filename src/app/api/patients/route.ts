@@ -21,22 +21,21 @@ export const POST = async (
 	console.log(data);
 	try {
 		const user = PatientForm.parse({ ...data, birth: new Date(data.birth) });
-		console.log(user);
-		const prismaResult =
-			await prisma.$executeRaw`CALL crear_paciente(${user.dni}, ${user.name}, ${user.surname}, ${user.birth}, ${user.gender}, '1', ${user.affiliation_name}, ${user.civil_status}, ${user.phone}, ${user.blood_type}, ${user.observations}, ${user.accidents}, ${user.antecedents}, ${user.street}, ${user.street_number}, ${user.neighborhood}, ${user.province}, ${user.house_type}, ${user.department_annotation}, ${user.department_number}, ${user.area}, ${user.bed_number})`;
+
+		await prisma.$executeRaw`CALL crear_paciente(${user.dni}, ${user.name}, ${user.surname}, ${user.birth}, ${user.gender}, '1', ${user.affiliation_name}, ${user.civil_status}, ${user.phone}, ${user.blood_type}, ${user.observations}, ${user.accidents}, ${user.antecedents}, ${user.street}, ${user.street_number}, ${user.neighborhood}, ${user.province}, ${user.house_type}, ${user.department_annotation}, ${user.department_number}, ${user.area}, ${user.bed_number})`;
 
 		if (user.allergies && user.allergies.length > 0) {
-			for (let allergie in user.allergies) {
+			for (const allergie in user.allergies) {
 				await prisma.$executeRaw`CALL añadir_alergia(${user.dni}, ${allergie})`;
 			}
 		}
 		if (user.illnesses && user.illnesses.length > 0) {
-			for (let illness in user.illnesses) {
+			for (const illness in user.illnesses) {
 				await prisma.$executeRaw`CALL añadir_enfermedad(${user.dni}, ${illness})`;
 			}
 		}
 		if (user.vacuums && user.vacuums.length > 0) {
-			for (let vacuum in user.vacuums) {
+			for (const vacuum in user.vacuums) {
 				await prisma.$executeRaw`CALL añadir_vacuna(${user.dni}, '${vacuum}')`;
 			}
 		}

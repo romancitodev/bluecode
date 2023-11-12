@@ -7,7 +7,7 @@ type Params = {
 	};
 };
 
-export default async function Page({ params }: Params) {
+export default function Page({ params }: Params) {
 	console.log({ page: true, params });
 	return (
 		<div className='grid m-0'>

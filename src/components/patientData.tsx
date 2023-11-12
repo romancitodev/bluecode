@@ -1,4 +1,5 @@
-import { formatDni } from "@/utils/format";
+import { formatDni } from '@/utils/format';
+import { PatientNotFound } from './PatientNotFound';
 
 type Props = { id: string };
 
@@ -16,16 +17,19 @@ type PatientInfo = {
 	affiliation_name: string;
 };
 
-const formatDate = (d: Date) => `${d.getDate().toString().padStart(2, '0')} / ${(d.getMonth() + 1).toString().padStart(2, '0')} / ${d.getFullYear()}`;
+const formatDate = (d: Date) =>
+	`${d.getDate().toString().padStart(2, '0')} / ${(d.getMonth() + 1)
+		.toString()
+		.padStart(2, '0')} / ${d.getFullYear()}`;
 
 export async function PatientGridInfo({ id }: Props) {
 	const data = await fetch(`http://localhost:3000/api/patients?dni=${id}`);
 
 	const json: PatientInfo = (await data.json()).message;
 
-	console.log({ json });
-
-	return (
+	return !json ? (
+		<PatientNotFound />
+	) : (
 		<div className='w-full h-full'>
 			<div className='[&>*:nth-child(even)]:bg-white [&>*:nth-child(odd)]:bg-[#E2E2E2] w-full h-full m-0'>
 				<div className='grid grid-cols-2 px-4 py-0.5 rounded-t-3xl'>
@@ -42,7 +46,7 @@ export async function PatientGridInfo({ id }: Props) {
 				<div className='grid grid-cols-2 px-4 py-0.5'>
 					<div className='cols-span-1/2 flex justify-between p-2 pr-5'>
 						<p className='font-bold'>Fecha de nacimiento</p>
-						<p>{formatDate( new Date(json.birth))}</p>
+						<p>{formatDate(new Date(json.birth))}</p>
 					</div>
 					<div className='cols-span-1/2 flex justify-between p-2 pl-5'>
 						<p className='font-bold'>DNI</p>

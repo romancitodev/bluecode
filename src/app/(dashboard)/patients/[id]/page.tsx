@@ -1,5 +1,5 @@
-import { PatientGridInfo } from "@/components/patientData";
-import { Title } from "@/components/title";
+import { PatientGridInfo } from '@/components/patientData';
+import { Title } from '@/components/title';
 
 type Params = {
 	params: {
@@ -8,18 +8,13 @@ type Params = {
 };
 
 export default async function Page({ params }: Params) {
-	const data = await fetch(
-		`http://localhost:3000/api/patients?dni=${params.id}`,
-	);
-
-	console.log({ page: true, data });
-
+	console.log({ page: true, params });
 	return (
-		<div className="grid m-0">
+		<div className='grid m-0'>
 			<Title text='Ficha médica' />
-			
+
 			<div className='mx-28'>
-				<PatientGridInfo />
+				<PatientGridInfo id={params.id} />
 			</div>
 		</div>
 	);

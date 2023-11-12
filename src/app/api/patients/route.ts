@@ -1,12 +1,52 @@
 import { type PatientFormData, PatientForm } from '@/app/schemas/patients-form';
 import prisma from '@/prisma/singleton';
+import { NextApiRequest } from 'next';
 import { NextRequest, NextResponse } from 'next/server';
 import { ZodError } from 'zod';
 
-export const GET = async (request: Request) => {
-	console.log({ request });
-	const data = await prisma.paciente.findMany();
-	return Response.json({ data });
+export const GET = async (request: NextRequest) => {
+
+	const { searchParams: query } = request.nextUrl; 
+
+	if (!query.get('dni') || query.get('dni') === '0') {
+		const data = await prisma.paciente.findMany();
+		return Response.json({ data });
+	} else {
+		const dni = query.get('dni');
+		const data = await prisma.paciente.findFirst({
+			select: {
+				name: true, surname: true, fecha_nacimiento: true, genero: true, estado_civil: true, telefono: true,
+				rel_ficha_paciente: {
+					select: {
+						 ficha: {
+								select: {
+									grupo_sanguineo: true
+							}
+						}
+					}
+				},
+				rel_afil_paciente: {
+					select: {
+						afiliaciones: {
+								select: { nombre: true, tipo: true }
+						}
+					}
+				},
+				domicilio_paciente: {
+					select: {
+						 calle: true, numero: true, localidad: true, provincia: true
+					}
+				}
+			},
+			 where: { dni: Number(dni) } });
+		if (!data) return Response.json({ message: { errors: "not found" }}, { status: 404 });
+		const { calle, localidad, provincia, numero } = data.domicilio_paciente[0];
+		const { grupo_sanguineo } = data.rel_ficha_paciente[0].ficha;
+		const { nombre, tipo } = data.rel_afil_paciente[0].afiliaciones;
+		return Response.json({ message: {
+			name: data.name, surname: data.surname, birth: data.fecha_nacimiento, gender: data.genero, dni, civil_status: data.estado_civil, phone: data.telefono, blood_type: grupo_sanguineo, affiliation_type: tipo, affiliation_name: nombre, address: `${calle} ${numero}, ${localidad} | ${provincia}`  
+		} });
+	}
 };
 
 type FlattenZodError = {

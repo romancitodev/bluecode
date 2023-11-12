@@ -36,10 +36,11 @@ model area {
 }
 
 model cama {
-  id_cama       Int             @id @default(autoincrement())
-  estado        Int             @db.TinyInt
-  numero        Int
-  rel_area_cama rel_area_cama[]
+  id_cama           Int                 @id @default(autoincrement())
+  estado            Int                 @db.TinyInt
+  numero            Int
+  rel_area_cama     rel_area_cama[]
+  rel_paciente_cama rel_paciente_cama[]
 }
 
 model datos_usuario {
@@ -64,7 +65,7 @@ model deficiencias {
 
 /// The underlying table does not contain a valid unique identifier and can therefore currently not be handled by Prisma Client.
 model domicilio_paciente {
-  dni           Int
+  dni           Int @id
   calle         String   @db.VarChar(100)
   numero        Int
   localidad     String   @db.VarChar(100)
@@ -75,7 +76,6 @@ model domicilio_paciente {
   datos_usuario paciente @relation(fields: [dni], references: [dni], onDelete: Cascade, map: "fk_dni4")
 
   @@index([dni], map: "fk_dni4_idx")
-  @@ignore
 }
 
 model domicilio_usuario {
@@ -113,8 +113,8 @@ model ficha {
 model llamados {
   id_llamado           Int                    @id @default(autoincrement())
   tipo                 String                 @db.VarChar(100)
-  record               DateTime               @db.DateTime(0)
-  respuesta            DateTime?              @db.DateTime(0)
+  record               String                 @db.VarChar(100)
+  respuesta            String?                @db.VarChar(100)
   origen               String                 @db.VarChar(100)
   rel_llamado_paciente rel_llamado_paciente[]
 }
@@ -128,10 +128,11 @@ model paciente {
   legajo                String                  @db.VarChar(100)
   estado_civil          String                  @db.VarChar(100)
   telefono              Int
-  domicilio_paciente    domicilio_paciente[]    @ignore
+  domicilio_paciente    domicilio_paciente[]
   rel_afil_paciente     rel_afil_paciente[]
   rel_ficha_paciente    rel_ficha_paciente[]
   rel_llamado_paciente  rel_llamado_paciente[]
+  rel_paciente_cama     rel_paciente_cama[]
   rel_registro_paciente rel_registro_paciente[]
 }
 
@@ -259,7 +260,7 @@ model rel_llamado_paciente {
   id_llamado Int
   dni        Int
   paciente   paciente @relation(fields: [dni], references: [dni], onDelete: Cascade, map: "fk_dni5")
-  llamados   llamados @relation(fields: [id_llamado], references: [id_llamado], onDelete: NoAction, onUpdate: NoAction, map: "fk_llamado")
+  llamados   llamados @relation(fields: [id_llamado], references: [id_llamado], onDelete: Cascade, map: "fk_llamado")
 
   @@index([dni], map: "fk_dni5_idx")
   @@index([id_llamado], map: "fk_llamado_idx")
@@ -339,4 +340,15 @@ model vacunas {
   id_vacuna        Int                @id @default(autoincrement())
   descripcion      String             @db.VarChar(45)
   rel_ficha_vacuna rel_ficha_vacuna[]
+}
+
+model rel_paciente_cama {
+  id       Int      @id @default(autoincrement())
+  dni      Int
+  id_cama  Int
+  cama     cama     @relation(fields: [id_cama], references: [id_cama], onDelete: Cascade, map: "fk_cama1")
+  paciente paciente @relation(fields: [dni], references: [dni], onDelete: Cascade, map: "fk_paciente2")
+
+  @@index([id_cama], map: "fk_cama1_idx")
+  @@index([dni], map: "fk_paciente2_idx")
 }

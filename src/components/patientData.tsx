@@ -1,62 +1,88 @@
-export function PatientGridInfo() {
-    return (
-        <div className="w-full h-full">
-            <div className='[&>*:nth-child(even)]:bg-white [&>*:nth-child(odd)]:bg-[#E2E2E2] w-full h-full m-0'>
-                <div className='grid grid-cols-2 px-4 py-0.5 rounded-t-3xl'>
-                    <div className='cols-span-1/2 flex justify-between p-2 pr-5'>
-                        <div>Nombre</div>
-                        <div>Valentin</div>
-                    </div>
-                    <div className='cols-span-1/2 flex justify-between p-2 pl-5'>
-                        <div>Apellido</div>
-                        <div>Smaia</div>
-                    </div>
-                </div>
+import { formatDni } from "@/utils/format";
 
-                <div className='grid grid-cols-2 px-4 py-0.5'>
-                    <div className='cols-span-1/2 flex justify-between p-2 pr-5'>
-                        <div>Fecha de nacimiento</div>
-                        <div>19-02-2004</div>
-                    </div>
-                    <div className='cols-span-1/2 flex justify-between p-2 pl-5'>
-                        <div>DNI</div>
-                        <div>45480653</div>
-                    </div>
-                </div>
+type Props = { id: string };
 
-                <div className='grid grid-cols-2 px-4 py-0.5'>
-                    <div className='cols-span-1/2 flex justify-between p-2 pr-5'>
-                        <div>Sexo</div>
-                        <div>Masculino</div>
-                    </div>
-                    <div className='cols-span-1/2 flex justify-between p-2 pl-5'>
-                        <div>Estado civil</div>
-                        <div>Soltero</div>
-                    </div>
-                </div>
+type PatientInfo = {
+	name: string;
+	surname: string;
+	birth: Date;
+	dni: number;
+	gender: string;
+	civil_status: string;
+	blood_type: string;
+	phone: number;
+	address: string;
+	affiliation_type: string;
+	affiliation_name: string;
+};
 
-                <div className='grid grid-cols-2 px-4 py-0.5'>
-                    <div className='cols-span-1/2 flex justify-between p-2 pr-5'>
-                        <div>Grupo Sanguíneo</div>
-                        <div>ni idea la verdad</div>
-                    </div>
-                    <div className='cols-span-1/2 flex justify-between p-2 pl-5'>
-                        <div>Telefono</div>
-                        <div>1111111111</div>
-                    </div>
-                </div>
+const formatDate = (d: Date) => `${d.getDate().toString().padStart(2, '0')} / ${(d.getMonth() + 1).toString().padStart(2, '0')} / ${d.getFullYear()}`;
 
-                <div className='grid grid-cols-2 px-4 py-0.5 rounded-b-3xl'>
-                    <div className='cols-span-1/2 flex justify-between p-2 pr-5'>
-                        <div>Domicilio</div>
-                        <div>pedro lozano algo, villa del parque, caba</div>
-                    </div>
-                    <div className='cols-span-1/2 flex justify-between p-2 pl-5'>
-                        <div>Afiliación</div>
-                        <div>Obra social - Osuthgra</div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    );
+export async function PatientGridInfo({ id }: Props) {
+	const data = await fetch(`http://localhost:3000/api/patients?dni=${id}`);
+
+	const json: PatientInfo = (await data.json()).message;
+
+	console.log({ json });
+
+	return (
+		<div className='w-full h-full'>
+			<div className='[&>*:nth-child(even)]:bg-white [&>*:nth-child(odd)]:bg-[#E2E2E2] w-full h-full m-0'>
+				<div className='grid grid-cols-2 px-4 py-0.5 rounded-t-3xl'>
+					<div className='cols-span-1/2 flex justify-between p-2 pr-5'>
+						<p className='font-bold'>Nombre</p>
+						<p>{json.name}</p>
+					</div>
+					<div className='cols-span-1/2 flex justify-between p-2 pl-5'>
+						<p className='font-bold'>Apellido</p>
+						<p>{json.surname}</p>
+					</div>
+				</div>
+
+				<div className='grid grid-cols-2 px-4 py-0.5'>
+					<div className='cols-span-1/2 flex justify-between p-2 pr-5'>
+						<p className='font-bold'>Fecha de nacimiento</p>
+						<p>{formatDate( new Date(json.birth))}</p>
+					</div>
+					<div className='cols-span-1/2 flex justify-between p-2 pl-5'>
+						<p className='font-bold'>DNI</p>
+						<p>{formatDni(json.dni)}</p>
+					</div>
+				</div>
+
+				<div className='grid grid-cols-2 px-4 py-0.5'>
+					<div className='cols-span-1/2 flex justify-between p-2 pr-5'>
+						<p className='font-bold'>Sexo</p>
+						<p>{json.gender}</p>
+					</div>
+					<div className='cols-span-1/2 flex justify-between p-2 pl-5'>
+						<p className='font-bold'>Estado civil</p>
+						<p>{json.civil_status}</p>
+					</div>
+				</div>
+
+				<div className='grid grid-cols-2 px-4 py-0.5'>
+					<div className='cols-span-1/2 flex justify-between p-2 pr-5'>
+						<p className='font-bold'>Grupo Sanguíneo</p>
+						<p>{json.blood_type}</p>
+					</div>
+					<div className='cols-span-1/2 flex justify-between p-2 pl-5'>
+						<p className='font-bold'>Telefono</p>
+						<p>{json.phone}</p>
+					</div>
+				</div>
+
+				<div className='grid grid-cols-2 px-4 py-0.5 rounded-b-3xl'>
+					<div className='cols-span-1/2 flex justify-between p-2 pr-5'>
+						<p className='font-bold'>Domicilio</p>
+						<p>{json.address}</p>
+					</div>
+					<div className='cols-span-1/2 flex justify-between p-2 pl-5'>
+						<p className='font-bold'>Afiliación</p>
+						<p>{`${json.affiliation_type} - ${json.affiliation_name}`}</p>
+					</div>
+				</div>
+			</div>
+		</div>
+	);
 }

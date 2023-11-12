@@ -9,11 +9,7 @@ type Props = {
 export const TextInput = React.forwardRef<HTMLInputElement, Props>(
 	({ placeholder, error, block, ...props }, ref) => {
 		return (
-			<div 
-				className={`${
-						block ? 'col-span-full' : 'col-span-1/2'
-					}`}
-			>
+			<div className={`${block ? 'col-span-full' : 'col-span-1/2'}`}>
 				<input
 					placeholder={placeholder}
 					ref={ref}

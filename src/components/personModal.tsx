@@ -20,10 +20,10 @@ export function PatientModal({ show, onClose }: Props) {
 		register,
 	} = useForm<PatientFormData>({ resolver: zodResolver(PatientForm) });
 
-	const handleClose = (e) => {
+	const handleClose = e => {
 		onClose(e);
 		reset();
-	}
+	};
 
 	const onSubmit = async (data: PatientFormData) => {
 		const result = await fetch('http://localhost:3000/api/patients', {

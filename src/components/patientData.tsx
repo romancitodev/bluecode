@@ -15,7 +15,7 @@ type PatientInfo = {
 	address: string;
 	affiliation_type: string;
 	affiliation_name: string;
-};
+} | { errors: string };
 
 const formatDate = (d: Date) =>
 	`${d.getDate().toString().padStart(2, '0')} / ${(d.getMonth() + 1)
@@ -26,8 +26,8 @@ export async function PatientGridInfo({ id }: Props) {
 	const data = await fetch(`http://localhost:3000/api/patients?dni=${id}`);
 
 	const json: PatientInfo = (await data.json()).message;
-
-	return !json ? (
+	console.log({ pageRender: true, json })
+	return !json || json.errors ? (
 		<PatientNotFound />
 	) : (
 		<div className='w-full h-full'>

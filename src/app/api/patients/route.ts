@@ -1,6 +1,5 @@
 import { type PatientFormData, PatientForm } from '@/app/schemas/patients-form';
 import prisma from '@/prisma/singleton';
-import { NextApiRequest } from 'next';
 import { NextRequest, NextResponse } from 'next/server';
 import { ZodError } from 'zod';
 
@@ -47,6 +46,7 @@ export const GET = async (request: NextRequest) => {
 			},
 			where: { dni: Number(dni) },
 		});
+		console.log(data);
 		if (!data)
 			return Response.json({ message: { errors: 'not found' } }, { status: 404 });
 		const { calle, localidad, provincia, numero } = data.domicilio_paciente[0];
@@ -118,4 +118,21 @@ export const POST = async (
 		}
 		return NextResponse.json({ message: err as string }, { status: 500 });
 	}
+};
+
+export const DELETE = async (
+	request: NextRequest,
+): Promise<NextResponse<Response>> => {
+	const query = request.nextUrl.searchParams;
+	const dni = query.get('dni');
+	if (!dni)
+		return NextResponse.json({ message: 'missing dni' }, { status: 400 });
+
+	if (Number.isNaN(dni))
+		return NextResponse.json({ message: 'invalid id' }, { status: 400 });
+
+	console.log(dni);
+	await prisma.paciente.delete({ where: { dni: Number(dni) } });
+
+	return NextResponse.json({ message: 'deleted' });
 };

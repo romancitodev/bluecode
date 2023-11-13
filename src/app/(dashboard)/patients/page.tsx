@@ -76,7 +76,9 @@ export default function Patients() {
 					</div>
 				) : (
 					<div className='grid h-full w-full gap-y-10 no-scrollbar overflow-y-auto'>
-						<PatientCards patients={patients} />
+						<PatientCards patients={patients} onRefresh={() => {
+							getPatients({ name: '', dni: 0 })
+						}} />
 					</div>
 				)}
 			</div>

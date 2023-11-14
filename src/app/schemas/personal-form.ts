@@ -5,6 +5,19 @@ const STATUS = ['casado', 'soltero'];
 
 export const PersonalForm = z
 	.object({
+		mail: z.string({
+			invalid_type_error: 'Mail inválido',
+			required_error: 'Mail inválido'
+		}).email().min(1, {
+			message: 'Mail inválido'
+		}),
+		password: z.string({
+			required_error: 'Contraseña inválida'
+		}).min(8, {
+			message: 'Mínimo de 8 caracteres'
+		}).max(40, {
+			message: 'Máximo de 40 caracteres'
+		}),
 		name: z.string().min(1, {
 			message: 'Nombre inválido',
 		}),
@@ -81,7 +94,7 @@ export const PersonalForm = z
 		department_number: z.coerce.number().nullable().default(null),
 		area: z.array(z.string(), {
 			required_error: 'Debe seleccionar al menos un área',
-		}),
+		}).min(1),
 	})
 	.superRefine((data, ctx) => {
 		if (data.house_type === 'departamento' && data.department_annotation === '') {

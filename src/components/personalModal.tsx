@@ -109,18 +109,34 @@ export function PersonalModal({ show, onClose }: Props) {
 								{...register('phone')}
 								error={errors.phone?.message}
 							/>
+								<Modal.TextInput
+									placeholder='CUIT'
+									{...register('cuit')}
+									error={errors.cuit?.message}
+								/>
+								<Modal.TextInput
+									placeholder='Mail'
+									{...register('mail')}
+									block
+									error={errors.mail?.message}
+								/>
+
+								<Modal.TextInput
+									placeholder='Contraseña'
+									type='password'
+									{...register('password')}
+									error={errors.password?.message}
+								/>
+
 							<Modal.DatePicker
 								control={control}
 								{...register('date_start')}
 								placeholder='Fecha inicio'
 								max_day={new Date()}
 								error={errors.date_start?.message}
+							
 							/>
-							<Modal.TextInput
-								placeholder='CUIT'
-								{...register('cuit')}
-								error={errors.cuit?.message}
-							/>
+							
 						</Modal.Group>
 					</Modal.Grid>
 

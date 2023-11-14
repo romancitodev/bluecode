@@ -16,7 +16,7 @@ export const GET = async (request: NextRequest) => {
 			descripcion: true,
 			_count: true,
 			rel_area_cama: {
-				select: { cama: { select: { estado: true } } }
+				select: { cama: { select: { estado: true } } },
 			},
 			rel_area_usuario: {
 				select: {
@@ -26,20 +26,22 @@ export const GET = async (request: NextRequest) => {
 								select: {
 									datos_usuario: {
 										select: {
-											name: true, surname: true
-										}
-									}
-								}
-							}
-						}
-					}
-				}
-			}
-		}
+											name: true,
+											surname: true,
+										},
+									},
+								},
+							},
+						},
+					},
+				},
+			},
+		},
 	});
 
-	const mapped = data.filter(({ rel_area_usuario }) => rel_area_usuario.length > 0).map(
-		({ descripcion: areaname, _count, rel_area_cama, rel_area_usuario }) => {
+	const mapped = data
+		.filter(({ rel_area_usuario }) => rel_area_usuario.length > 0)
+		.map(({ descripcion: areaname, _count, rel_area_cama, rel_area_usuario }) => {
 			const { name, surname } =
 				rel_area_usuario[0].usuario.rel_usuario_datos[0].datos_usuario;
 			const variant = rel_area_cama[0].cama.estado ? 'occupied' : 'open' ?? 'open';
@@ -50,8 +52,7 @@ export const GET = async (request: NextRequest) => {
 				beds,
 				variant,
 			};
-		},
-	);
+		});
 
 	return Response.json({ data: mapped });
 };
@@ -59,9 +60,9 @@ export const GET = async (request: NextRequest) => {
 export const POST = async (
 	request: NextRequest,
 ): Promise<NextResponse<Response>> => {
-	const { birth, ...data } = await request.json();
+	const data = await request.json();
 	try {
-		const area = AreaForm.parse({ ...data, birth: new Date(birth) });
+		const area = AreaForm.parse(data);
 
 		await prisma.area.create({
 			data: {

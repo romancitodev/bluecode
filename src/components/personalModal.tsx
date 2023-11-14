@@ -1,3 +1,5 @@
+'use client';
+
 import { substractYears } from '@/utils/date';
 import { Modal } from './modal';
 import { PersonalForm, PersonalFormData } from '@/app/schemas/personal-form';
@@ -26,7 +28,7 @@ export function PersonalModal({ show, onClose }: Props) {
 	};
 
 	const onSubmit = async (data: PersonalFormData) => {
-		const result = await fetch('http://localhost:3000/api/patients', {
+		const result = await fetch('http://localhost:3000/api/personal', {
 			method: 'POST',
 			body: JSON.stringify(data),
 		});
@@ -40,7 +42,9 @@ export function PersonalModal({ show, onClose }: Props) {
 	};
 
 	const { areas, getAreas } = useAreas();
-	useEffect(() => { getAreas({ areaname: '' })})
+	useEffect(() => {
+		getAreas({ areaname: '' });
+	}, []);
 
 	return (
 		<Modal open={show} onSubmit={handleSubmit(onSubmit, onError)}>
@@ -114,24 +118,24 @@ export function PersonalModal({ show, onClose }: Props) {
 								{...register('phone')}
 								error={errors.phone?.message}
 							/>
-								<Modal.TextInput
-									placeholder='CUIT'
-									{...register('cuit')}
-									error={errors.cuit?.message}
-								/>
-								<Modal.TextInput
-									placeholder='Mail'
-									{...register('mail')}
-									block
-									error={errors.mail?.message}
-								/>
+							<Modal.TextInput
+								placeholder='CUIT'
+								{...register('cuit')}
+								error={errors.cuit?.message}
+							/>
+							<Modal.TextInput
+								placeholder='Mail'
+								{...register('mail')}
+								block
+								error={errors.mail?.message}
+							/>
 
-								<Modal.TextInput
-									placeholder='Contraseña'
-									type='password'
-									{...register('password')}
-									error={errors.password?.message}
-								/>
+							<Modal.TextInput
+								placeholder='Contraseña'
+								type='password'
+								{...register('password')}
+								error={errors.password?.message}
+							/>
 
 							<Modal.DatePicker
 								control={control}
@@ -139,9 +143,7 @@ export function PersonalModal({ show, onClose }: Props) {
 								placeholder='Fecha inicio'
 								max_day={new Date()}
 								error={errors.date_start?.message}
-							
 							/>
-							
 						</Modal.Group>
 					</Modal.Grid>
 
@@ -208,7 +210,9 @@ export function PersonalModal({ show, onClose }: Props) {
 							placeholder='Areas'
 							empty='No se encontró el area.'
 							error={errors.area?.message}
-							options={ areas.map(a => { return { label: a.areaname, value: a.areaname } }) }
+							options={areas.map(a => {
+								return { label: a.areaname, value: a.areaname };
+							})}
 						/>
 					</Modal.Grid>
 				</Modal.Grid>

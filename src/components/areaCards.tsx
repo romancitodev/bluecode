@@ -10,7 +10,6 @@ type Area = {
 type Props = { areas: Area[] };
 
 export function AreaCards({ areas }: Props) {
-
 	console.log({ page: true, areas });
 
 	if (!areas || areas.length <= 0)
@@ -20,7 +19,7 @@ export function AreaCards({ areas }: Props) {
 			</p>
 		);
 
-	 		return areas.map(({ areaname, incharge, beds, variant }) => (
+	return areas.map(({ areaname, incharge, beds, variant }) => (
 		<AreaCard
 			areaname={areaname}
 			incharge={incharge}

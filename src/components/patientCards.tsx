@@ -2,7 +2,7 @@ import { formatDni } from '@/utils/format';
 import { Card } from './patientCard';
 
 type Patient = { name: string; surname: string; dni: number };
-type Props = { patients: Patient[], onRefresh: () => void };
+type Props = { patients: Patient[]; onRefresh: () => void };
 
 export function PatientCards({ patients, onRefresh }: Props) {
 	if (patients.length === 0)
@@ -21,7 +21,7 @@ export function PatientCards({ patients, onRefresh }: Props) {
 					`http://localhost:3000/api/patients?dni=${dni}`,
 					{ method: 'DELETE' },
 				);
-				onRefresh()
+				onRefresh();
 			}}
 		/>
 	));

@@ -18,6 +18,8 @@ export default function Areas() {
 	const { areas, getAreas, loading } = useAreas();
 	const [isOpen, setIsOpen] = useState(false);
 
+	console.log('page rendered:', areas);
+
 	const handleName = (e: React.ChangeEvent<HTMLInputElement>) => {
 		const { value: name } = e.target;
 		const new_filter = { ...filter, name };

@@ -46,7 +46,6 @@ export const GET = async (request: NextRequest) => {
 			},
 			where: { dni: Number(dni) },
 		});
-		console.log(data);
 		if (!data)
 			return Response.json({ message: { errors: 'not found' } }, { status: 404 });
 		const { calle, localidad, provincia, numero } = data.domicilio_paciente[0];

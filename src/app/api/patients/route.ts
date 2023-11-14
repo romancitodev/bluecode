@@ -48,7 +48,12 @@ export const GET = async (request: NextRequest) => {
 		});
 		if (!data)
 			return Response.json({ message: { errors: 'not found' } }, { status: 404 });
-		const { calle, localidad, provincia, numero } = data.domicilio_paciente[0];
+			const { calle, localidad, provincia, numero } = data.domicilio_paciente ?? {
+				calle: 'calle desconocida',
+				localidad: 'localidad desconocida',
+				provincia: 'provincia desconocida',
+				numero: 'numero desconocido'
+			};
 		const { grupo_sanguineo } = data.rel_ficha_paciente[0].ficha;
 		const { nombre, tipo } = data.rel_afil_paciente[0].afiliaciones;
 		return Response.json({

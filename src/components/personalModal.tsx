@@ -3,6 +3,8 @@ import { Modal } from './modal';
 import { PersonalForm, PersonalFormData } from '@/app/schemas/personal-form';
 import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
+import { useAreas } from '@/hooks/areas';
+import { useEffect } from 'react';
 
 type Props = {
 	show: boolean;
@@ -36,6 +38,9 @@ export function PersonalModal({ show, onClose }: Props) {
 		console.log(errors);
 		console.log('an error occurred');
 	};
+
+	const { areas, getAreas } = useAreas();
+	useEffect(() => { getAreas({ areaname: '' })})
 
 	return (
 		<Modal open={show} onSubmit={handleSubmit(onSubmit, onError)}>
@@ -203,24 +208,7 @@ export function PersonalModal({ show, onClose }: Props) {
 							placeholder='Areas'
 							empty='No se encontró el area.'
 							error={errors.area?.message}
-							options={[
-								{
-									label: 'Electro',
-									value: 'electro',
-								},
-								{
-									label: 'Resonancia',
-									value: 'resonancia',
-								},
-								{
-									label: 'Cardiologia',
-									value: 'cardiologia',
-								},
-								{
-									label: 'Guardia',
-									value: 'guardia',
-								},
-							]}
+							options={ areas.map(a => { return { label: a.areaname, value: a.areaname } }) }
 						/>
 					</Modal.Grid>
 				</Modal.Grid>

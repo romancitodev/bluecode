@@ -1,5 +1,6 @@
 import { formatDni } from '@/utils/format';
 import { PatientNotFound } from './PatientNotFound';
+import { PatientDetails } from './patientInfo';
 
 type Props = { id: string };
 
@@ -48,8 +49,8 @@ export async function PatientGridInfo({ id }: Props) {
 			affiliation_name,
 		} = json.message;
 		return (
-			<div className='w-full h-full'>
-				<div className='[&>*:nth-child(even)]:bg-white [&>*:nth-child(odd)]:bg-[#E2E2E2] w-full h-full m-0'>
+			<div className='w-full h-full overflow-x-scroll overflow-y-clip scrollbar-thin scrollbar-thumb-gray-200 scrollbar-rounded-[25px] scrollbar-track-rounded-[25px] scroll-smooth hover:scrollbar-thumb-gray-300 overflow-x-scroll'>
+				<div className='[&>*:nth-child(even)]:bg-white [&>*:nth-child(odd)]:bg-[#E2E2E2] w-full h-auto m-0 p-0'>
 					<div className='grid grid-cols-2 px-4 py-0.5 rounded-t-3xl'>
 						<div className='cols-span-1/2 flex justify-between p-2 pr-5'>
 							<p className='font-bold'>Nombre</p>
@@ -104,6 +105,23 @@ export async function PatientGridInfo({ id }: Props) {
 							<p>{`${affiliation_type} - ${affiliation_name}`}</p>
 						</div>
 					</div>
+				</div>
+
+				<div className='grid grid-cols-2 my-2 w-full'>
+					<PatientDetails
+						title='Accidentes'
+						pright
+					/>
+
+					<PatientDetails
+						title='Antecedentes'
+						pleft
+					/>
+
+					<PatientDetails
+						title='Observaciones'
+						block
+					/>
 				</div>
 			</div>
 		);

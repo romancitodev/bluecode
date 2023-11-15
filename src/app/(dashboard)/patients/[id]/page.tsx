@@ -10,7 +10,7 @@ type Params = {
 export default function Page({ params }: Params) {
 	console.log({ page: true, params });
 	return (
-		<div className='grid m-0'>
+		<div className='w-full h-full grid m-0 min-[800px]:'>
 			<Title text='Ficha médica' />
 
 			<div className='mx-28'>

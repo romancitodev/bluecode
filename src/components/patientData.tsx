@@ -30,7 +30,7 @@ const formatDate = (d: Date) =>
 
 export async function PatientGridInfo({ id }: Props) {
 	const data = await fetch(`http://localhost:3000/api/patients?dni=${id}`);
-	const json: PatientInfo = await data.json();
+	const json: PatientResponse = await data.json();
 	if (!json || !json.message || 'errors' in json.message) {
 		return <PatientNotFound />;
 	} else {

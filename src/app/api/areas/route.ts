@@ -10,7 +10,6 @@ type FlattenZodError = {
 type Response = { message: string | { errors: FlattenZodError } };
 
 export const GET = async (request: NextRequest) => {
-	const params = request.nextUrl.searchParams;
 	const data = await prisma.area.findMany({
 		select: {
 			descripcion: true,

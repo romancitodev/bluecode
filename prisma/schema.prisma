@@ -47,11 +47,12 @@ model datos_usuario {
   dni                  Int                    @id
   name                 String                 @map("nombre") @db.VarChar(255)
   surname              String                 @map("apellido") @db.VarChar(255)
-  cuil                 BigInt                 @unique(map: "cuil_UNIQUE") @db.BigInt
+  cuil                 BigInt                 @unique(map: "cuil_UNIQUE")
   telefono             Int
   est_civil            String                 @db.VarChar(100)
   fec_inicio           DateTime               @db.Date
   fec_nacimiento       DateTime               @db.Date
+  genero               String                 @db.VarChar(50)
   domicilio_usuario    domicilio_usuario?
   rel_registro_usuario rel_registro_usuario[]
   rel_usuario_datos    rel_usuario_datos[]

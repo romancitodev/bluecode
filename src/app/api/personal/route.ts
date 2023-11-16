@@ -21,42 +21,58 @@ export const GET = async (request: NextRequest) => {
 		const dni = query.get('dni');
 		const data = await prisma.usuario.findFirst({
 			select: {
-				name: true,
-				surname: true,
-				fecha_nacimiento: true,
-				genero: true,
-				estado_civil: true,
-				telefono: true,
-				domicilio_usuario: {
+				mail: true,
+				rel_usuario_datos: {
 					select: {
-						calle: true,
-						numero: true,
-						localidad: true,
-						provincia: true,
+						datos_usuario: {
+							select: {
+								name: true,
+								surname: true,
+								fec_inicio: true,
+								fec_nacimiento: true,
+								genero: true,
+								cuil: true,
+								est_civil: true,
+								telefono: true,
+								domicilio_usuario: {
+									select: {
+										calle: true,
+										numero: true,
+										localidad: true,
+										provincia: true,
+									},
+								},
+							},
+						},
 					},
-				},
+					where: { dni : Number(dni) },
+				}
 			},
-			where: { dni : Number(dni) },
 		});
 
 		if (!data)
 			return Response.json({ message: { errors: 'not found' } }, { status: 404 });
-		const { calle, localidad, prvincia, numero } = data.domicilio_paciente ?? {
+		
+		const result = data.rel_usuario_datos[0].datos_usuario;
+		const { calle, localidad, provincia, numero } = result.domicilio_usuario ?? {
 			calle: 'calle desconocida',
 			localidad: 'localidad desconocida',
 			provincia: 'provincia desconocida',
 			numero: 'numero desconocido',
 		};
-		
+
 		return Response.json({
 			message: {
-				name: data.name,
-				surname: data.surname,
-				birth: data.fecha_nacimiento,
-				gender: data.genero,
+				name: result.name,
+				surname: result.surname,
+				birth: result.fec_nacimiento,
+				gender: result.genero,
 				dni,
-				civil_status: data.estado_civil,
-				phone: data.telefono,
+				start_date: result.fec_inicio,
+				cuit: result.cuil,
+				mail: data.mail,
+				civil_status: result.est_civil,
+				phone: result.telefono,
 				address: `${calle} ${numero}, ${localidad} | ${provincia}`,
 			},
 		});

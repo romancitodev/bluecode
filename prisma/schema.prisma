@@ -27,32 +27,33 @@ model alergias {
 }
 
 model area {
-  id_area           Int                 @id
+  id_area           Int                 @id @default(autoincrement())
   descripcion       String              @db.VarChar(100)
+  piso              Int
   rel_area_cama     rel_area_cama[]
   rel_area_registro rel_area_registro[]
   rel_area_usuario  rel_area_usuario[]
 }
 
 model cama {
-  id_cama       Int             @id
-  estado        Int             @db.TinyInt
-  numero        Int
-  rel_area_cama rel_area_cama[]
+  id_cama           Int                 @id @default(autoincrement())
+  estado            Int                 @db.TinyInt
+  numero            Int
+  rel_area_cama     rel_area_cama[]
+  rel_paciente_cama rel_paciente_cama[]
 }
 
 model datos_usuario {
   dni                  Int                    @id
   name                 String                 @map("nombre") @db.VarChar(255)
   surname              String                 @map("apellido") @db.VarChar(255)
-  cuil                 Int                    @unique(map: "cuil_UNIQUE")
+  cuil                 BigInt                 @unique(map: "cuil_UNIQUE")
   telefono             Int
   est_civil            String                 @db.VarChar(100)
   fec_inicio           DateTime               @db.Date
   fec_nacimiento       DateTime               @db.Date
-  domicilio_paciente   domicilio_paciente?
+  genero               String                 @db.VarChar(50)
   domicilio_usuario    domicilio_usuario?
-  rel_ficha_paciente   rel_ficha_paciente[]
   rel_registro_usuario rel_registro_usuario[]
   rel_usuario_datos    rel_usuario_datos[]
 }
@@ -64,15 +65,17 @@ model deficiencias {
 }
 
 model domicilio_paciente {
-  dni           Int           @id
-  calle         String        @db.VarChar(100)
-  numero        Int
-  localidad     String        @db.VarChar(100)
-  provincia     String        @db.VarChar(100)
-  tipo          String        @db.VarChar(100)
-  departamento  String?       @db.VarChar(50)
-  piso          Int?
-  datos_usuario datos_usuario @relation(fields: [dni], references: [dni], onDelete: Cascade, map: "fk_dni4")
+  dni          Int      @id
+  calle        String   @db.VarChar(100)
+  numero       Int
+  localidad    String   @db.VarChar(100)
+  provincia    String   @db.VarChar(100)
+  tipo         String   @db.VarChar(100)
+  departamento String?  @db.VarChar(50)
+  piso         Int?
+  paciente     paciente @relation(fields: [dni], references: [dni], onDelete: Cascade, map: "fk_dni4")
+
+  @@index([dni], map: "fk_dni4_idx")
 }
 
 model domicilio_usuario {
@@ -82,7 +85,8 @@ model domicilio_usuario {
   localidad     String        @db.VarChar(100)
   provincia     String        @db.VarChar(100)
   tipo          String        @db.VarChar(45)
-  departamento  String        @db.VarChar(50)
+  departamento  String?       @db.VarChar(50)
+  piso          Int?
   datos_usuario datos_usuario @relation(fields: [dni], references: [dni], onDelete: Cascade, map: "fk_dni2")
 }
 
@@ -107,10 +111,10 @@ model ficha {
 }
 
 model llamados {
-  id_llamado           Int                    @id
+  id_llamado           Int                    @id @default(autoincrement())
   tipo                 String                 @db.VarChar(100)
-  record               DateTime               @db.DateTime(0)
-  respuesta            DateTime               @db.DateTime(0)
+  record               String                 @db.VarChar(100)
+  respuesta            String?                @db.VarChar(100)
   origen               String                 @db.VarChar(100)
   rel_llamado_paciente rel_llamado_paciente[]
 }
@@ -124,13 +128,16 @@ model paciente {
   legajo                String                  @db.VarChar(100)
   estado_civil          String                  @db.VarChar(100)
   telefono              Int
+  domicilio_paciente    domicilio_paciente?
   rel_afil_paciente     rel_afil_paciente[]
+  rel_ficha_paciente    rel_ficha_paciente[]
   rel_llamado_paciente  rel_llamado_paciente[]
+  rel_paciente_cama     rel_paciente_cama[]
   rel_registro_paciente rel_registro_paciente[]
 }
 
 model registro {
-  id_registro           Int                     @id
+  id_registro           Int                     @id @default(autoincrement())
   estado                Int                     @default(0) @db.TinyInt
   fecha                 DateTime                @default(now()) @db.DateTime(0)
   rel_area_registro     rel_area_registro[]
@@ -173,8 +180,8 @@ model rel_area_registro {
 
 model rel_area_usuario {
   id      Int     @id @default(autoincrement())
-  mail    String  @db.VarChar(256)
   id_area Int
+  mail    String  @db.VarChar(256)
   area    area    @relation(fields: [id_area], references: [id_area], onDelete: NoAction, onUpdate: NoAction, map: "fk_area")
   usuario usuario @relation(fields: [mail], references: [mail], onDelete: Cascade, map: "fk_mail4")
 
@@ -184,7 +191,6 @@ model rel_area_usuario {
 
 model rel_ficha_accidente {
   id           Int        @id @default(autoincrement())
-  estado       Int        @default(1) @db.TinyInt
   id_accidente Int
   id_ficha     Int
   accidentes   accidentes @relation(fields: [id_accidente], references: [id_accidente], onDelete: NoAction, onUpdate: NoAction, map: "fk_accidente")
@@ -196,7 +202,6 @@ model rel_ficha_accidente {
 
 model rel_ficha_alergia {
   id         Int      @id @default(autoincrement())
-  estado     Boolean  @default(true)
   id_ficha   Int
   id_alergia Int
   alergias   alergias @relation(fields: [id_alergia], references: [id_alergia], onDelete: NoAction, onUpdate: NoAction, map: "fk_alergia")
@@ -208,7 +213,6 @@ model rel_ficha_alergia {
 
 model rel_ficha_deficiencia {
   id             Int          @id @default(autoincrement())
-  estado         Int          @default(1) @db.TinyInt
   id_deficiencia Int
   id_ficha       Int
   deficiencias   deficiencias @relation(fields: [id_deficiencia], references: [id_deficiencia], onDelete: NoAction, onUpdate: NoAction, map: "fk_deficiencia")
@@ -220,7 +224,6 @@ model rel_ficha_deficiencia {
 
 model rel_ficha_enfermedad {
   id            Int          @id @default(autoincrement())
-  estado        Int          @default(1) @db.TinyInt
   id_enfermedad Int
   id_ficha      Int
   enfermedades  enfermedades @relation(fields: [id_enfermedad], references: [id_enfermedad], onDelete: NoAction, onUpdate: NoAction, map: "fk_enfermedad")
@@ -231,11 +234,11 @@ model rel_ficha_enfermedad {
 }
 
 model rel_ficha_paciente {
-  id            Int           @id @default(autoincrement())
-  id_ficha      Int
-  dni           Int
-  datos_usuario datos_usuario @relation(fields: [dni], references: [dni], onDelete: Cascade, map: "fk_dni3")
-  ficha         ficha         @relation(fields: [id_ficha], references: [id_ficha], onDelete: Cascade, map: "fk_ficha7")
+  id       Int      @id @default(autoincrement())
+  id_ficha Int
+  dni      Int
+  paciente paciente @relation(fields: [dni], references: [dni], onDelete: Cascade, map: "fk_dni3")
+  ficha    ficha    @relation(fields: [id_ficha], references: [id_ficha], onDelete: Cascade, map: "fk_ficha7")
 
   @@index([dni], map: "fk_dni3_idx")
   @@index([id_ficha], map: "fk_ficha7_idx")
@@ -243,7 +246,6 @@ model rel_ficha_paciente {
 
 model rel_ficha_vacuna {
   id        Int     @id @default(autoincrement())
-  estado    Int     @default(1) @db.TinyInt
   id_vacuna Int
   id_ficha  Int
   ficha     ficha   @relation(fields: [id_ficha], references: [id_ficha], onDelete: Cascade, map: "fk_ficha3")
@@ -255,19 +257,30 @@ model rel_ficha_vacuna {
 
 model rel_llamado_paciente {
   id         Int      @id @default(autoincrement())
-  dni        Int
   id_llamado Int
+  dni        Int
   paciente   paciente @relation(fields: [dni], references: [dni], onDelete: Cascade, map: "fk_dni5")
-  llamados   llamados @relation(fields: [id_llamado], references: [id_llamado], onDelete: NoAction, onUpdate: NoAction, map: "fk_llamado")
+  llamados   llamados @relation(fields: [id_llamado], references: [id_llamado], onDelete: Cascade, map: "fk_llamado")
 
   @@index([dni], map: "fk_dni5_idx")
   @@index([id_llamado], map: "fk_llamado_idx")
 }
 
+model rel_paciente_cama {
+  id       Int      @id @default(autoincrement())
+  dni      Int
+  id_cama  Int
+  cama     cama     @relation(fields: [id_cama], references: [id_cama], onDelete: Cascade, map: "fk_cama1")
+  paciente paciente @relation(fields: [dni], references: [dni], onDelete: Cascade, map: "fk_paciente2")
+
+  @@index([id_cama], map: "fk_cama1_idx")
+  @@index([dni], map: "fk_paciente2_idx")
+}
+
 model rel_registro_paciente {
   id          Int      @id @default(autoincrement())
-  dni         Int
   id_registro Int
+  dni         Int
   paciente    paciente @relation(fields: [dni], references: [dni], onDelete: Cascade, map: "fk_dni6")
   registro    registro @relation(fields: [id_registro], references: [id_registro], onDelete: NoAction, onUpdate: NoAction, map: "fk_registro")
 
@@ -277,8 +290,8 @@ model rel_registro_paciente {
 
 model rel_registro_usuario {
   id            Int           @id @default(autoincrement())
-  dni           Int
   id_registro   Int
+  dni           Int
   datos_usuario datos_usuario @relation(fields: [dni], references: [dni], onDelete: Cascade, map: "fk_dni7")
   registro      registro      @relation(fields: [id_registro], references: [id_registro], onDelete: NoAction, onUpdate: NoAction, map: "fk_registro2")
 
@@ -320,7 +333,7 @@ model rel_usuario_rol {
 }
 
 model rol {
-  id_rol          Int               @id
+  id_rol          Int               @id @default(autoincrement())
   descripci_n     String            @map("descripción") @db.VarChar(45)
   rel_usuario_rol rel_usuario_rol[]
 }

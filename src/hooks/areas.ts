@@ -20,10 +20,9 @@ export function useAreas() {
 
 	const getAreas = useCallback(async ({ areaname }: Pick<Area, 'areaname'>) => {
 		setLoading(true);
-		fetchAreaData({ areaname }).then(({ data }) => {
-			setLoading(false);
-			setAreas(data);
-		});
+		const data = await fetchAreaData({ areaname });
+		setLoading(false);
+		setAreas(data.data);
 	}, []);
 
 	return { areas, getAreas, loading };

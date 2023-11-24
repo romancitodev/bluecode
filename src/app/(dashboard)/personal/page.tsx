@@ -4,17 +4,19 @@ import { Title } from '@/components/title';
 import { Add } from '@/components/add';
 import { Filter } from '@/components/filter';
 import RaceBy from '@uiball/loaders/dist/components/RaceBy';
-import { useCallback, useEffect } from 'react';
+import { useCallback, useEffect, useState } from 'react';
 import { PersonalCards } from '@/components/personalCards';
 import { useFilter } from '@/hooks/filter';
 import { usePersonal } from '@/hooks/personal';
 import debounce from 'just-debounce-it';
+import { PersonalModal } from '@/components/personalModal';
 
 type Form = { name: string; dni: number };
 
 export default function Personal() {
 	const { filter, setFilter } = useFilter();
 	const { personal, getPersonal, loading } = usePersonal();
+	const [isOpen, setIsOpen] = useState(false);
 
 	const handleName = (e: React.ChangeEvent<HTMLInputElement>) => {
 		const { value: name } = e.target;
@@ -42,13 +44,14 @@ export default function Personal() {
 	}, []);
 
 	return (
-		<div className='grid gap-10 p-6'>
+		<div className='grid m-0'>
+			<PersonalModal show={isOpen} onClose={() => setIsOpen(!isOpen)} />
 			<Title text='Personal' />
 
-			<div className='grid w-full h-full gap-y-10 m-auto px-20'>
+			<div className='grid md:max-h-[600px] min-[1600px]:max-h-[820px] w-full h-full gap-y-10 m-auto px-20'>
 				<div className='flex justify-between w-full'>
 					<div className='flex h-full w-[200px]'>
-						<Add />
+						<Add onClick={() => setIsOpen(!isOpen)} />
 					</div>
 
 					<div className='flex h-16'>
@@ -61,7 +64,7 @@ export default function Personal() {
 						<RaceBy lineWeight={5} speed={1.4} size={500} color='#2A26EA' />
 					</div>
 				) : (
-					<div className='grid w-full h-full gap-y-10'>
+					<div className='grid h-full w-full gap-y-10 no-scrollbar overflow-y-auto'>
 						<PersonalCards personal={personal} />
 					</div>
 				)}
